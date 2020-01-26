@@ -11,6 +11,7 @@ public class SplashScreen extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     boolean firstTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
