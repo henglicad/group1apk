@@ -164,7 +164,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // enter info from ahmed
     }
 
-    // ADD ALL LINES TO BACKUP_SCHED_TABLE
+    // ADD ALL LINES TO BACKUP_SCHED_TABLE WITH NULL VALUES
     public boolean insertIntoBackupSched(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
