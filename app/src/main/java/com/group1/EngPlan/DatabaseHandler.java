@@ -2,6 +2,7 @@ package com.group1.EngPlan;
 
 import android.content.Context;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -454,4 +455,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result != -1;
     }
     /* METHODS FOR DATABASE CREATION AND INITIALIZATION END */
+
+    public Cursor returnValue(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + COURSE_NAME_COL + " FROM " + COURSE_LIST_TABLE
+                + " WHERE " + COURSE_ID_COL + " = " + id + ";";
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
+    }
 }
