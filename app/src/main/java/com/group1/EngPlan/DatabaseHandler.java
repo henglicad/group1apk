@@ -1,7 +1,6 @@
 package com.group1.EngPlan;
 
 import android.content.Context;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -48,6 +47,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /* METHODS FOR DATABASE CREATION AND INITIALIZATION BEGIN */
     // CREATE ALL TABLES
     @Override
+      public void onCreate(SQLiteDatabase db) {
+        Log.d(LOG_TAG, "Start of onCreate() for the database");
+        db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
+                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
+                + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
+                + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
+        fillCourseTable(db);
+            /*populateCourseTable(db);
+
         public void onCreate(SQLiteDatabase db) {
             Log.d(LOG_TAG, "Start of onCreate() for the database");
             db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
@@ -56,11 +64,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
             fillCourseTable(db);
             /*populateCourseTable(db);
-
             db.execSQL("CREATE TABLE " + IDEAL_SCHED_TABLE
                     + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
                     + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
             populateIdealSchedTable(db);
+
+
+
 
             db.execSQL("CREATE TABLE " + RECORD_TABLE
                     + "(" + COURSE_ID_COL + " CHAR(8), " + STATUS_COL + " CHAR(1) DEFAULT 'N',"
@@ -202,12 +212,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoCourseList("SENG43XX", "Upper Level Technical Elective-3", "W", "SENG3210", "SENG3120", null, null, null, null);
         insertIntoCourseList("SENG44XX", "Upper Level Technical Elective-4", "W", "SENG3210", "SENG3120", null, null, null, null);
     }
-
     // ADD ALL LINES TO COURSE_LIST_TABLE
     public boolean insertIntoCourseList(String id, String name, String sem, String pr1, String pr2, String t1, String t2, String t3, String t4){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
         contentValues.put(COURSE_NAME_COL, name);
         contentValues.put(COURSE_OFFERED_COL, sem);
@@ -217,15 +225,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(COURSE_TO2_COL, t2);
         contentValues.put(COURSE_TO3_COL, t3);
         contentValues.put(COURSE_TO4_COL, t4);
-
         long result = db.insert(COURSE_LIST_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + COURSE_LIST_TABLE);
-
         return result != -1;
     }
-
     // POPULATE IDEAL_SCHED_TABLE WITH MASTER PLAN
     private void populateIdealSchedTable(SQLiteDatabase db){
         insertIntoIdealSched("COOP1000", "F2");
@@ -282,23 +286,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoIdealSched("SENG43XX", "W5");
         insertIntoIdealSched("SENG44XX", "W5");
     }
-
     // ADD ALL LINES TO IDEAL_SCHED_TABLE
     private boolean insertIntoIdealSched(String id, String sem){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
         contentValues.put(SEMESTER_COL, sem);
-
         long result = db.insert(IDEAL_SCHED_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + IDEAL_SCHED_TABLE);
-
         return result != -1;
     }
-
     // POPULATE RECORD_TABLE WITH MASTER PLAN
     private void populateRecordTable(SQLiteDatabase db){
         insertIntoRecord("COOP1000");
@@ -355,22 +353,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoRecord("SENG43XX");
         insertIntoRecord("SENG44XX");
     }
-
     // ADD ALL LINES TO RECORD_TABLE
     private boolean insertIntoRecord(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
-
         long result = db.insert(RECORD_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + RECORD_TABLE);
-
         return result != -1;
     }
-
     // POPULATE SAVED_SCHED_TABLE WITH MASTER PLAN
     private void populateSavedSchedTable(SQLiteDatabase db){
         insertIntoSavedSched("COOP1000", "F2");
@@ -427,23 +419,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoSavedSched("SENG43XX", "W5");
         insertIntoSavedSched("SENG44XX", "W5");
     }
-
     // ADD ALL LINES TO SAVED_SCHED_TABLE
     private boolean insertIntoSavedSched(String id, String sem){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
         contentValues.put(SEMESTER_COL, sem);
-
         long result = db.insert(SAVED_SCHED_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + SAVED_SCHED_TABLE);
-
         return result != -1;
     }
-
     // POPULATE BACKUP_SCHED_TABLE
     private void populateBackupSchedTable(SQLiteDatabase db){
         insertIntoBackupSched("COOP1000");
@@ -500,27 +486,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoBackupSched("SENG43XX");
         insertIntoBackupSched("SENG44XX");
     }
-
     // ADD ALL LINES TO BACKUP_SCHED_TABLE WITH null VALUES
     private boolean insertIntoBackupSched(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
-
         long result = db.insert(BACKUP_SCHED_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + BACKUP_SCHED_TABLE);
-
         return result != -1;
     }
     /* METHODS FOR DATABASE CREATION AND INITIALIZATION END */
 
-    public Cursor returnValue(String id){
+    public Cursor returnValue(){
+        Log.d(LOG_TAG, "In return value");
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + COURSE_NAME_COL + " FROM " + COURSE_LIST_TABLE
-                + " WHERE " + COURSE_ID_COL + " = " + id + ";";
+        String query = "SELECT * FROM " + COURSE_LIST_TABLE + ";";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
