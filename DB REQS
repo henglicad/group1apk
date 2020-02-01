@@ -1,0 +1,11 @@
+DATABSE REQUIREMENTS
+
+For sprint 2:
+- create and populate tables with default values on start up
+    - this should occur only once
+- access and display the ideal schedule in quick view
+- pull up deatils about specific courses when prompted
+
+Other:
+- updates rows of SAVED_SCHED when user adds/drops a course
+- copy SAVED_SCHED to BACKUP_SCHED
