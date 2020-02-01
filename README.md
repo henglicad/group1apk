@@ -12,8 +12,6 @@ Recalculate plan based on pre-reqs
 
 Calculate grad year/number left
 
-Info held in database with student id
-
 Quick view
 
 Line graph showing progress
