@@ -1,7 +1,6 @@
 package com.group1.EngPlan;
 
 import android.content.Context;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -9,6 +8,7 @@ import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String LOG_TAG = DatabaseHandler.class.getSimpleName();
+    SQLiteDatabase db;
 
     public static final String DATABASE_NAME = "EngPlan.db";
 
@@ -40,37 +40,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context){
         super(context, DATABASE_NAME, null, 1);
+        Log.d(LOG_TAG, "In constructor for database");
+        db = getWritableDatabase();
     }
 
     /* METHODS FOR DATABASE CREATION AND INITIALIZATION BEGIN */
     // CREATE ALL TABLES
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d(LOG_TAG, "Start of onCreate() for the database");
         db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
                 + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
                 + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
                 + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
-        populateCourseTable(db);
-
-        db.execSQL("CREATE TABLE " + IDEAL_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
-                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-        populateIdealSchedTable(db);
-
-        db.execSQL("CREATE TABLE " + RECORD_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + STATUS_COL + " CHAR(1) DEFAULT 'N',"
-                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-        populateRecordTable(db);
-
-        db.execSQL("CREATE TABLE " + SAVED_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
-                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-        populateSavedSchedTable(db);
-
+        fillCourseTable(db);
+            /*populateCourseTable(db);
+            db.execSQL("CREATE TABLE " + IDEAL_SCHED_TABLE
+                    + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                    + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
+            populateIdealSchedTable(db);
+            db.execSQL("CREATE TABLE " + RECORD_TABLE
+                    + "(" + COURSE_ID_COL + " CHAR(8), " + STATUS_COL + " CHAR(1) DEFAULT 'N',"
+                    + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
+            populateRecordTable(db);
+            db.execSQL("CREATE TABLE " + SAVED_SCHED_TABLE
+                    + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                    + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
+            populateSavedSchedTable(db);
         db.execSQL("CREATE TABLE " + BACKUP_SCHED_TABLE
                 + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
                 + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-        populateBackupSchedTable(db);
+        populateBackupSchedTable(db);*/
 
         Log.d(LOG_TAG, "End of onCreate() for the database");
     }
@@ -78,14 +78,70 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + COURSE_LIST_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + IDEAL_SCHED_TABLE);
+        /*db.execSQL("DROP TABLE IF EXISTS " + IDEAL_SCHED_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + SAVED_SCHED_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + BACKUP_SCHED_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + BACKUP_SCHED_TABLE);*/
         onCreate(db);
     }
 
-    // POPULATE COURSE_LIST_TABLE WITH MASTER VALUES
+    public void fillCourseTable(SQLiteDatabase db){
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, null, null, null, null)");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2080', 'Work Term 1', 'F', 'COOP1000', null, null, null, null, null)");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2180', 'Work Term 2', 'F', 'COOP1000', 'COOP2180', null, null, null, null)");
+        /*db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CENG2010", "Computer Architecture & Assembly Language", "F", "MATH1230", "SENG1210", "SENG3130", "CENG3010", null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CENG2030", "Introduction to Digital Signal Processing", "W", "MATH2110", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CENG3010", "Computer System Design", "F", "CENG2010", "EPHY2990", "CENG3020", null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CENG3020", "Real Time Systems Design", "W", "CENG3010", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CENG3310", "Digital Communications Systems", "F", "EPHY2100", "MATH2240", "CENG4320", null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CENG4320", "Communications Networks", "W", "CENG3310", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CHEM1520", "Principles of Chemistry", "W", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "CMNS1290", "Introduction to Professional Writing", "B", "ENGL1100", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "COMP3410", "Operating Systems", "B", "SENG3110", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "COMP3610", "Database Management Systems Design", "B", "SENG3110", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "DRAF1520", "Engineering Graphics", "F", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EENG3010", "Introduction to Control Systems", "W", "MATH2240", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "ENGL1100", "Introduction to University Writing", "B", "MATH2240", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "ENGR1100", "Introduction to Engineering & Design", "B", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "ENGR2200", "Engineering in Society, Health and Safety", "F", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "ENGR2300", "Engineering Management", "W", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "ENGR2400", "Engineering Economics", "W", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "ENGR3300", "Engineering Professional Ethics", "W", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EPHY1150", "Physics for Engineers 1", "F", null, null, "EPHY1250", "EPHY1700", "EPHY1990", "PHYS1250");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EPHY1250", "Physics for Engineers 2", "W", "EPHY1150", null, "EPHY2200", null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EPHY1700", "Engineering Mechanics 1", "W", "EPHY1150", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EPHY1990", "Introduction to Engineering Measurements", "W", "EPHY1150", "MATH1130", null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EPHY2200", "Electrical Properties of Materials", "F", "EPHY1250", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EPHY2300", "Digital Electronics", "W", "PHYS2150", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "EPHY2990", "ECE Design", "W", "PHYS2150", null, "CENG3010", null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "MATH1130", "Enriched Calculus 1", "F", null, null, "EPHY1990", "MATH1230", "PHYS2150", null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "MATH1230", "Enriched Calculus 2", "W", "MATH1130", null, "CENG2010", null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "MATH1300", "Linear Algebra for Engineers", "F", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "MATH1700", "Discrete Mathematics", "B", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "PHYS2150", "Circuit Analysis", "F", "EPHY1150", "MATH1130", "EPHY2300", "EPHY2990", null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "PHYS2250", "Intermediate Electromagnetism", "W", "EPHY1150", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG1110", "Programming for Engineers 1", "F", null, null, "SENG1210", null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG1210", "Programming for Engineers 2", "W", "SENG1110", null, "SENG3110", "CENG2010", null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG3110", "Algorithms & Data Structures", "F", "SENG1210", "STAT2230", "COMP3410", "COMP3610", "SENG3120", "SENG3210");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG3120", "Software Engineering Design: Process & Principles", "W", "SENG3110", null, "SENG4100", "SENG4130", null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG3130", "Software Requirements and Specifications", "F", "CENG2010", "ENGR2300", "SENG4230", null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG3210", "Applied Software Engineering", "W", "SENG3110", null, "SENG4110", "SENG4120", "SENG4140", "SENG4220");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG4100", "Software Engineering Design Project", "F", "SENG3120", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG4110", "Software Testing & Verifications", "F", "SENG3210", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG4120", "Software Model Engineering & Formal Methods", "F", "SENG3210", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG4130", "Software Design Patterns", "F", "SENG3120", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG4140", "Software Quality Engineering", "W", "SENG3210", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG4220", "Software Security Engineering", "W", "SENG3210", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG4230", "Software Estimation", "W", "SENG3130", null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "STAT2230", "Probability and Statistics for Engineers", "F", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "NSCIXXXX", "Natural Science Elective", "B", null, null, null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG41XX", "Upper Level Technical Elective-1", "F", "SENG3210", "SENG3120", null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG42XX", "Upper Level Technical Elective-2", "F", "SENG3210", "SENG3120", null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG43XX", "Upper Level Technical Elective-3", "W", "SENG3210", "SENG3120", null, null, null, null);
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + "SENG44XX", "Upper Level Technical Elective-4", "W", "SENG3210", "SENG3120", null, null, null, null);*/
+    }
+
+    /*// POPULATE COURSE_LIST_TABLE WITH MASTER VALUES
     public void populateCourseTable(SQLiteDatabase db){
         insertIntoCourseList("COOP1000", "Career Management", "B", null, null, null, null, null, null);
         insertIntoCourseList("COOP2080", "Work Term 1", "F", "COOP1000", null, null, null, null, null);
@@ -136,17 +192,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoCourseList("SENG4230", "Software Estimation", "W", "SENG3130", null, null, null, null, null);
         insertIntoCourseList("STAT2230", "Probability and Statistics for Engineers", "F", null, null, null, null, null, null);
         insertIntoCourseList("NSCIXXXX", "Natural Science Elective", "B", null, null, null, null, null, null);
-        insertIntoCourseList("SENG41XX", "Upper Level Technical Elective-1", "F", null, null, null, null, null, null);
-        insertIntoCourseList("SENG42XX", "Upper Level Technical Elective-2", "F", null, null, null, null, null, null);
-        insertIntoCourseList("SENG43XX", "Upper Level Technical Elective-3", "W", null, null, null, null, null, null);
-        insertIntoCourseList("SENG44XX", "Upper Level Technical Elective-4", "W", null, null, null, null, null, null);
+        insertIntoCourseList("SENG41XX", "Upper Level Technical Elective-1", "F", "SENG3210", "SENG3120", null, null, null, null);
+        insertIntoCourseList("SENG42XX", "Upper Level Technical Elective-2", "F", "SENG3210", "SENG3120", null, null, null, null);
+        insertIntoCourseList("SENG43XX", "Upper Level Technical Elective-3", "W", "SENG3210", "SENG3120", null, null, null, null);
+        insertIntoCourseList("SENG44XX", "Upper Level Technical Elective-4", "W", "SENG3210", "SENG3120", null, null, null, null);
     }
-
     // ADD ALL LINES TO COURSE_LIST_TABLE
     public boolean insertIntoCourseList(String id, String name, String sem, String pr1, String pr2, String t1, String t2, String t3, String t4){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
         contentValues.put(COURSE_NAME_COL, name);
         contentValues.put(COURSE_OFFERED_COL, sem);
@@ -156,15 +210,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(COURSE_TO2_COL, t2);
         contentValues.put(COURSE_TO3_COL, t3);
         contentValues.put(COURSE_TO4_COL, t4);
-
         long result = db.insert(COURSE_LIST_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + COURSE_LIST_TABLE);
-
         return result != -1;
     }
-
     // POPULATE IDEAL_SCHED_TABLE WITH MASTER PLAN
     private void populateIdealSchedTable(SQLiteDatabase db){
         insertIntoIdealSched("COOP1000", "F2");
@@ -221,23 +271,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoIdealSched("SENG43XX", "W5");
         insertIntoIdealSched("SENG44XX", "W5");
     }
-
     // ADD ALL LINES TO IDEAL_SCHED_TABLE
     private boolean insertIntoIdealSched(String id, String sem){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
         contentValues.put(SEMESTER_COL, sem);
-
         long result = db.insert(IDEAL_SCHED_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + IDEAL_SCHED_TABLE);
-
         return result != -1;
     }
-
     // POPULATE RECORD_TABLE WITH MASTER PLAN
     private void populateRecordTable(SQLiteDatabase db){
         insertIntoRecord("COOP1000");
@@ -294,22 +338,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoRecord("SENG43XX");
         insertIntoRecord("SENG44XX");
     }
-
     // ADD ALL LINES TO RECORD_TABLE
     private boolean insertIntoRecord(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
-
         long result = db.insert(RECORD_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + RECORD_TABLE);
-
         return result != -1;
     }
-
     // POPULATE SAVED_SCHED_TABLE WITH MASTER PLAN
     private void populateSavedSchedTable(SQLiteDatabase db){
         insertIntoSavedSched("COOP1000", "F2");
@@ -366,23 +404,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoSavedSched("SENG43XX", "W5");
         insertIntoSavedSched("SENG44XX", "W5");
     }
-
     // ADD ALL LINES TO SAVED_SCHED_TABLE
     private boolean insertIntoSavedSched(String id, String sem){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
         contentValues.put(SEMESTER_COL, sem);
-
         long result = db.insert(SAVED_SCHED_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + SAVED_SCHED_TABLE);
-
         return result != -1;
     }
-
     // POPULATE BACKUP_SCHED_TABLE
     private void populateBackupSchedTable(SQLiteDatabase db){
         insertIntoBackupSched("COOP1000");
@@ -439,27 +471,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         insertIntoBackupSched("SENG43XX");
         insertIntoBackupSched("SENG44XX");
     }
-
     // ADD ALL LINES TO BACKUP_SCHED_TABLE WITH null VALUES
     private boolean insertIntoBackupSched(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
         contentValues.put(COURSE_ID_COL, id);
-
         long result = db.insert(BACKUP_SCHED_TABLE, null, contentValues);
-
         if(result == -1)
             Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + BACKUP_SCHED_TABLE);
-
         return result != -1;
     }
     /* METHODS FOR DATABASE CREATION AND INITIALIZATION END */
 
-    public Cursor returnValue(String id){
+    public Cursor returnValue(){
+        Log.d(LOG_TAG, "In return value");
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + COURSE_NAME_COL + " FROM " + COURSE_LIST_TABLE
-                + " WHERE " + COURSE_ID_COL + " = " + id + ";";
+        String query = "SELECT * FROM " + COURSE_LIST_TABLE + ";";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;

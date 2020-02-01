@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseHandler myDB;
+    //DatabaseHandler myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button mainActivitybtn2 = (Button) findViewById(R.id.MainActivitybtn2);
 
-        myDB = new DatabaseHandler(this);
+        //myDB = new DatabaseHandler(this);
 
         mainActivitybtn2.setOnClickListener(new View.OnClickListener() {
             @Override
