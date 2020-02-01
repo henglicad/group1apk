@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
+    public static final String LOG_TAG = DatabaseHandler.class.getSimpleName();
+
     public static final String DATABASE_NAME = "EngPlan.db";
 
     // COURSE_LIST_TABLE STRING DECLARATIONS
@@ -38,6 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
     }
 
+    /* METHODS FOR DATABASE CREATION AND INITIALIZATION BEGIN */
     // CREATE ALL TABLES
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -48,20 +52,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         populateCourseTable(db);
 
         db.execSQL("CREATE TABLE " + IDEAL_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + SEMESTER_COL + " CHAR(2));");
+                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
         populateIdealSchedTable(db);
 
         db.execSQL("CREATE TABLE " + RECORD_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + STATUS_COL + " CHAR(1) DEFAULT 'N');");
+                + "(" + COURSE_ID_COL + " CHAR(8), " + STATUS_COL + " CHAR(1) DEFAULT 'N',"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
         populateRecordTable(db);
 
         db.execSQL("CREATE TABLE " + SAVED_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + SEMESTER_COL + " CHAR(2));");
+                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
         populateSavedSchedTable(db);
 
         db.execSQL("CREATE TABLE " + BACKUP_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + SEMESTER_COL + " CHAR(2));");
+                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
         populateBackupSchedTable(db);
+
+        Log.d(LOG_TAG, "End of onCreate() for the database");
     }
 
     @Override
@@ -147,6 +157,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(COURSE_TO4_COL, t4);
 
         long result = db.insert(COURSE_LIST_TABLE, null, contentValues);
+
+        if(result == -1)
+            Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + COURSE_LIST_TABLE);
+
         return result != -1;
     }
 
@@ -216,6 +230,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(SEMESTER_COL, sem);
 
         long result = db.insert(IDEAL_SCHED_TABLE, null, contentValues);
+
+        if(result == -1)
+            Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + IDEAL_SCHED_TABLE);
+
         return result != -1;
     }
 
@@ -284,74 +302,83 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(COURSE_ID_COL, id);
 
         long result = db.insert(RECORD_TABLE, null, contentValues);
+
+        if(result == -1)
+            Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + RECORD_TABLE);
+
         return result != -1;
     }
 
     // POPULATE SAVED_SCHED_TABLE WITH MASTER PLAN
     private void populateSavedSchedTable(SQLiteDatabase db){
-        insertIntoSavedSched("COOP1000");
-        insertIntoSavedSched("COOP2080");
-        insertIntoSavedSched("COOP2180");
-        insertIntoSavedSched("CENG2010");
-        insertIntoSavedSched("CENG2030");
-        insertIntoSavedSched("CENG3010");
-        insertIntoSavedSched("CENG3020");
-        insertIntoSavedSched("CENG3310");
-        insertIntoSavedSched("CENG4320");
-        insertIntoSavedSched("CHEM1520");
-        insertIntoSavedSched("CMNS1290");
-        insertIntoSavedSched("COMP3410");
-        insertIntoSavedSched("COMP3610");
-        insertIntoSavedSched("DRAF1520");
-        insertIntoSavedSched("EENG3010");
-        insertIntoSavedSched("ENGL1100");
-        insertIntoSavedSched("ENGR1100");
-        insertIntoSavedSched("ENGR2200");
-        insertIntoSavedSched("ENGR2300");
-        insertIntoSavedSched("ENGR2400");
-        insertIntoSavedSched("ENGR3300");
-        insertIntoSavedSched("EPHY1150");
-        insertIntoSavedSched("EPHY1250");
-        insertIntoSavedSched("EPHY1700");
-        insertIntoSavedSched("EPHY1990");
-        insertIntoSavedSched("EPHY2200");
-        insertIntoSavedSched("EPHY2300");
-        insertIntoSavedSched("EPHY2990");
-        insertIntoSavedSched("MATH1130");
-        insertIntoSavedSched("MATH1230");
-        insertIntoSavedSched("MATH1300");
-        insertIntoSavedSched("MATH1700");
-        insertIntoSavedSched("PHYS2150");
-        insertIntoSavedSched("PHYS2250");
-        insertIntoSavedSched("SENG1110");
-        insertIntoSavedSched("SENG1210");
-        insertIntoSavedSched("SENG3110");
-        insertIntoSavedSched("SENG3120");
-        insertIntoSavedSched("SENG3130");
-        insertIntoSavedSched("SENG3210");
-        insertIntoSavedSched("SENG4100");
-        insertIntoSavedSched("SENG4110");
-        insertIntoSavedSched("SENG4120");
-        insertIntoSavedSched("SENG4130");
-        insertIntoSavedSched("SENG4140");
-        insertIntoSavedSched("SENG4220");
-        insertIntoSavedSched("SENG4230");
-        insertIntoSavedSched("STAT2230");
-        insertIntoSavedSched("NSCIXXXX");
-        insertIntoSavedSched("SENG41XX");
-        insertIntoSavedSched("SENG42XX");
-        insertIntoSavedSched("SENG43XX");
-        insertIntoSavedSched("SENG44XX");
+        insertIntoSavedSched("COOP1000", "F2");
+        insertIntoSavedSched("COOP2080", "F4");
+        insertIntoSavedSched("COOP2180", "W4");
+        insertIntoSavedSched("CENG2010", "F2");
+        insertIntoSavedSched("CENG2030", "W2");
+        insertIntoSavedSched("CENG3010", "F3");
+        insertIntoSavedSched("CENG3020", "W3");
+        insertIntoSavedSched("CENG3310", "F3");
+        insertIntoSavedSched("CENG4320", "W5");
+        insertIntoSavedSched("CHEM1520", "W2");
+        insertIntoSavedSched("CMNS1290", "F2");
+        insertIntoSavedSched("COMP3410", "W3");
+        insertIntoSavedSched("COMP3610", "W3");
+        insertIntoSavedSched("DRAF1520", "F1");
+        insertIntoSavedSched("EENG3010", "W3");
+        insertIntoSavedSched("ENGL1100", "F1");
+        insertIntoSavedSched("ENGR1100", "F1");
+        insertIntoSavedSched("ENGR2200", "F2");
+        insertIntoSavedSched("ENGR2300", "W2");
+        insertIntoSavedSched("ENGR2400", "W2");
+        insertIntoSavedSched("ENGR3300", "W3");
+        insertIntoSavedSched("EPHY1150", "F1");
+        insertIntoSavedSched("EPHY1250", "W1");
+        insertIntoSavedSched("EPHY1700", "W1");
+        insertIntoSavedSched("EPHY1990", "W1");
+        insertIntoSavedSched("EPHY2200", "F2");
+        insertIntoSavedSched("EPHY2300", "W2");
+        insertIntoSavedSched("EPHY2990", "W2");
+        insertIntoSavedSched("MATH1130", "F1");
+        insertIntoSavedSched("MATH1230", "W1");
+        insertIntoSavedSched("MATH1300", "F1");
+        insertIntoSavedSched("MATH1700", "W2");
+        insertIntoSavedSched("PHYS2150", "F2");
+        insertIntoSavedSched("PHYS2250", "W2");
+        insertIntoSavedSched("SENG1110", "F1");
+        insertIntoSavedSched("SENG1210", "W1");
+        insertIntoSavedSched("SENG3110", "F3");
+        insertIntoSavedSched("SENG3120", "W3");
+        insertIntoSavedSched("SENG3130", "F3");
+        insertIntoSavedSched("SENG3210", "W3");
+        insertIntoSavedSched("SENG4100", "F5");
+        insertIntoSavedSched("SENG4110", "F5");
+        insertIntoSavedSched("SENG4120", "F5");
+        insertIntoSavedSched("SENG4130", "F5");
+        insertIntoSavedSched("SENG4140", "W5");
+        insertIntoSavedSched("SENG4220", "W5");
+        insertIntoSavedSched("SENG4230", "W5");
+        insertIntoSavedSched("STAT2230", "F5");
+        insertIntoSavedSched("NSCIXXXX", "W3");
+        insertIntoSavedSched("SENG41XX", "F5");
+        insertIntoSavedSched("SENG42XX", "F5");
+        insertIntoSavedSched("SENG43XX", "W5");
+        insertIntoSavedSched("SENG44XX", "W5");
     }
 
     // ADD ALL LINES TO SAVED_SCHED_TABLE
-    private boolean insertIntoSavedSched(String id){
+    private boolean insertIntoSavedSched(String id, String sem){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COURSE_ID_COL, id);
+        contentValues.put(SEMESTER_COL, sem);
 
         long result = db.insert(SAVED_SCHED_TABLE, null, contentValues);
+
+        if(result == -1)
+            Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + SAVED_SCHED_TABLE);
+
         return result != -1;
     }
 
@@ -420,6 +447,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(COURSE_ID_COL, id);
 
         long result = db.insert(BACKUP_SCHED_TABLE, null, contentValues);
+
+        if(result == -1)
+            Log.d(LOG_TAG, "Cannot insert " + COURSE_ID_COL + " INTO TABLE " + BACKUP_SCHED_TABLE);
+
         return result != -1;
     }
+    /* METHODS FOR DATABASE CREATION AND INITIALIZATION END */
 }
