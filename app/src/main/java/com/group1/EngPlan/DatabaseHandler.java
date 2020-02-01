@@ -47,7 +47,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /* METHODS FOR DATABASE CREATION AND INITIALIZATION BEGIN */
     // CREATE ALL TABLES
     @Override
-    public void onCreate(SQLiteDatabase db) {
+      public void onCreate(SQLiteDatabase db) {
         Log.d(LOG_TAG, "Start of onCreate() for the database");
         db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
                 + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
@@ -55,18 +55,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
         fillCourseTable(db);
             /*populateCourseTable(db);
+
+        public void onCreate(SQLiteDatabase db) {
+            Log.d(LOG_TAG, "Start of onCreate() for the database");
+            db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
+                    + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
+                    + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
+                    + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
+            fillCourseTable(db);
+            /*populateCourseTable(db);
             db.execSQL("CREATE TABLE " + IDEAL_SCHED_TABLE
                     + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
                     + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
             populateIdealSchedTable(db);
+
+
+
+
             db.execSQL("CREATE TABLE " + RECORD_TABLE
                     + "(" + COURSE_ID_COL + " CHAR(8), " + STATUS_COL + " CHAR(1) DEFAULT 'N',"
                     + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
             populateRecordTable(db);
+
             db.execSQL("CREATE TABLE " + SAVED_SCHED_TABLE
                     + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
                     + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
             populateSavedSchedTable(db);
+
         db.execSQL("CREATE TABLE " + BACKUP_SCHED_TABLE
                 + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
                 + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
