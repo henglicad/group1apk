@@ -18,8 +18,21 @@ public class CourseDetails extends AppCompatActivity {
         Intent in = getIntent();
         String index = in.getStringExtra("com.group1.INDEX");
         TextView courseName = (TextView) findViewById(R.id.courseInfoTextView);
-        courseName.setText(index);
+        courseName.setText(index + "\n");
+
 
         Cursor data = myDB.getCourseData(index);
+
+
+        int columnCount = 1;
+        data.moveToFirst();
+        String temp = "not null";
+
+        while(temp != null){
+            temp = data.getString(columnCount);
+            courseName.append(temp + "\n");
+            columnCount++;
+        }
+
     }
 }
