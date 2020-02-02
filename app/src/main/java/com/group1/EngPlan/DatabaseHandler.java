@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final String LOG_TAG = DatabaseHandler.class.getSimpleName();
+    public static final String LOG_TAG = DatabaseHandler.class.getSimpleName();
     SQLiteDatabase db;
 
     private static final String DATABASE_NAME = "EngPlan.db";
@@ -38,7 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //BACKUP_SCHED_TABLE STRING DECLARATIONS
     private static final String BACKUP_SCHED_TABLE = "BACKUP_SCHED";
 
-    private DatabaseHandler(Context context){
+    public DatabaseHandler(Context context){
         super(context, DATABASE_NAME, null, 1);
         Log.d(LOG_TAG, "In constructor for database");
         db = getWritableDatabase();
@@ -206,59 +206,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // POPULATE RECORD_TABLE WITH MASTER PLAN
     private void populateRecordTable(SQLiteDatabase db){
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COOP1000');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COOP2080');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COOP2180');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG2010');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG2030');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG3010');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG3020');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG3310');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG4320');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CHEM1520');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CMNS1290');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COMP3410');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COMP3610');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('DRAF1520');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EENG3010');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGL1100');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR1100');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR2200');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR2300');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR2400');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR3300');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1150');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1250');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1700');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1990');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY2200');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY2300');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY2990');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1130');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1230');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1300');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1700');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('PHYS2150');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('PHYS2250');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG1110');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG1210');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3110');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3120');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3130');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3210');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4100');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4110');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4120');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4130');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4140');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4220');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4230');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('STAT2230');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('NSCIXXXX');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG41XX');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG42XX');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG43XX');");
-        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG44XX');");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COOP1000', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COOP2080', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COOP2180', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG2010', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG2030', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG3010', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG3020', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG3310', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CENG4320', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CHEM1520', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('CMNS1290', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COMP3410', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('COMP3610', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('DRAF1520', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EENG3010', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGL1100', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR1100', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR2200', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR2300', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR2400', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('ENGR3300', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1150', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1250', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1700', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY1990', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY2200', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY2300', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('EPHY2990', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1130', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1230', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1300', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('MATH1700', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('PHYS2150', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('PHYS2250', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG1110', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG1210', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3110', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3120', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3130', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG3210', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4100', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4110', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4120', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4130', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4140', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4220', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG4230', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('STAT2230', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('NSCIXXXX', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG41XX', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG42XX', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG43XX', null);");
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('SENG44XX', null);");
     }
 
     // POPULATE SAVED_SCHED_TABLE WITH IDEAL PLAN FRO DEFAULT
@@ -320,59 +320,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // POPULATE BACKUP_SCHED_TABLE
     private void populateBackupSchedTable(SQLiteDatabase db){
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COOP1000');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COOP2080');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COOP2180');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG2010');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG2030');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3010');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3020');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3310');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG4320');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CHEM1520');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CMNS1290');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COMP3410');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COMP3610');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('DRAF1520');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EENG3010');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGL1100');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR1100');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2200');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2300');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2400');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR3300');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1150');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1250');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1700');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1990');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY2200');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY2300');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY2990');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1130');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1230');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1300');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1700');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('PHYS2150');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('PHYS2250');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG1110');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG1210');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3110');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3120');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3130');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3210');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4100');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4110');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4120');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4130');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4140');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4220');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4230');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('STAT2230');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('NSCIXXXX');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG41XX');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG42XX');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG43XX');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG44XX');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COOP1000', 'F2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COOP2080', 'F4');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COOP2180', 'W4');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG2010', 'F2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG2030', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3010', 'F3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3020', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3310', 'F3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG4320', 'W5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CHEM1520', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CMNS1290', 'F2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COMP3410', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COMP3610', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('DRAF1520', 'F1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EENG3010', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGL1100', 'F1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR1100', 'F1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2200', 'F2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2300', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2400', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR3300', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1150', 'F1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1250', 'W1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1700', 'W1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1990', 'W1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY2200', 'F2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY2300', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY2990', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1130', 'F1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1230', 'W1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1300', 'F1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1700', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('PHYS2150', 'F2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('PHYS2250', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG1110', 'F1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG1210', 'W1');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3110', 'F3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3120', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3130', 'F3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG3210', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4100', 'F5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4110', 'F5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4120', 'F5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4130', 'F5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4140', 'W5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4220', 'W5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG4230', 'W5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('STAT2230', 'F5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('NSCIXXXX', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG41XX', 'F5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG42XX', 'F5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG43XX', 'W5');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG44XX', 'W5');");
     }
         /* END TABLE POPULATION */
 
@@ -392,8 +392,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT " + COURSE_ID_COL + ", " + COURSE_NAME_COL
-                + " FROM " + IDEAL_SCHED_TABLE + " WHERE " + SEMESTER_COL + " = " + semester + ";";
+        String query = "SELECT I." + COURSE_ID_COL + ", C." + COURSE_NAME_COL
+                + " FROM " + IDEAL_SCHED_TABLE + " I JOIN " + COURSE_LIST_TABLE
+                + " C ON C." + COURSE_ID_COL + " = I." + COURSE_ID_COL
+                + " WHERE I." + SEMESTER_COL + " = '" + semester + "';";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
@@ -405,7 +407,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM " + COURSE_LIST_TABLE + " WHERE " + COURSE_ID_COL + " = " + id + ";";
+        String query = "SELECT * FROM " + COURSE_LIST_TABLE + " WHERE " + COURSE_ID_COL + " = '" + id + "';";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;

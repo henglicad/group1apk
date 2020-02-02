@@ -5,6 +5,7 @@
     <string name="MainActivitybtn1">Make a Plan</string>
     <string name="MainActivitybtn2">Quick View</string>
     <string name="title_activity_quick_view">QuickView</string>
+    <string name="courseInfoTextView"> Course Info</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

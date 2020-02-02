@@ -10,5 +10,6 @@
     <ListView
         android:id="@+id/ListViewIdeal"
         android:layout_width="match_parent"
-        android:layout_height="485dp" />
+        android:layout_height="match_parent"
+        />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

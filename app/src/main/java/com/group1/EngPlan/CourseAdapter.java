@@ -1,0 +1,55 @@
+package com.group1.EngPlan;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+public class CourseAdapter extends BaseAdapter {
+
+    LayoutInflater mInflater;
+    ArrayList<String> idealScheduleCode;
+    ArrayList<String> idealScheduleName;
+
+    public CourseAdapter(Context c, ArrayList<String> i, ArrayList<String> j){
+        idealScheduleCode = i;
+        idealScheduleName = j;
+        mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+
+    @Override
+    public int getCount() {
+        return idealScheduleCode.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return idealScheduleCode.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = mInflater.inflate(R.layout.listview_layout_quick_view, null);
+        TextView courseCode = (TextView) v.findViewById(R.id.textViewCourseCode);
+        TextView courseName = (TextView) v.findViewById(R.id.TextView2);
+
+        String code =  idealScheduleCode.get(position);
+        String name =  idealScheduleName.get(position);
+
+        courseCode.setText(code);
+        courseName.setText(name);
+
+
+        return v;
+    }
+}

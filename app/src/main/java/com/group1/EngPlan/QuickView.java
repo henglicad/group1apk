@@ -1,21 +1,20 @@
 package com.group1.EngPlan;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import static com.group1.EngPlan.DatabaseHandler.LOG_TAG;
-
 public class QuickView extends AppCompatActivity {
 
-    //DatabaseHandler myDB;
+    ArrayList<String> idealScheduleCode = new ArrayList<>();
+    ArrayList<String> idealScheduleName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,33 +23,48 @@ public class QuickView extends AppCompatActivity {
         setContentView(R.layout.activity_quick_view);
 
         ListView listView = (ListView) findViewById(R.id.ListViewIdeal);
-        //myDB = new DatabaseHandler(this);
-        Log.d(LOG_TAG, "Before method call");
-        ArrayList<String> idealSchedule = new ArrayList<>();
-        Cursor data = myDB.returnValue();
-        Log.d(LOG_TAG, "Didn't crash yet");
-        //if(data.getCount == 0){
-          //  Toast.makeText(QuickView.this, "The Database Table is Empty. ",Toast.LENGTH_LONG).show();
-        //}
-        //else{
-            while(data.moveToNext()){
-                idealSchedule.add(data.getString(0));
-                ListAdapter listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, idealSchedule);
-                listView.setAdapter(listAdapter);
+        String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4"};
+        int termNo = 0;
+
+        ArrayList<String> Semester = new ArrayList<>();
+
+
+        while(termNo < 8) {
+            //myDB = new DatabaseHandler(this);
+            //Log.d(LOG_TAG, "Before method call");
+
+
+            Cursor data = myDB.fillQuickView(terms[termNo]);
+            //Log.d(LOG_TAG, "Didn't crash yet");
+            //if(data.getCount == 0){
+            //  Toast.makeText(QuickView.this, "The Database Table is Empty. ",Toast.LENGTH_LONG).show();
+            //}
+            //else{
+            data.moveToFirst();
+            while (data.moveToNext()) {
+                idealScheduleCode.add(data.getString(0));
             }
-        //}
+            data.moveToFirst();
+            while (data.moveToNext()) {
+                idealScheduleName.add(data.getString(1));
+            }
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
+            CourseAdapter courseAdapter = new CourseAdapter(this, idealScheduleCode, idealScheduleName);
+            listView.setAdapter(courseAdapter);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+            //}
+            termNo++;
+
+
+        }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String data = idealScheduleCode.get(position);
+                Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
+                showCourseInfo.putExtra("com.group1.INDEX", data);
+                startActivity(showCourseInfo);
             }
-        });*/
-
+        });
     }
 }
