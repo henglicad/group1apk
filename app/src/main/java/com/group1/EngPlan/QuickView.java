@@ -30,33 +30,33 @@ public class QuickView extends AppCompatActivity {
 
 
         while(termNo < terms.length) {
-            //myDB = new DatabaseHandler(this);
-            //Log.d(LOG_TAG, "Before method call");
-
 
             Cursor data = myDB.fillQuickView(terms[termNo]);
-            //Log.d(LOG_TAG, "Didn't crash yet");
-            //if(data.getCount == 0){
-            //  Toast.makeText(QuickView.this, "The Database Table is Empty. ",Toast.LENGTH_LONG).show();
-            //}
-            //else{
+            idealScheduleName.add(terms[termNo]);
+            idealScheduleCode.add(terms[termNo]);
+
             data.moveToFirst();
-            while (data.moveToNext()) {
+            boolean check = true;
+            while (check) {
                 idealScheduleCode.add(data.getString(0));
+                check = data.moveToNext();
             }
+
             data.moveToFirst();
-            while (data.moveToNext()) {
+            check = true;
+            while (check) {
                 idealScheduleName.add(data.getString(1));
+                check = data.moveToNext();
             }
 
-            CourseAdapter courseAdapter = new CourseAdapter(this, idealScheduleCode, idealScheduleName);
-            listView.setAdapter(courseAdapter);
-
-            //}
             termNo++;
-
-
         }
+
+        CourseAdapter courseAdapter = new CourseAdapter(this, idealScheduleCode, idealScheduleName);
+        listView.setAdapter(courseAdapter);
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
