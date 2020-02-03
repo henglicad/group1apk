@@ -23,13 +23,13 @@ public class QuickView extends AppCompatActivity {
         setContentView(R.layout.activity_quick_view);
 
         ListView listView = (ListView) findViewById(R.id.ListViewIdeal);
-        String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4"};
+        String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
         int termNo = 0;
 
         ArrayList<String> Semester = new ArrayList<>();
 
 
-        while(termNo < 8) {
+        while(termNo < terms.length) {
             //myDB = new DatabaseHandler(this);
             //Log.d(LOG_TAG, "Before method call");
 
