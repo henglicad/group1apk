@@ -96,4 +96,10 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="coursename">CourseName</string>
+    <string name="offering">Offering</string>
+    <string name="prlist">PRList</string>
+    <string name="tolist">ToList</string>
+    <string name="title">Title</string>
+    <string name="toListTitle">ToListTitle</string>
 </resources>
