@@ -14,10 +14,17 @@ public class CourseAdapter extends BaseAdapter {
     LayoutInflater mInflater;
     ArrayList<String> idealScheduleCode;
     ArrayList<String> idealScheduleName;
+    String st;
+
 
     public CourseAdapter(Context c, ArrayList<String> i, ArrayList<String> j){
         idealScheduleCode = i;
         idealScheduleName = j;
+        mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public CourseAdapter(Context c, String s){
+        st = s;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -39,17 +46,49 @@ public class CourseAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = mInflater.inflate(R.layout.listview_layout_quick_view, null);
-        TextView courseCode = (TextView) v.findViewById(R.id.textViewCourseCode);
-        TextView courseName = (TextView) v.findViewById(R.id.TextView2);
 
-        String code =  idealScheduleCode.get(position);
-        String name =  idealScheduleName.get(position);
+        String temp = idealScheduleName.get(position);
 
-        courseCode.setText(code);
-        courseName.setText(name);
+        if(getItemViewType(position) == 1) {
+            View v = mInflater.inflate(R.layout.listview_layout_quick_view, null);
+            TextView courseCode = (TextView) v.findViewById(R.id.textViewCourseCode);
+            TextView courseName = (TextView) v.findViewById(R.id.TextView2);
+
+            String code =  idealScheduleCode.get(position);
+            String name =  idealScheduleName.get(position);
+
+            courseCode.setText(code);
+            courseName.setText(name);
+            return v;
+        }
+
+        else if(getItemViewType(position) == 0){
+            View v = mInflater.inflate(R.layout.listview_headings_quick_view, null);
+            TextView courseSem = (TextView) v.findViewById(R.id.TextViewSemester);
+
+            String semester = idealScheduleName.get(position);
+
+            courseSem.setText(semester);
+            return v;
+        }
 
 
-        return v;
+        return null;
+
     }
+
+    @Override
+    public int getViewTypeCount(){
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position){
+        if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
+                (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
+                (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")){
+        return 0;}
+        return 1;
+    }
+
 }
