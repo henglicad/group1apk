@@ -8,7 +8,7 @@
         android:id="@+id/textViewCourseCode"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#00897B"
+        android:background="#4863A0"
         android:text="TextView"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
@@ -21,6 +21,6 @@
         android:layout_height="30dp"
         android:layout_below="@+id/textViewCourseCode"
         android:layout_gravity="center"
-        android:background="#00897B"
+        android:background="#4863A0"
         android:text="textView2" />
 </LinearLayout>

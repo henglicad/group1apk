@@ -61,9 +61,17 @@ public class QuickView extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String data = idealScheduleCode.get(position);
-                Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
-                showCourseInfo.putExtra("com.group1.INDEX", data);
-                startActivity(showCourseInfo);
+                if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
+                        (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
+                        (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")){
+
+
+                }
+                 else {
+                    Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
+                    showCourseInfo.putExtra("com.group1.INDEX", data);
+                    startActivity(showCourseInfo);
+                }
             }
         });
     }
