@@ -3,13 +3,10 @@ package com.group1.EngPlan;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import static com.group1.EngPlan.DatabaseHandler.LOG_TAG;
 
 public class CourseDetails extends AppCompatActivity {
 
@@ -79,7 +76,7 @@ public class CourseDetails extends AppCompatActivity {
 
             toList.setText(temp + "\n");
             for(int i = 6; i <= 8; i++){
-                temp = data.getString(4);
+                temp = data.getString(i);
                 if(temp != null) {
                     toList.append(temp + "\n");
                 }
