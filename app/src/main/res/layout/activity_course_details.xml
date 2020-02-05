@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    tools:context=".CourseDetails">
+
+
+    <TextView
+        android:id="@+id/courseInfoTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/courseInfoTextView"
+        android:textColor="@android:color/black"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/CourseName"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/coursename"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/courseInfoTextView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/courseInfoTextView"
+        app:layout_constraintTop_toBottomOf="@+id/courseInfoTextView" />
+
+    <TextView
+        android:id="@+id/Offering"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/offering"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/CourseName"
+        app:layout_constraintStart_toStartOf="@+id/CourseName"
+        app:layout_constraintTop_toBottomOf="@+id/CourseName" />
+
+    <TextView
+        android:id="@+id/PreReqList"
+        android:layout_width="190dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#4863A0"
+        android:text="@string/prlist"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/ToList"
+        app:layout_constraintStart_toStartOf="@+id/Offering"
+        app:layout_constraintTop_toBottomOf="@+id/PreReqListTitle" />
+
+    <TextView
+        android:id="@+id/ToList"
+        android:layout_width="190dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="#4863A0"
+        android:text="@string/tolist"
+        android:textColor="#ffffff"
+        android:textIsSelectable="false"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/Offering"
+        app:layout_constraintStart_toEndOf="@+id/PreReqList"
+        app:layout_constraintTop_toBottomOf="@+id/ToListTitle" />
+
+    <TextView
+        android:id="@+id/PreReqListTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#3C3C3C"
+        android:gravity="center"
+        android:text="@string/title"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/PreReqList"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/PreReqList"
+        app:layout_constraintTop_toBottomOf="@+id/Offering" />
+
+    <TextView
+        android:id="@+id/ToListTitle"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#3C3C3C"
+        android:gravity="center"
+        android:text="@string/toListTitle"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/ToList"
+        app:layout_constraintTop_toBottomOf="@+id/Offering" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

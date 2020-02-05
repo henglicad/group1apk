@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="MainActivitytextView1">Main Activity</string>
+    <string name="app_name">TRU Eng. Planner</string>
+    <string name="MainActivitytextView1">TRU</string>
     <string name="SplashScreentextView1">group1</string>
     <string name="MainActivitybtn1">Make a Plan</string>
     <string name="MainActivitybtn2">Quick View</string>
     <string name="title_activity_quick_view">QuickView</string>
+    <string name="courseInfoTextView"> Course Info</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -95,4 +96,10 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="coursename">CourseName</string>
+    <string name="offering">Offering</string>
+    <string name="prlist">PRList</string>
+    <string name="tolist">ToList</string>
+    <string name="title">Title</string>
+    <string name="toListTitle">ToListTitle</string>
 </resources>
