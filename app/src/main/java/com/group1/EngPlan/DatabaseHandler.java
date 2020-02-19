@@ -106,13 +106,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COMP3410', 'Operating Systems', 'B', 'SENG3110', null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COMP3610', 'Database Management Systems Design', 'B', 'SENG3110', null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('DRAF1520', 'Engineering Graphics', 'F', null, null, null, null, null, null);");
-        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('EENG3010', 'Introduction to Control Systems', 'W', 'MATH2240', null, null, null, null, null);");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('EENG3010', 'Introduction to Control Systems', 'F', 'MATH2240', null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('ENGL1100', 'Introduction to University Writing', 'B', 'MATH2240', null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('ENGR1100', 'Introduction to Engineering & Design', 'B', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('ENGR2200', 'Engineering in Society, Health and Safety', 'F', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('ENGR2300', 'Engineering Management', 'W', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('ENGR2400', 'Engineering Economics', 'W', null, null, null, null, null, null);");
-        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('ENGR3300', 'Engineering Professional Ethics', 'W', null, null, null, null, null, null);");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('ENGR3300', 'Engineering Professional Ethics', 'F', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('EPHY1150', 'Physics for Engineers 1', 'F', null, null, 'EPHY1250', 'EPHY1700', 'EPHY1990', 'PHYS1250');");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('EPHY1250', 'Physics for Engineers 2', 'W', 'EPHY1150', null, 'EPHY2200', null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('EPHY1700', 'Engineering Mechanics 1', 'W', 'EPHY1150', null, null, null, null, null);");
@@ -169,7 +169,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2200', 'F2');");
         db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2300', 'W2');");
         db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2400', 'W2');");
-        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR3300', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR3300', 'F3');");
         db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1150', 'F1');");
         db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1250', 'W1');");
         db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1700', 'W1');");
@@ -408,6 +408,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM " + COURSE_LIST_TABLE + " WHERE " + COURSE_ID_COL + " = '" + id + "';";
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
+    }
+
+    // METHOD TO DENOTE PASS/FAIL
+    public Cursor markGrades(String id){
+
+    }
+
+    public Cursor getSchedData(){
+        Log.d(LOG_TAG, "Getting Course Data for Schedule");
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT L.COURSE_ID_COL, L.OFFERED_COL, L.PREREQ1_COL, L.PREREQ2_COL, L.TO1_COL, L.TO2_COL, L.TO3_COL, L.TO4_COL, R.STATUS_COL " +
+                        "FROM COURSE_LIST_TABLE L JOIN RECORD_TABLE R ON L.COURSE_ID_COL = R.COURSE_ID_COL;";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
