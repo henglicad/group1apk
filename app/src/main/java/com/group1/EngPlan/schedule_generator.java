@@ -6,10 +6,19 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
-public class schedule_generator {
+public class schedule_generator extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     DatabaseHandler CDB = new DatabaseHandler(this);//reminder: fix this
+
 
     ArrayList<String> courseID = new ArrayList<>();
     ArrayList<String> courseStatus = new ArrayList<>();
