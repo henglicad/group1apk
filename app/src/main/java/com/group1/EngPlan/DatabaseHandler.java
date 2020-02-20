@@ -149,59 +149,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // POPULATE IDEAL_SCHED_TABLE WITH IDEAL PLAN
     private void populateIdealSchedTable(SQLiteDatabase db){
-        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COOP1000', 'F2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COOP2080', 'F4'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COOP2180', 'W4'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG2010', 'F2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG2030', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG3010', 'F3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG3020', 'W3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG3310', 'F3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG4320', 'W5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CHEM1520', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CMNS1290', 'F2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COMP3410', 'W3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COMP3610', 'W3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('DRAF1520', 'F1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EENG3010', 'W3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGL1100', 'F1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR1100', 'F1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2200', 'F2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2300', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2400', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR3300', 'F3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1150', 'F1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1250', 'W1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1700', 'W1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1990', 'W1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY2200', 'F2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY2300', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY2990', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1130', 'F1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1230', 'W1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1300', 'F1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1700', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('PHYS2150', 'F2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('PHYS2250', 'W2'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG1110', 'F1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG1210', 'W1'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3110', 'F3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3120', 'W3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3130', 'F3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3210', 'W3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4100', 'F5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4110', 'F5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4120', 'F5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4130', 'F5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4140', 'W5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4220', 'W5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4230', 'W5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('STAT2230', 'F5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('NSCIXXXX', 'W3'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG41XX', 'F5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG42XX', 'F5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG43XX', 'W5'); "
-                + "INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG44XX', 'W5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COOP1000', 'F2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COOP2080', 'F4');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COOP2180', 'W4');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG2010', 'F2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG2030', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG3010', 'F3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG3020', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG3310', 'F3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CENG4320', 'W5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CHEM1520', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('CMNS1290', 'F2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COMP3410', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('COMP3610', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('DRAF1520', 'F1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EENG3010', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGL1100', 'F1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR1100', 'F1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2200', 'F2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2300', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR2400', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('ENGR3300', 'F3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1150', 'F1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1250', 'W1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1700', 'W1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY1990', 'W1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY2200', 'F2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY2300', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('EPHY2990', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1130', 'F1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1230', 'W1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1300', 'F1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('MATH1700', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('PHYS2150', 'F2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('PHYS2250', 'W2');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG1110', 'F1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG1210', 'W1');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3110', 'F3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3120', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3130', 'F3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG3210', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4100', 'F5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4110', 'F5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4120', 'F5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4130', 'F5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4140', 'W5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4220', 'W5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG4230', 'W5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('STAT2230', 'F5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('NSCIXXXX', 'W3');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG41XX', 'F5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG42XX', 'F5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG43XX', 'W5');");
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('SENG44XX', 'W5');");
     }
 
     // POPULATE RECORD_TABLE WITH MASTER PLAN
