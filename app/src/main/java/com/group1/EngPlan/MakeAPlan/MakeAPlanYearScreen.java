@@ -40,10 +40,10 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
 
 
                 if(radioBtnChk == getString(R.string.yearRadioBtn)){
-                    goToNumberofCourses();
+                    goToNumberofCoursesT();
                 }
                 else if(radioBtnChk == getString(R.string.yearRadioBtn2)){
-                    goToPassFail();
+                    goToNumberofCoursesF();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Please Select One of the above Options", Toast.LENGTH_SHORT).show();
@@ -52,16 +52,16 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
         });
     }
 
-    public void goToPassFail(){
-        Intent showPassFailScreen = new Intent(getApplicationContext(), PassFailScreen.class);
-        String message = "Pass Fail Screen";
-        showPassFailScreen.putExtra("Check", message);
-        startActivity(showPassFailScreen);
+    public void goToNumberofCoursesT(){
+        Intent showNumberOfCoursesScreen = new Intent(getApplicationContext(), NumberOfCoursesScreen.class);
+        boolean message = true;
+        showNumberOfCoursesScreen.putExtra("Check", message);
+        startActivity(showNumberOfCoursesScreen);
     }
 
-    public void goToNumberofCourses(){
-        Intent showNumberOfCoursesScreen = new Intent(getApplicationContext(), PassFailScreen.class);
-        String message = "Number Of Courses Screen";
+    public void goToNumberofCoursesF(){
+        Intent showNumberOfCoursesScreen = new Intent(getApplicationContext(), NumberOfCoursesScreen.class);
+        boolean message = false;
         showNumberOfCoursesScreen.putExtra("Check", message);
         startActivity(showNumberOfCoursesScreen);
     }
