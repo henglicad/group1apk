@@ -67,8 +67,41 @@ public class CourseAdapter extends BaseAdapter {
             TextView courseSem = (TextView) v.findViewById(R.id.TextViewSemester);
 
             String semester = idealScheduleName.get(position);
+            String display = " ";
+            switch(semester){
+                case "F1":
+                    display = "Fall 1";
+                    break;
+                case "W1":
+                    display = "Winter 1";
+                    break;
+                case "F2":
+                    display = "Fall 2";
+                    break;
+                case "W2":
+                    display = "Winter 2";
+                    break;
+                case "F3":
+                    display = "Fall 3";
+                    break;
+                case "W3":
+                    display = "Winter 3";
+                    break;
+                case "F4":
+                    display = "Fall 4";
+                    break;
+                case "W4":
+                    display = "Winter 4";
+                    break;
+                case "F5":
+                    display = "Fall 5";
+                    break;
+                case "W5":
+                    display = "Winter 5";
+                    break;
+            }
 
-            courseSem.setText(semester);
+            courseSem.setText(display);
             return v;
         }
 
