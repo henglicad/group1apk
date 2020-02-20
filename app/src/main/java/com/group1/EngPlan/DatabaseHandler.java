@@ -94,7 +94,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private void populateCourseTable(SQLiteDatabase db){
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2080', 'Work Term 1', 'F', 'COOP1000', null, null, null, null, null);");
-        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2180', 'Work Term 2', 'F', 'COOP1000', 'COOP2180', null, null, null, null);");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2180', 'Work Term 2', 'W', 'COOP1000', 'COOP2080', null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG2010', 'Computer Architecture & Assembly Language', 'F', 'MATH1230', 'SENG1210', 'SENG3130', 'CENG3010', null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG2030', 'Introduction to Digital Signal Processing', 'W', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG3010', 'Computer System Design', 'F', 'CENG2010', 'EPHY2990', 'CENG3020', null, null, null);");
@@ -412,4 +412,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    public Cursor getSchedData(){
+        Log.d(LOG_TAG, "Getting Course Data for Schedule");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT L." + COURSE_ID_COL + ", L." + COURSE_OFFERED_COL + ", L." + COURSE_PREREQ1_COL + ", L." + COURSE_PREREQ2_COL
+                + ", L." + COURSE_TO1_COL + ", L." + COURSE_TO2_COL + ", L." + COURSE_TO3_COL + ", L." + COURSE_TO4_COL + ", R." + STATUS_COL
+                + " FROM " + COURSE_LIST_TABLE + " L JOIN " + RECORD_TABLE + " R ON L." + COURSE_ID_COL + " = R." + COURSE_ID_COL + ";";
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
+    }
+
+    // UPDATE SAVED SCHEDULE WITH DATA FROM MAIN ALGORITHM
+    public void updateSavedSched(String id, String sem){
+        Log.d(LOG_TAG, "Updating saved schedule");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("UPDATE " + SAVED_SCHED_TABLE + " SET " + SEMESTER_COL + " = '" + sem + "' WHERE " + COURSE_ID_COL + " = '" + id + "';");
+    }
+
 }
