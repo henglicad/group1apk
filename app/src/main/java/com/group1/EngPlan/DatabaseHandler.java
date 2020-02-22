@@ -11,6 +11,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     SQLiteDatabase db;
 
     private static final String DATABASE_NAME = "EngPlan.db";
+    private boolean firstTime = true;
 
     // COURSE_LIST_TABLE STRING DECLARATIONS
     private static final String COURSE_LIST_TABLE = "COURSE_LIST";
@@ -23,18 +24,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String COURSE_TO2_COL = "TO2";
     private static final String COURSE_TO3_COL = "TO3";
     private static final String COURSE_TO4_COL = "TO4";
-
     //IDEAL_SCHED STRING DECLARATIONS
     private static final String IDEAL_SCHED_TABLE = "IDEAL_SCHED";
     private static final String SEMESTER_COL = "SEMESTER";
-
     //RECORD_TABLE STRING DECLARATIONS
     private static final String RECORD_TABLE = "RECORD";
     private static final String STATUS_COL = "STATUS";
-
     //SAVED_SCHED_TABLE STRING DECLARATIONS
     private static final String SAVED_SCHED_TABLE = "SAVED_SCHED";
-
     //BACKUP_SCHED_TABLE STRING DECLARATIONS
     private static final String BACKUP_SCHED_TABLE = "BACKUP_SCHED";
 
@@ -44,11 +41,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = getWritableDatabase();
     }
 
-    /* METHODS FOR DATABASE CREATION AND INITIALIZATION BEGIN */
-    // CREATE ALL TABLES
     @Override
       public void onCreate(SQLiteDatabase db) {
         Log.d(LOG_TAG, "Start of onCreate() for the database");
+
+        if(firstTime){
+            createDatabase(db);
+            firstTime = false;
+        }
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + COURSE_LIST_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + IDEAL_SCHED_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + SAVED_SCHED_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + BACKUP_SCHED_TABLE);
+        onCreate(db);
+    }
+
+        /* BEGIN TABLE CREATION */
+    // CREATE TABLES AND CALL FOR POPULATION
+    private void createDatabase(SQLiteDatabase db){
+        Log.d(LOG_TAG, "Building tables for database");
 
         db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
                 + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
@@ -75,21 +91,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
                 + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
         populateBackupSchedTable(db);
-
-        Log.d(LOG_TAG, "End of onCreate() for the database");
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + COURSE_LIST_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + IDEAL_SCHED_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + SAVED_SCHED_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + BACKUP_SCHED_TABLE);
-        onCreate(db);
-    }
-
-        /* BEGIN TABLE POPULATION */
     // POPULATE COURSE_LIST_TABLE WITH IDEAL PLAN
     private void populateCourseTable(SQLiteDatabase db){
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, null, null, null, null);");
@@ -374,22 +377,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG43XX', 'W5');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG44XX', 'W5');");
     }
-        /* END TABLE POPULATION */
+        /* END TABLE CREATION */
 
-    // test method for db comm (to be deleted)
-    public Cursor returnValue(){
-        Log.d(LOG_TAG, "In return value");
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + COURSE_LIST_TABLE + ";";
-        Cursor cursor = db.rawQuery(query, null);
-
-        return cursor;
-    }
-
-    // METHOD TO FILL OUR QUICK VIEW- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE
+        /* BEGIN SEND DATA */
+    // FILL QUICK VIEW- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE
     public Cursor fillQuickView(String semester){
         Log.d(LOG_TAG, "Filling Quick View");
-
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT I." + COURSE_ID_COL + ", C." + COURSE_NAME_COL
@@ -401,10 +394,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
-    // METHOD TO SEND DATA FOR THE DETAILED COURSE SCREEN
+    // SEND DATA FOR THE DETAILED COURSE SCREEN
     public Cursor getCourseData(String id){
         Log.d(LOG_TAG, "Getting Course Data");
-
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM " + COURSE_LIST_TABLE + " WHERE " + COURSE_ID_COL + " = '" + id + "';";
@@ -412,4 +404,66 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    // SEND PASS/FAIL DATA
+    public Cursor getRecords(){
+        Log.d(LOG_TAG, "Pulling records");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + RECORD_TABLE + ";";
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
+    }
+
+    // PULL ALL DATA NEEDED FOR SCHEDULING FROM DATABASE
+    public Cursor getSchedData(){
+        Log.d(LOG_TAG, "Getting Course Data for Schedule");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT L." + COURSE_ID_COL + ", L." + COURSE_OFFERED_COL + ", L." + COURSE_PREREQ1_COL + ", L." + COURSE_PREREQ2_COL
+                + ", L." + COURSE_TO1_COL + ", L." + COURSE_TO2_COL + ", L." + COURSE_TO3_COL + ", L." + COURSE_TO4_COL + ", R." + STATUS_COL
+                + " FROM " + COURSE_LIST_TABLE + " L JOIN " + RECORD_TABLE + " R ON L." + COURSE_ID_COL + " = R." + COURSE_ID_COL + ";";
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
+    }
+
+    // DISPLAY SAVED SCHED- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE
+    public Cursor getSavedSched(String semester){
+        Log.d(LOG_TAG, "Filling Saved Schedule");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT S." + COURSE_ID_COL + ", C." + COURSE_NAME_COL
+                + " FROM " + SAVED_SCHED_TABLE + " S JOIN " + COURSE_LIST_TABLE + " C "
+                + "ON C." + COURSE_ID_COL + " = S." + COURSE_ID_COL
+                + " WHERE S." + SEMESTER_COL + " = '" + semester + "';";
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
+    }
+        /* END SEND DATA */
+
+        /* BEGIN FILL DATA */
+    // DENOTE PASS/FAIL
+    public void setRecords(String id, int passed){
+        Log.d(LOG_TAG, "Updating grades");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("UPDATE " + RECORD_TABLE + " SET " + STATUS_COL + " = '" + passed + "' WHERE " + COURSE_ID_COL + " = '" + id + "';");
+    }
+
+    // UPDATE SAVED SCHEDULE WITH DATA FROM MAIN ALGORITHM
+    public void setSavedSched(String id, String sem){
+        Log.d(LOG_TAG, "Updating saved schedule");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("UPDATE " + SAVED_SCHED_TABLE + " SET " + SEMESTER_COL + " = '" + sem + "' WHERE " + COURSE_ID_COL + " = '" + id + "';");
+    }
+
+    // UPDATE BACKUP SCHED WITH SAVED SCHED
+    //public void updateBackupSched(){
+
+    //}
+        /* END FILL DATA */
 }
