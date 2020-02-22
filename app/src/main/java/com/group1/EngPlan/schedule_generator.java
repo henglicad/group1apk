@@ -12,21 +12,54 @@ import java.util.ArrayList;
 
 public class schedule_generator extends AppCompatActivity {
     public static final String LOG_TAG = schedule_generator.class.getSimpleName();
+    Cursor data;
+    //int semester_number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //test();
     }
 
-    //DatabaseHandler CDB = new DatabaseHandler(this);//reminder: fix this
+
 
     ArrayList<String> courseID = new ArrayList<>();
     ArrayList<String> courseStatus = new ArrayList<>();
-    //ArrayList<ArrayList<String>> coursePreReqs = new ArrayList<>(3);
-    Cursor data;// Replace this DB method with one to get COURSEID, STATUS, OFFERED, PREREQS and TO for all courses
+    DatabaseHandler CDB;
+    // Replace this DB method with one to get COURSEID, STATUS, OFFERED, PREREQS and TO for all courses
 
-    public schedule_generator( DatabaseHandler db){
-        data = db.getSchedData();
+    public schedule_generator(){
+        CDB = new DatabaseHandler(this);//reminder: fix this
+        data = CDB.getSchedData();
+        test();
+    }
+
+    public void main(int num_of_courses, String sem, int year){
+        ArrayList<ArrayList<String>> ret;
+
+
+
+        add_data();
+
+        ArrayList<String> MasterList = getMasterList();
+
+        while(checkMaster(MasterList)){
+            ArrayList<String> sub = subList1(MasterList);
+
+            ArrayList<String> Fall = getFall(sub);
+            Fall = order(Fall);
+
+            ArrayList<String> Winter = getWinter(sub);
+            Winter = order(Winter);
+
+            saveInDB(Fall, Winter, sem, year, num_of_courses);
+
+            //ArrayList<ArrayList<String>> fallSems = semSplit(Fall, num_of_courses);
+            //ArrayList<ArrayList<String>> WintSems = semSplit(Winter, num_of_courses);
+
+
+
+        }
     }
 
     public void test(){
@@ -56,19 +89,30 @@ public class schedule_generator extends AppCompatActivity {
         }
     }
 
-    /*public boolean check_new_student(){
-        int count = 0;
+    public ArrayList<String> getMasterList(){
+        ArrayList<String> MasterList = new ArrayList<>();
 
         for(int i = 0; i<courseStatus.size(); i++){
-            if(courseStatus.get(i) == "P" || courseStatus.get(i) == "F"){
-                return false;
+            if(courseStatus.get(i) == "F"){
+                MasterList.add(courseID.get(i));
             }
         }
-        return true;
-    }*/
 
-    public boolean check_pre_req(String courseID){
-        int pos = courseID.indexOf(courseID);
+        return MasterList;
+    }
+
+    public boolean checkMaster(ArrayList<String> Master){
+
+
+        for(int i = 0; i<Master.size(); i++){
+            if(courseStatus.get(courseID.indexOf(Master.get(i))) != "S")
+            return false;
+        }
+        return true;
+    }
+
+    public boolean check_pre_req(String course){
+        int pos = courseID.indexOf(course);
         int count = 0;
         String r1, r2;
         if(data.moveToPosition(pos)) {
@@ -123,6 +167,7 @@ public class schedule_generator extends AppCompatActivity {
         for(int i= 0; i< masterID.size(); i++){
             if(check_pre_req(masterID.get(i))){
                 s.add(masterID.get(i));
+                courseStatus.set(i, "S");
             }
         }
 
@@ -134,7 +179,7 @@ public class schedule_generator extends AppCompatActivity {
 
         for(int i = 0; i<sub.size(); i++){
             data.moveToPosition(data.getColumnIndex(sub.get(i)));
-            if(data.getString(1).equals("F")){
+            if(data.getString(1).equals("F") || data.getString(0).equals("COOP1000")){
                 fall.add(sub.get(i));
             }
         }
@@ -155,6 +200,19 @@ public class schedule_generator extends AppCompatActivity {
 
         return Winter;
 
+    }
+
+    public ArrayList<String> getBoth(ArrayList<String> sub){
+        ArrayList<String> Both = new ArrayList<>();
+
+        for(int i = 0; i<sub.size(); i++){
+            data.moveToPosition(data.getColumnIndex(sub.get(i)));
+            if(data.getString(1).equals("B")){
+                Both.add(sub.get(i));
+            }
+        }
+
+        return Both;
     }
 
     public ArrayList<String> order(ArrayList<String> x){
@@ -196,7 +254,71 @@ public class schedule_generator extends AppCompatActivity {
         return x;
     }
 
-    //Need to seperate the semester lists into different years.
+    /*public ArrayList<ArrayList<String>> semSplit (ArrayList<String> a, int num){
+        ArrayList<ArrayList<String>> ret = new ArrayList<>();
+        int start  = 0;
+
+        while(true){
+            ArrayList<String> x = new ArrayList<>();
+            if((start + num) < a.size()){
+                for(int i = start; i<(start+num); i++){
+                    if(a.get(i).equals("COOP2080") || a.get(i).equals("COOP2180")){
+                        x.add(a.get(i));
+                        break;
+                    }
+                    x.add(a.get(i));
+                }
+
+                ret.add(x);
+                start = start+num;
+            }
+            else{
+                for(int i = start; i<a.size(); i++){
+                    x.add(a.get(i));
+                }
+
+                ret.add(x);
+                break;
+            }
+
+        }
+        return ret;
+    }*/
+
+    public void saveInDB(ArrayList<String> fall, ArrayList<String> winter, String sem, int year, int Cnum){
+        if(sem.equals("W"))
+            year ++;
+        int num = Cnum;
+
+        int i = 0, j = 0;
+        while(!fall.isEmpty() || !winter.isEmpty()){
+            if(sem.equals("W") && !winter.isEmpty()){
+                if(num > winter.size())
+                    num = winter.size();
+                for(; i<num; i++){
+                    CDB.setSavedSched(winter.get(0), sem+year);
+                    winter.remove(0);
+                }
+                sem = "F";
+                year ++;
+            }
+
+            else if(sem.equals("F") && !fall.isEmpty()){
+                if(num > fall.size())
+                    num = fall.size();
+                for(; i<num; i++){
+                    CDB.setSavedSched(fall.get(0), sem+year);
+                    fall.remove(0);
+                }
+                sem = "W";
+            }
+
+            num = Cnum;
+        }
+    }
+
+
+
 
 
 

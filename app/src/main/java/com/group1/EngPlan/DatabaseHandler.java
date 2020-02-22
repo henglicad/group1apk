@@ -426,7 +426,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // UPDATE SAVED SCHEDULE WITH DATA FROM MAIN ALGORITHM
-    public void updateSavedSched(String id, String sem){
+    public void setSavedSched(String id, String sem){
         Log.d(LOG_TAG, "Updating saved schedule");
         SQLiteDatabase db = this.getReadableDatabase();
 
