@@ -13,29 +13,32 @@ import java.util.ArrayList;
 public class schedule_generator extends AppCompatActivity {
     public static final String LOG_TAG = schedule_generator.class.getSimpleName();
     Cursor data;
+    DatabaseHandler CDB;
+    ArrayList<String> courseID = new ArrayList<>();
+    ArrayList<String> courseStatus = new ArrayList<>();
+
+    // Replace this DB method with one to get COURSEID, STATUS, OFFERED, PREREQS and TO for all courses
+
     //int semester_number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        CDB = new DatabaseHandler(this);//reminder: fix this
+        data = CDB.getSchedData();
+        test();
         //test();
     }
 
 
 
-    ArrayList<String> courseID = new ArrayList<>();
-    ArrayList<String> courseStatus = new ArrayList<>();
-    DatabaseHandler CDB;
-    // Replace this DB method with one to get COURSEID, STATUS, OFFERED, PREREQS and TO for all courses
 
-    public schedule_generator(){
+    /*public schedule_generator(){
         CDB = new DatabaseHandler(this);//reminder: fix this
         data = CDB.getSchedData();
         test();
-    }
+    }*/
 
     public void main(int num_of_courses, String sem, int year){
-        ArrayList<ArrayList<String>> ret;
 
 
 
@@ -202,18 +205,6 @@ public class schedule_generator extends AppCompatActivity {
 
     }
 
-    public ArrayList<String> getBoth(ArrayList<String> sub){
-        ArrayList<String> Both = new ArrayList<>();
-
-        for(int i = 0; i<sub.size(); i++){
-            data.moveToPosition(data.getColumnIndex(sub.get(i)));
-            if(data.getString(1).equals("B")){
-                Both.add(sub.get(i));
-            }
-        }
-
-        return Both;
-    }
 
     public ArrayList<String> order(ArrayList<String> x){
         int a = -1;
@@ -221,7 +212,7 @@ public class schedule_generator extends AppCompatActivity {
         int count2 = 0;
         String m;
         while(a<0){
-            for(int i =0; i<x.size(); i++){
+            for(int i =0; i<=x.size(); i++){
                 if(i == x.size()){
                     a = 1;
                     break;
@@ -241,7 +232,7 @@ public class schedule_generator extends AppCompatActivity {
                         }
                     }
 
-                    if(count1>count2){
+                    if(count1<count2){
                         m = x.get(i+1);
                         x.set(i+1, x.get(i));
                         x.set(i, m);
@@ -290,12 +281,12 @@ public class schedule_generator extends AppCompatActivity {
             year ++;
         int num = Cnum;
 
-        int i = 0, j = 0;
+
         while(!fall.isEmpty() || !winter.isEmpty()){
             if(sem.equals("W") && !winter.isEmpty()){
                 if(num > winter.size())
                     num = winter.size();
-                for(; i<num; i++){
+                for(int i = 0; i<num; i++){
                     CDB.setSavedSched(winter.get(0), sem+year);
                     winter.remove(0);
                 }
@@ -306,7 +297,7 @@ public class schedule_generator extends AppCompatActivity {
             else if(sem.equals("F") && !fall.isEmpty()){
                 if(num > fall.size())
                     num = fall.size();
-                for(; i<num; i++){
+                for(int i = 0; i<num; i++){
                     CDB.setSavedSched(fall.get(0), sem+year);
                     fall.remove(0);
                 }
