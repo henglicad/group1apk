@@ -39,6 +39,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
         Log.d(LOG_TAG, "In constructor for database");
         db = getWritableDatabase();
+        Log.d(LOG_TAG, "In e");
     }
 
     @Override

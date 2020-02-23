@@ -20,8 +20,10 @@ public class QuickView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         DatabaseHandler myDB = new DatabaseHandler(this);
 
-        schedule_generator sg = new schedule_generator();
-        sg.test();
+        schedule_generator sg = new schedule_generator(myDB);
+        //sg.test();
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_view);
