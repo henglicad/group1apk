@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2d2d2d"
+    android:background="#000000"
     tools:context=".MakeAPlan.MakeAPlanYearScreen">
 
     <TextView
@@ -27,7 +27,6 @@
         app:layout_constraintVertical_bias="0.307" />
 
 
-
     <Button
         android:id="@+id/yearNextBtn"
         android:layout_width="wrap_content"
@@ -45,8 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="#2d2d2d"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yearScreenTextView">
 
