@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class CourseChoiceAdapter extends BaseAdapter {
 
-    boolean[] checkBoxState;
+    public boolean[] checkBoxState;
     LayoutInflater mInflater;
     ArrayList<String> courseCode;
     ArrayList<String> courseName;
@@ -23,7 +23,15 @@ public class CourseChoiceAdapter extends BaseAdapter {
         courseCode = i;
         courseName = j;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        checkBoxState = new boolean[courseCode.size()];
     }
+
+   /* private class ViewHolder{
+        TextView courseCodeView;
+        TextView courseNameView;
+        CheckBox courseCheck;
+
+    }*/
 
     @Override
     public int getCount() {
@@ -69,3 +77,4 @@ public class CourseChoiceAdapter extends BaseAdapter {
         return v;
     }
 }
+

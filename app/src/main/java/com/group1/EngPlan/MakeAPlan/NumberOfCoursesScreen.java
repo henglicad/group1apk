@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group1.EngPlan.DatabaseHandler;
 import com.group1.EngPlan.R;
 
 public class NumberOfCoursesScreen extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final DatabaseHandler myDB = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_of_courses_screen);
 
@@ -58,7 +60,10 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
 
 
                 if(message){
-                    // send //courseNumber(choice) and true
+                    MakeAPlanYearScreen MAPS = new MakeAPlanYearScreen();
+                    String[] s = MAPS.getData();
+                    int year = Integer.parseInt(s[0]);
+                    ///////////////////////////////////////main(choice, s[1], year);
                 }
                 else {
                     goToPassFail(message);

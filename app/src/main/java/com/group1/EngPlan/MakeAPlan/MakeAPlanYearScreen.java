@@ -1,5 +1,6 @@
 package com.group1.EngPlan.MakeAPlan;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.R;
@@ -16,6 +18,9 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
 
     RadioGroup radioGroup;
     RadioButton RadioBtn;
+    AlertDialog alertDialog1;
+    int year;
+    String semester = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,13 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
 
         radioGroup = findViewById(R.id.yearInfoRadioGrp);
         Button nextBtn = findViewById(R.id.yearNextBtn);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                CreateAlertDialogWithRadioButtonGroup();
+            }
+        });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,18 +51,41 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
                     radioBtnChk = RadioBtn.getText().toString();
 
 
+
                 if(radioBtnChk == getString(R.string.yearRadioBtn)){
                     goToNumberofCoursesT();
+                    year = 1;
                 }
                 else if(radioBtnChk == getString(R.string.yearRadioBtn2)){
                     goToNumberofCoursesF();
+                    year = 2;
+                }
+                else if(radioBtnChk == getString(R.string.yearRadioBtn3)){
+                    goToNumberofCoursesF();
+                    year = 3;
+                }
+                else if(radioBtnChk == getString(R.string.yearRadioBtn4)){
+                    goToNumberofCoursesF();
+                    year = 4;
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Please Select One of the above Options", Toast.LENGTH_SHORT).show();
                 }
+
+
+
             }
         });
     }
+
+    public String[] getData(){
+        String[] s = new String[2];
+        s[0] = String.valueOf(year);
+        s[1] = semester;
+
+        return s;
+    }
+
 
     public void goToNumberofCoursesT(){
         Intent showNumberOfCoursesScreen = new Intent(getApplicationContext(), NumberOfCoursesScreen.class);
@@ -66,5 +101,38 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
         startActivity(showNumberOfCoursesScreen);
     }
 
+    public void CreateAlertDialogWithRadioButtonGroup(){
+
+        String[] values = {"Fall Semester", "Winter Semester"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Select Your Choice");
+
+        builder.setSingleChoiceItems(values, -1, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int item) {
+
+                switch(item)
+                {
+                    case 0:
+
+                        Toast.makeText(getApplicationContext(), "Fall Semester Selected", Toast.LENGTH_LONG).show();
+                        semester = "F";
+                        break;
+
+                    case 1:
+
+                        Toast.makeText(getApplicationContext(), "Winter Semester Selected", Toast.LENGTH_LONG).show();
+                        semester = "W";
+                        break;
+
+                }
+                alertDialog1.dismiss();
+            }
+        });
+        alertDialog1 = builder.create();
+        alertDialog1.show();
+
+    }
 
 }
