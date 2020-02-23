@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseChoiceAdapter;
+import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.DatabaseHandler;
 import com.group1.EngPlan.R;
 
@@ -23,18 +26,18 @@ public class PassFailScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DatabaseHandler myDB = new DatabaseHandler(this);
+        final DatabaseHandler myDB = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pass_fail_screen);
 
         Log.d(LOG_TAG, "On Pass Fail Screen");
         ListView listView = (ListView) findViewById(R.id.passFailListView);
+        Button passFailNext = (Button) findViewById(R.id.passFailNextBtn);
         Intent intent = getIntent();
         boolean message = intent.getBooleanExtra("Check", false);
 
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
         int termNo = 0;
-
         while(termNo < terms.length) {
 
             Cursor data = myDB.fillQuickView(terms[termNo]);
@@ -50,12 +53,31 @@ public class PassFailScreen extends AppCompatActivity {
             termNo++;
         }
 
-        /*QuickView qv = new QuickView();
-        courseCode = qv.getIdealScheduleCode();
-        courseName = qv.getIdealScheduleName();*/
 
-        CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName);
+        final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName);
         listView.setAdapter(adapter);
+
+
+        passFailNext.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean[] chk = adapter.checkBoxState;
+
+                        for(int i = 0; i < chk.length; i++){
+                            if(chk[i] = true)
+                                myDB.setRecords(courseCode.get(i), 1);
+                            else
+                                myDB.setRecords(courseCode.get(i), 0);
+                        }
+
+                        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+                        startActivity(intent);
+
+                    }
+        });
+
+
+
 
 
 
