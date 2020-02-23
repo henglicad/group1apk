@@ -1,13 +1,8 @@
 package com.group1.EngPlan;
 
-import android.content.Context;
+
 import android.database.Cursor;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
-import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 public class schedule_generator  {
