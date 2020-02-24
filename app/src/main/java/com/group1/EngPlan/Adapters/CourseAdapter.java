@@ -1,4 +1,4 @@
-package com.group1.EngPlan;
+package com.group1.EngPlan.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.group1.EngPlan.R;
 
 import java.util.ArrayList;
 
@@ -118,9 +120,9 @@ public class CourseAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position){
         if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
-                (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
-                (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")){
-        return 0;}
+           (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
+           (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")){
+                return 0;}
         return 1;
     }
 
