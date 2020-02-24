@@ -57,6 +57,13 @@ public class PassFailScreen extends AppCompatActivity {
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName);
         listView.setAdapter(adapter);
 
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter.setCheckd(position);
+            }
+        });*/
+
 
         passFailNext.setOnClickListener(new View.OnClickListener() {
                     @Override

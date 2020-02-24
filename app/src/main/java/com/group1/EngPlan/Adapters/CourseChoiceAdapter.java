@@ -18,6 +18,7 @@ public class CourseChoiceAdapter extends BaseAdapter {
     LayoutInflater mInflater;
     ArrayList<String> courseCode;
     ArrayList<String> courseName;
+    public CheckBox courseCheck;
 
     public CourseChoiceAdapter(Context c, ArrayList<String> i, ArrayList<String> j){
         courseCode = i;
@@ -54,7 +55,7 @@ public class CourseChoiceAdapter extends BaseAdapter {
         View v = mInflater.inflate(R.layout.listview_layout_passfail, null);
         TextView courseCodeView = (TextView) v.findViewById(R.id.textViewCourseCode);
         TextView courseNameView = (TextView) v.findViewById(R.id.textViewCourseName);
-        CheckBox courseCheck = (CheckBox) v.findViewById(R.id.courseCheckBox);
+        courseCheck = (CheckBox) v.findViewById(R.id.courseCheckBox);
 
 
         String code =  courseCode.get(position);
