@@ -25,7 +25,8 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
 
         Intent intent = getIntent();
         final boolean message = intent.getBooleanExtra("Check", false);
-
+        final int year = intent.getIntExtra("Year", 0);
+        final String Semester = intent.getStringExtra("Semester");
         radioGroup = findViewById(R.id.courseNoRadioGroup1);
         Button nextBtn = findViewById(R.id.courseNoNextBtn1);
 
@@ -60,9 +61,6 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
 
 
                 if(message){
-                    MakeAPlanYearScreen MAPS = new MakeAPlanYearScreen();
-                    String[] s = MAPS.getData();
-                    int year = Integer.parseInt(s[0]);
                     ///////////////////////////////////////main(choice, s[1], year);
                 }
                 else {
