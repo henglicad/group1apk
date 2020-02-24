@@ -101,7 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG2030', 'Introduction to Digital Signal Processing', 'W', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG3010', 'Computer System Design', 'F', 'CENG2010', 'EPHY2990', 'CENG3020', null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG3020', 'Real Time Systems Design', 'W', 'CENG3010', null, null, null, null, null);");
-        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG3310', 'Digital Communications Systems', 'F', 'EPHY2100', null, 'CENG4320', null, null, null);");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG3310', 'Digital Communications Systems', 'F', null, null, 'CENG4320', null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG4320', 'Communications Networks', 'W', 'CENG3310', null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CHEM1520', 'Principles of Chemistry', 'W', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CMNS1290', 'Introduction to Professional Writing', 'B', 'ENGL1100', null, null, null, null, null);");
@@ -379,7 +379,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         /* END TABLE CREATION */
 
         /* BEGIN SEND DATA */
-    /// FILL QUICK VIEW- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE
+    // FILL QUICK VIEW- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE
     public Cursor fillQuickView(String semester){
         Log.d(LOG_TAG, "Filling Quick View");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -391,7 +391,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
-    /// SEND DATA FOR THE DETAILED COURSE SCREEN
+    // SEND DATA FOR THE DETAILED COURSE SCREEN
     public Cursor getCourseData(String id){
         Log.d(LOG_TAG, "Getting Course Data");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -401,7 +401,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
-    /// SEND PASS/FAIL DATA
+    // SEND PASS/FAIL DATA
     public Cursor getRecords(){
         Log.d(LOG_TAG, "Pulling records");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -422,7 +422,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
-    /// DISPLAY SAVED SCHED- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE
+    // DISPLAY SAVED SCHED- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE
     public Cursor getSavedSched(String semester){
         Log.d(LOG_TAG, "Filling Saved Schedule");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -436,7 +436,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         /* END SEND DATA */
 
         /* BEGIN FILL DATA */
-    /// DENOTE PASS/FAIL
+    // DENOTE PASS/FAIL
     public void setRecords(String id, int passed){
         Log.d(LOG_TAG, "Updating grades");
         SQLiteDatabase db = this.getReadableDatabase();
@@ -444,7 +444,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("UPDATE " + RECORD_TABLE + " SET " + STATUS_COL + " = '" + passed + "' WHERE " + COURSE_ID_COL + " = '" + id + "';");
     }
 
-    /// UPDATE SAVED SCHEDULE WITH DATA FROM MAIN ALGORITHM
+    // UPDATE SAVED SCHEDULE WITH DATA FROM MAIN ALGORITHM
     public void setSavedSched(String id, String sem){
         Log.d(LOG_TAG, "Updating saved schedule");
         SQLiteDatabase db = this.getReadableDatabase();

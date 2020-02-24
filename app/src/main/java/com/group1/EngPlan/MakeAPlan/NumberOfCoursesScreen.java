@@ -16,6 +16,7 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
 
     RadioGroup radioGroup;
     RadioButton RadioBtn;
+    public int choice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,6 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
                 int radioId = radioGroup.getCheckedRadioButtonId();
                 RadioBtn = findViewById(radioId);
                 String radioBtnChk;
-                int choice;
 
                 if(radioId == -1)
                     radioBtnChk = null;
