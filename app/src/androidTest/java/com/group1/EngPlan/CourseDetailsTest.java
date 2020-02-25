@@ -1,4 +1,4 @@
-/*package com.group1.EngPlan;
+package com.group1.EngPlan;
 
 
 import android.database.Cursor;
@@ -152,4 +152,4 @@ public class CourseDetailsTest {
             }
         };
     }
-}*/
+}
