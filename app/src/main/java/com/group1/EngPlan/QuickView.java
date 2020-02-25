@@ -74,12 +74,4 @@ public class QuickView extends AppCompatActivity {
             }
         });
     }
-
-    public ArrayList<String> getIdealScheduleCode() {
-        return idealScheduleCode;
-    }
-
-    public ArrayList<String> getIdealScheduleName() {
-        return idealScheduleName;
-    }
 }
