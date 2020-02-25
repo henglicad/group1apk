@@ -33,13 +33,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CentralActivityMenuTest {
+public class CAMenuTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void centralActivityMenuTest() {
+    public void cAMenuTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.MainActivitybtn1), withText("Make a Plan"),
                         childAtPosition(
@@ -51,13 +51,13 @@ public class CentralActivityMenuTest {
         appCompatButton.perform(click());
 
         ViewInteraction appCompatRadioButton = onView(
-                allOf(withId(R.id.yearRadioBtn3), withText("Third Year"),
+                allOf(withId(R.id.yearRadioBtn2), withText("Second Year"),
                         childAtPosition(
                                 allOf(withId(R.id.yearInfoRadioGrp),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 2)),
-                                2),
+                                1),
                         isDisplayed()));
         appCompatRadioButton.perform(click());
 
@@ -66,7 +66,7 @@ public class CentralActivityMenuTest {
                         childAtPosition(
                                 withId(R.id.contentPanel),
                                 0)))
-                .atPosition(1);
+                .atPosition(0);
         appCompatCheckedTextView.perform(click());
 
         ViewInteraction appCompatButton2 = onView(
@@ -109,24 +109,6 @@ public class CentralActivityMenuTest {
                                 1),
                         isDisplayed()));
         appCompatButton4.perform(click());
-
-        DataInteraction linearLayout = onData(anything())
-                .inAdapterView(allOf(withId(R.id.central_activity_list_view),
-                        childAtPosition(
-                                withId(R.id.fragment_container),
-                                0)))
-                .atPosition(0);
-        linearLayout.perform(click());
-
-        DataInteraction linearLayout2 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.central_activity_list_view),
-                        childAtPosition(
-                                withId(R.id.fragment_container),
-                                0)))
-                .atPosition(1);
-        linearLayout2.perform(click());
-
-        pressBack();
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Open navigation drawer"),

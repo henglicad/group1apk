@@ -226,9 +226,6 @@ public class schedule_generator  {
                 count++;
             } else {
                 pos = courseID.indexOf(r1);
-                if(pos == -1){
-                    Log.d(LOG_TAG, r1);
-                }
                 if (courseStatus.get(pos).equals("1")) {
                     count++;
                 }

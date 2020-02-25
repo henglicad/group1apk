@@ -32,13 +32,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class NumberOfCoursesScreenTest {
+public class NumCoursesTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void numberOfCoursesScreen() {
+    public void numCoursesTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.MainActivitybtn1), withText("Make a Plan"),
                         childAtPosition(
@@ -102,26 +102,18 @@ public class NumberOfCoursesScreenTest {
         pressBack();
 
         ViewInteraction appCompatRadioButton3 = onView(
-                allOf(withId(R.id.yearRadioBtn3), withText("Third Year"),
+                allOf(withId(R.id.courseNoRadioBtn2), withText("4 Courses"),
                         childAtPosition(
-                                allOf(withId(R.id.yearInfoRadioGrp),
+                                allOf(withId(R.id.courseNoRadioGroup1),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                2)),
-                                2),
+                                                0)),
+                                1),
                         isDisplayed()));
         appCompatRadioButton3.perform(click());
 
-        DataInteraction appCompatCheckedTextView2 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
-                        childAtPosition(
-                                withId(R.id.contentPanel),
-                                0)))
-                .atPosition(0);
-        appCompatCheckedTextView2.perform(click());
-
         ViewInteraction appCompatButton4 = onView(
-                allOf(withId(R.id.yearNextBtn), withText("Next"),
+                allOf(withId(R.id.courseNoNextBtn1), withText("Next"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -130,14 +122,16 @@ public class NumberOfCoursesScreenTest {
                         isDisplayed()));
         appCompatButton4.perform(click());
 
+        pressBack();
+
         ViewInteraction appCompatRadioButton4 = onView(
-                allOf(withId(R.id.courseNoRadioBtn3), withText("5 Courses"),
+                allOf(withId(R.id.courseNoRadioBtn5), withText("7 Courses"),
                         childAtPosition(
                                 allOf(withId(R.id.courseNoRadioGroup1),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 0)),
-                                2),
+                                4),
                         isDisplayed()));
         appCompatRadioButton4.perform(click());
 
@@ -152,27 +146,6 @@ public class NumberOfCoursesScreenTest {
         appCompatButton5.perform(click());
 
         pressBack();
-
-        ViewInteraction appCompatRadioButton5 = onView(
-                allOf(withId(R.id.courseNoRadioBtn4), withText("6 Courses"),
-                        childAtPosition(
-                                allOf(withId(R.id.courseNoRadioGroup1),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        appCompatRadioButton5.perform(click());
-
-        ViewInteraction appCompatButton6 = onView(
-                allOf(withId(R.id.courseNoNextBtn1), withText("Next"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatButton6.perform(click());
 
         pressBack();
     }

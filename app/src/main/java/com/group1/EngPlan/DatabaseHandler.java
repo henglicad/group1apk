@@ -401,15 +401,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
-    // SEND PASS/FAIL DATA
-    public Cursor getRecords(){
-        Log.d(LOG_TAG, "Pulling records");
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String query = "SELECT * FROM " + RECORD_TABLE + ";";
-        return db.rawQuery(query, null);
-    }
-
     // PULL ALL DATA NEEDED FOR SCHEDULING FROM DATABASE
     public Cursor getSchedData(){
         Log.d(LOG_TAG, "Getting Course Data for Schedule");
