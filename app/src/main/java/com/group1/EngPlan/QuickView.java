@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group1.EngPlan.Adapters.CourseAdapter;
+
 import java.util.ArrayList;
 
 public class QuickView extends AppCompatActivity {
@@ -25,9 +27,6 @@ public class QuickView extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.ListViewIdeal);
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
         int termNo = 0;
-
-        ArrayList<String> Semester = new ArrayList<>();
-
 
         while(termNo < terms.length) {
 
