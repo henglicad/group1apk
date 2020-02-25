@@ -4,34 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#303030"
+    android:background="#2d2d2d"
     tools:context=".MakeAPlan.NumberOfCoursesScreen">
 
     <RadioGroup
         android:id="@+id/courseNoRadioGroup1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="#424242"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="32dp"
+        android:background="#2d2d2d"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <RadioButton
             android:id="@+id/courseNoRadioBtn1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:text="3 Courses"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <RadioButton
             android:id="@+id/courseNoRadioBtn2"
@@ -42,7 +37,7 @@
             android:layout_marginBottom="16dp"
             android:text="4 Courses"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <RadioButton
             android:id="@+id/courseNoRadioBtn3"
@@ -53,7 +48,7 @@
             android:layout_marginBottom="16dp"
             android:text="5 Courses"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <RadioButton
             android:id="@+id/courseNoRadioBtn4"
@@ -63,7 +58,7 @@
             android:layout_marginBottom="16dp"
             android:text="6 Courses"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <RadioButton
             android:id="@+id/courseNoRadioBtn5"
@@ -73,7 +68,7 @@
             android:layout_marginBottom="16dp"
             android:text="7 Courses"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
     </RadioGroup>
 
     <Button
@@ -83,7 +78,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/rounded_button2"
+        android:background="@drawable/rounded_button"
         android:text="@string/yearNextBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -93,12 +88,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="150dp"
         android:layout_marginRight="32dp"
         android:background="#424242"
+        android:gravity="center"
         android:text="How many courses will you be taking per semester?"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/courseNoRadioGroup1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
