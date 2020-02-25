@@ -2,7 +2,9 @@ package com.group1.EngPlan;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 
 public class CentralActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String LOG_DATA = CentralActivity.class.getSimpleName();
     private DrawerLayout drawer;
     ArrayList<String> courseCode = new ArrayList<>();
     ArrayList<String> courseName = new ArrayList<>();
@@ -54,20 +57,33 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         final DatabaseHandler myDB = new DatabaseHandler(this);
         ListView listView = (ListView) findViewById(R.id.central_activity_list_view);
 
-        String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
+        String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5", "F6", "W6", "F7", "W7"};
         int termNo = 0;
         while(termNo < terms.length) {
 
-            Cursor data = myDB.fillQuickView(terms[termNo]);
+            Cursor data = myDB.getSavedSched(terms[termNo]);
             courseName.add(terms[termNo]);
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            boolean check = true;
-            while (check) {
-                courseCode.add(data.getString(0));
-                courseName.add(data.getString(1));
+            String s;
+            //boolean check = true;
+            /*while (check){
+                s = DatabaseUtils.dumpCurrentRowToString(data);
+                Log.d(LOG_DATA, s);
                 check = data.moveToNext();
+            }*/
+
+            data.moveToFirst();
+            boolean check = true;
+            if(data.getCount() != 0){
+                while (check) {
+                    s = DatabaseUtils.dumpCurrentRowToString(data);
+                    Log.d(LOG_DATA, s);
+                    courseCode.add(data.getString(0));
+                    courseName.add(data.getString(1));
+                    check = data.moveToNext();
+                }
             }
 
             termNo++;
@@ -82,7 +98,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                 String data = courseCode.get(position);
                 if((courseName.get(position) == "F1") || (courseName.get(position) == "W1") ||(courseName.get(position) == "F2") || (courseName.get(position) == "W2") ||
                         (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
-                        (courseName.get(position) == "F5") || (courseName.get(position) == "W5")){
+                        (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6")||
+                        (courseName.get(position) == "F7") || (courseName.get(position) == "W7")){
 
 
                 }

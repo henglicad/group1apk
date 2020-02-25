@@ -96,7 +96,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private void populateCourseTable(SQLiteDatabase db){
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2080', 'Work Term 1', 'F', 'COOP1000', null, null, null, null, null);");
-        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2180', 'Work Term 2', 'W', 'COOP1000', 'COOP2180', null, null, null, null);");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2180', 'Work Term 2', 'W', 'COOP1000', 'COOP2080', null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG2010', 'Computer Architecture & Assembly Language', 'F', 'MATH1230', 'SENG1210', 'SENG3130', 'CENG3010', null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG2030', 'Introduction to Digital Signal Processing', 'W', null, null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG3010', 'Computer System Design', 'F', 'CENG2010', 'EPHY2990', 'CENG3020', null, null, null);");
@@ -415,11 +415,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Log.d(LOG_TAG, "Getting Course Data for Schedule");
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT L." + COURSE_ID_COL + ", L." + COURSE_OFFERED_COL + ", I." + SEMESTER_COL + ", L." + COURSE_PREREQ1_COL + ", L." + COURSE_PREREQ2_COL
-                + ", L." + COURSE_TO1_COL + ", L." + COURSE_TO2_COL + ", L." + COURSE_TO3_COL + ", L." + COURSE_TO4_COL + ", R." + STATUS_COL
+        String query = "SELECT L." + COURSE_ID_COL + ", L." + COURSE_OFFERED_COL + ", L." + COURSE_PREREQ1_COL + ", L." + COURSE_PREREQ2_COL
+                + ", L." + COURSE_TO1_COL + ", L." + COURSE_TO2_COL + ", L." + COURSE_TO3_COL + ", L." + COURSE_TO4_COL + ", R." + STATUS_COL + ", I." + SEMESTER_COL
                 + " FROM " + COURSE_LIST_TABLE + " L JOIN " + RECORD_TABLE + " R ON L." + COURSE_ID_COL + " = R." + COURSE_ID_COL
                 + " JOIN " + IDEAL_SCHED_TABLE + " I ON L." + COURSE_ID_COL + " = I." + COURSE_ID_COL + ";";
-        return db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
     }
 
     // DISPLAY SAVED SCHED- CALLED WITH SEMESTER OF LIST VIEW TO POPULATE

@@ -101,6 +101,18 @@ public class CourseAdapter extends BaseAdapter {
                 case "W5":
                     display = "Winter 5";
                     break;
+                case "F6":
+                    display = "Fall 6";
+                    break;
+                case "W6":
+                    display = "Winter 6";
+                    break;
+                case "F7":
+                    display = "Fall 7";
+                    break;
+                case "W7":
+                    display = "Winter 7";
+                    break;
             }
 
             courseSem.setText(display);
@@ -121,7 +133,8 @@ public class CourseAdapter extends BaseAdapter {
     public int getItemViewType(int position){
         if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
            (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
-           (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")){
+           (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")||(idealScheduleName.get(position) == "F6") || (idealScheduleName.get(position) == "W6") ||
+            (idealScheduleName.get(position) == "F7") || (idealScheduleName.get(position) == "W7")){
                 return 0;}
         return 1;
     }

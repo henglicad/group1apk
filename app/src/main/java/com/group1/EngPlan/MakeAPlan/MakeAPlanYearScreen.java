@@ -53,20 +53,20 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
 
 
                 if(radioBtnChk == getString(R.string.yearRadioBtn)){
-                    goToNumberofCoursesT();
                     year = 1;
+                    goToNumberofCoursesT();
                 }
                 else if(radioBtnChk == getString(R.string.yearRadioBtn2)){
-                    goToNumberofCoursesF();
                     year = 2;
+                    goToNumberofCoursesF();
                 }
                 else if(radioBtnChk == getString(R.string.yearRadioBtn3)){
-                    goToNumberofCoursesF();
                     year = 3;
+                    goToNumberofCoursesF();
                 }
                 else if(radioBtnChk == getString(R.string.yearRadioBtn4)){
-                    goToNumberofCoursesF();
                     year = 4;
+                    goToNumberofCoursesF();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Please Select One of the above Options", Toast.LENGTH_SHORT).show();
@@ -91,6 +91,8 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
         Intent showNumberOfCoursesScreen = new Intent(getApplicationContext(), NumberOfCoursesScreen.class);
         boolean message = true;
         showNumberOfCoursesScreen.putExtra("Check", message);
+        showNumberOfCoursesScreen.putExtra("Year",year);
+        showNumberOfCoursesScreen.putExtra("Semester", semester);
         startActivity(showNumberOfCoursesScreen);
     }
 
@@ -98,6 +100,8 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
         Intent showNumberOfCoursesScreen = new Intent(getApplicationContext(), NumberOfCoursesScreen.class);
         boolean message = false;
         showNumberOfCoursesScreen.putExtra("Check", message);
+        showNumberOfCoursesScreen.putExtra("Year",year);
+        showNumberOfCoursesScreen.putExtra("Semester", semester);
         startActivity(showNumberOfCoursesScreen);
     }
 
