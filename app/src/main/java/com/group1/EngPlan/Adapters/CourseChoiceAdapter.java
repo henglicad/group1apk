@@ -75,7 +75,25 @@ public class CourseChoiceAdapter extends BaseAdapter {
             }
         });
 
+        //setCheckd(position);
+
         return v;
     }
+
+    public void setCheckd(final int position){
+        courseCheck.setChecked(checkBoxState[position]);
+        courseCheck.setChecked(!courseCheck.isChecked());
+        if(courseCheck.isChecked()){
+            checkBoxState[position] = true;
+        }
+
+        else{
+            checkBoxState[position] = false;
+        }
+
+
+
+    }
+
 }
 
