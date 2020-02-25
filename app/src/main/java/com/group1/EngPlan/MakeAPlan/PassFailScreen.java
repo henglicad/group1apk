@@ -72,7 +72,7 @@ public class PassFailScreen extends AppCompatActivity {
                         boolean[] chk = adapter.checkBoxState;
 
                         for(int i = 0; i < chk.length; i++){
-                            if(chk[i] = true)
+                            if(chk[i] == true)
                                 myDB.setRecords(courseCode.get(i), 1);
                             else
                                 myDB.setRecords(courseCode.get(i), 0);

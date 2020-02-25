@@ -1,6 +1,8 @@
 package com.group1.EngPlan;
 
 
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -14,10 +16,12 @@ import androidx.test.runner.AndroidJUnit4;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -28,10 +32,17 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class PassFailScreenTestWDatabase {
+
+    DatabaseHandler db;
+    @Before
+    public void setUp(){
+        db = new DatabaseHandler(getApplicationContext());
+    }
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -191,7 +202,18 @@ public class PassFailScreenTestWDatabase {
                                 1),
                         isDisplayed()));
         appCompatButton4.perform(click());
+
+    int[] reference = {1, 0, 0, 0, 0, 0, 0, 0};
+    int check = 0;
+    Cursor data = db.getRecords();
+        String s = DatabaseUtils.dumpCursorToString(data);
+        data.moveToFirst();
+        for(int i = 0; i < 8; i++){
+        check = data.getInt(1);
+        assertEquals(check, reference[i]);
+        data.moveToNext();
     }
+}
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
