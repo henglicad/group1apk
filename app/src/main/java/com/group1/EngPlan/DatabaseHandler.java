@@ -391,6 +391,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+    public Cursor fillSched(String semester){
+        Log.d(LOG_TAG, "Filling Sched View");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT S." + COURSE_ID_COL + ", C." + COURSE_NAME_COL
+                + " FROM " + SAVED_SCHED_TABLE + " S JOIN " + COURSE_LIST_TABLE
+                + " C ON C." + COURSE_ID_COL + " = S." + COURSE_ID_COL
+                + " WHERE S." + SEMESTER_COL + " = '" + semester + "';";
+        return db.rawQuery(query, null);
+    }
+
     // SEND DATA FOR THE DETAILED COURSE SCREEN
     public Cursor getCourseData(String id){
         Log.d(LOG_TAG, "Getting Course Data");

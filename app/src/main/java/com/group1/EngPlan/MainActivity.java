@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button mainActivitybtn1 = (Button) findViewById(R.id.MainActivitybtn1);
         Button mainActivitybtn2 = (Button) findViewById(R.id.MainActivitybtn2);
+        Button mainActivitybtn3 = (Button) findViewById(R.id.MainActivitybtn3);
+        Button admin = (Button) findViewById(R.id.fileButton);
 
         mainActivitybtn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,11 +39,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //@Override
-        //public void onClick(View v){
-          //  Intent quickView = new Intent(this, QuickView.class);
-            //startActivity(quickView);
-        //}
+        mainActivitybtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewSched = new Intent(getApplicationContext(), ViewSched.class);
+                startActivity(viewSched);
+            }
+        });
+
+        admin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //pop up & check credentials
+            }
+        });
 
     }
 }

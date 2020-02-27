@@ -24,6 +24,10 @@
             android:label="@string/title_activity_quick_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ViewSched"
+            android:label="My Saved Schedule"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SplashScreen">
