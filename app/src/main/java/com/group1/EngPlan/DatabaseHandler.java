@@ -450,10 +450,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Log.d(LOG_TAG, "Updating null semesters");
         SQLiteDatabase db = this.getReadableDatabase();
 
-        db.execSQL("UPDATE " + RECORD_TABLE
+        db.execSQL("UPDATE " + SAVED_SCHED_TABLE
                     + " SET " + SEMESTER_COL + " = NULL"
                     + " WHERE " + COURSE_ID_COL + " IN (SELECT " + COURSE_ID_COL
-                                                    + " FROM " + SAVED_SCHED_TABLE
+                                                    + " FROM " + RECORD_TABLE
                                                     + " WHERE " + STATUS_COL +  " = 1);");
     }
 
