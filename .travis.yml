@@ -6,8 +6,6 @@ android:
     # use the latest revision of Android SDK Tools
     # - tools
     # - platform-tools
-    
- 
 
     # The BuildTools version used by your project
     - build-tools-29.0.2
@@ -24,12 +22,12 @@ android:
     # if you need to run emulator(s) during your tests
     - sys-img-x86-android-29
     - sys-img-armeabi-v7a-android-17
-    
-before_script: 
+
+before_script:
     - mkdir -p "$ANDROID_HOME/licenses"
     - cp ./licenses/* "$ANDROID_HOME/licenses/"
     - chmod +x gradlew
-    
+
 script:
       #- chmod +x ./gradlew build connectedCheck
       - ./gradlew clean build
