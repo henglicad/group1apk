@@ -20,10 +20,11 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -32,13 +33,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class NumberOfCoursesScreenTest {
+public class CentralActivityTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void numberOfCoursesScreen() {
+    public void centralActivityTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.MainActivitybtn1), withText("Make a Plan"),
                         childAtPosition(
@@ -50,13 +51,13 @@ public class NumberOfCoursesScreenTest {
         appCompatButton.perform(click());
 
         ViewInteraction appCompatRadioButton = onView(
-                allOf(withId(R.id.yearRadioBtn), withText("First Year (Year 1)"),
+                allOf(withId(R.id.yearRadioBtn4), withText("Fourth Year"),
                         childAtPosition(
                                 allOf(withId(R.id.yearInfoRadioGrp),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 2)),
-                                0),
+                                3),
                         isDisplayed()));
         appCompatRadioButton.perform(click());
 
@@ -65,7 +66,7 @@ public class NumberOfCoursesScreenTest {
                         childAtPosition(
                                 withId(R.id.contentPanel),
                                 0)))
-                .atPosition(0);
+                .atPosition(1);
         appCompatCheckedTextView.perform(click());
 
         ViewInteraction appCompatButton2 = onView(
@@ -79,13 +80,13 @@ public class NumberOfCoursesScreenTest {
         appCompatButton2.perform(click());
 
         ViewInteraction appCompatRadioButton2 = onView(
-                allOf(withId(R.id.courseNoRadioBtn1), withText("3 Courses"),
+                allOf(withId(R.id.courseNoRadioBtn3), withText("5 Courses"),
                         childAtPosition(
                                 allOf(withId(R.id.courseNoRadioGroup1),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 0)),
-                                0),
+                                2),
                         isDisplayed()));
         appCompatRadioButton2.perform(click());
 
@@ -99,29 +100,8 @@ public class NumberOfCoursesScreenTest {
                         isDisplayed()));
         appCompatButton3.perform(click());
 
-        pressBack();
-
-        ViewInteraction appCompatRadioButton3 = onView(
-                allOf(withId(R.id.yearRadioBtn3), withText("Third Year"),
-                        childAtPosition(
-                                allOf(withId(R.id.yearInfoRadioGrp),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                2)),
-                                2),
-                        isDisplayed()));
-        appCompatRadioButton3.perform(click());
-
-        DataInteraction appCompatCheckedTextView2 = onData(anything())
-                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
-                        childAtPosition(
-                                withId(R.id.contentPanel),
-                                0)))
-                .atPosition(0);
-        appCompatCheckedTextView2.perform(click());
-
         ViewInteraction appCompatButton4 = onView(
-                allOf(withId(R.id.yearNextBtn), withText("Next"),
+                allOf(withId(R.id.passFailNextBtn), withText("Next"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -130,51 +110,55 @@ public class NumberOfCoursesScreenTest {
                         isDisplayed()));
         appCompatButton4.perform(click());
 
-        ViewInteraction appCompatRadioButton4 = onView(
-                allOf(withId(R.id.courseNoRadioBtn3), withText("5 Courses"),
-                        childAtPosition(
-                                allOf(withId(R.id.courseNoRadioGroup1),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                2),
-                        isDisplayed()));
-        appCompatRadioButton4.perform(click());
-
-        ViewInteraction appCompatButton5 = onView(
-                allOf(withId(R.id.courseNoNextBtn1), withText("Next"),
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.TextViewSemester), withText("Fall 1"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(android.R.id.content),
+                                        withId(R.id.central_activity_list_view),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textView.check(matches(withText("Fall 1")));
+
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withContentDescription("Open navigation drawer"),
+                        childAtPosition(
+                                allOf(withId(R.id.central_screen_toolbar),
+                                        childAtPosition(
+                                                withClassName(is("androidx.appcompat.widget.LinearLayoutCompat")),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+        ViewInteraction imageView = onView(
+                allOf(childAtPosition(
+                        childAtPosition(
+                                withId(R.id.navigation_header_container),
+                                0),
+                        0),
+                        isDisplayed()));
+        imageView.check(matches(isDisplayed()));
+
+        ViewInteraction textView2 = onView(
+                allOf(withText("TRU Eng. Planner"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.navigation_header_container),
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatButton5.perform(click());
+        textView2.check(matches(withText("TRU Eng. Planner")));
 
-        pressBack();
-
-        ViewInteraction appCompatRadioButton5 = onView(
-                allOf(withId(R.id.courseNoRadioBtn4), withText("6 Courses"),
-                        childAtPosition(
-                                allOf(withId(R.id.courseNoRadioGroup1),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                3),
-                        isDisplayed()));
-        appCompatRadioButton5.perform(click());
-
-        ViewInteraction appCompatButton6 = onView(
-                allOf(withId(R.id.courseNoNextBtn1), withText("Next"),
+        ViewInteraction textView3 = onView(
+                allOf(withText("TRU Eng. Planner"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(android.R.id.content),
+                                        withId(R.id.navigation_header_container),
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatButton6.perform(click());
-
-        pressBack();
+        textView3.check(matches(withText("TRU Eng. Planner")));
     }
 
     private static Matcher<View> childAtPosition(

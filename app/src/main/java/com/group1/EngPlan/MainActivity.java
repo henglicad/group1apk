@@ -2,6 +2,7 @@ package com.group1.EngPlan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.group1.EngPlan.MakeAPlan.MakeAPlanYearScreen;
 
 public class MainActivity extends AppCompatActivity {
-
-    //DatabaseHandler myDB;
+    public static final String LOG_TAG = MainActivity.class.getSimpleName();
+    //DatabaseHandler myDB = new DatabaseHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

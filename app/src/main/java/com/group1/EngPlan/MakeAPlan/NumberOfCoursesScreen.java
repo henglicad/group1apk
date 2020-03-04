@@ -9,8 +9,10 @@ import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.DatabaseHandler;
 import com.group1.EngPlan.R;
+import com.group1.EngPlan.schedule_generator;
 
 public class NumberOfCoursesScreen extends AppCompatActivity {
 
@@ -55,25 +57,37 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
                     choice = 5;
                 else if(Integer.parseInt(radioBtnChk) == 6)
                     choice = 6;
-                else if(Integer.parseInt(radioBtnChk) == 7)
+                else //if(Integer.parseInt(radioBtnChk) == 7)
                     choice = 7;
 
 
 
                 if(message){
                     ///////////////////////////////////////main(choice, s[1], year);
+                    boolean fin = false;
+                    schedule_generator sg = new schedule_generator(myDB);
+                    fin = sg.main(choice, Semester, year);
+
+
+                    Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+                    startActivity(intent);
+
+
                 }
                 else {
-                    goToPassFail(message);
+                    goToPassFail(choice, year, Semester);
+
                 }
 
             }
         });
     }
 
-    public void goToPassFail(boolean message){
-        Intent showPassFailScreen = new Intent(getApplicationContext(), PassFailScreen.class);
-        showPassFailScreen.putExtra("Check", message);
-        startActivity(showPassFailScreen);
+    public void goToPassFail(int choice, int year, String Semester){
+        Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
+        intent.putExtra("Year",year);
+        intent.putExtra("Semester", Semester);
+        intent.putExtra("Choice", choice);
+        startActivity(intent);
     }
 }
