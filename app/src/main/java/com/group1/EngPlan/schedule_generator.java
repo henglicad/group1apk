@@ -9,7 +9,7 @@ public class schedule_generator  {
     public static final String LOG_TAG = schedule_generator.class.getSimpleName();
     Cursor data;
     int fYear, wYear;
-    int fy = 0, wy = 0;
+    int fy = 0, wy = 0, C1Year;
 
     ArrayList<String> courseID = new ArrayList<>();
     ArrayList<String> courseStatus = new ArrayList<>();
@@ -362,6 +362,8 @@ public class schedule_generator  {
         //ArrayList<String> winter_buffer= new ArrayList<>();
         //int c = 0;
         //int fy = 0, wy = 0;
+
+
         fall_semesters.add(new ArrayList<String>());
         winter_semesters.add(new ArrayList<String>());
         while(fall.size()!=0 || winter.size()!=0){
@@ -393,6 +395,7 @@ public class schedule_generator  {
                         fall_semesters.get(fy+1).add(fall.get(0));
                         IdealcourseStatus.set(IdealcourseID.indexOf(fall.get(0)), "1");
                         courseStatus.set(courseID.indexOf(fall.get(0)), "1");
+                        C1Year = fy+1;
                         fall.remove(0);
 
                     }
@@ -436,7 +439,7 @@ public class schedule_generator  {
                     winter.remove(0);
                 }
                 else{
-                    if(winter.get(0).equals("COOP2180")){
+                    if(winter.get(0).equals("COOP2180") && wy+1>=C1Year){
                         winter_semesters.add(new ArrayList<String>());
                         winter_semesters.get(wy+1).add(winter.get(0));
                         IdealcourseStatus.set(IdealcourseID.indexOf(winter.get(0)), "1");
@@ -445,14 +448,20 @@ public class schedule_generator  {
                         break;
                     }
                     else{
-                        winter_semesters.get(wy).add(winter.get(0));
-                        IdealcourseStatus.set(IdealcourseID.indexOf(winter.get(0)), "1");
-                        courseStatus.set(courseID.indexOf(winter.get(0)), "1");
-                        winter.remove(0);
+                        if(winter.get(0).equals("COOP2180")){
+                            winter.remove(0);
+                        }
+                        else{
+                            winter_semesters.get(wy).add(winter.get(0));
+                            IdealcourseStatus.set(IdealcourseID.indexOf(winter.get(0)), "1");
+                            courseStatus.set(courseID.indexOf(winter.get(0)), "1");
+                            winter.remove(0);
+                        }
                     }
 
                 }
             }
+
             if(winter_semesters.get(wy).size() >= Cnum){
                 wy++;
                 winter_semesters.add(new ArrayList<String>());
