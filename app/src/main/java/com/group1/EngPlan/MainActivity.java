@@ -1,10 +1,13 @@
 package com.group1.EngPlan;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.MakeAPlan.MakeAPlanYearScreen;
@@ -42,15 +45,20 @@ public class MainActivity extends AppCompatActivity {
         mainActivitybtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent viewSched = new Intent(getApplicationContext(), ViewSched.class);
-                startActivity(viewSched);
+                Intent central = new Intent(getApplicationContext(), CentralActivity.class);
+                startActivity(central);
             }
         });
 
         admin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //pop up & check credentials
+                //pop up & check credentials but until then
+
+                
+
+                Intent changeDB = new Intent(getApplicationContext(), ChangeDatabase.class);
+                startActivity(changeDB);
             }
         });
 

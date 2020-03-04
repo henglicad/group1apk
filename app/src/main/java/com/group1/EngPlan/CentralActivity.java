@@ -100,8 +100,6 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                         (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
                         (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6")||
                         (courseName.get(position) == "F7") || (courseName.get(position) == "W7")){
-
-
                 }
                 else {
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
