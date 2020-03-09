@@ -1,5 +1,6 @@
 package com.group1.EngPlan.MakeAPlan;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,9 +51,7 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
                 else
                     radioBtnChk = RadioBtn.getText().toString();
 
-
-
-                if(radioBtnChk == getString(R.string.yearRadioBtn)){
+                if(radioBtnChk == "First Year"){
                     year = 1;
                     goToNumberofCoursesT();
                 }
@@ -71,9 +70,6 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
                 else{
                     Toast.makeText(getApplicationContext(), "Please Select One of the above Options", Toast.LENGTH_SHORT).show();
                 }
-
-
-
             }
         });
     }
@@ -108,7 +104,8 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
     public void CreateAlertDialogWithRadioButtonGroup(){
 
         String[] values = {"Fall Semester", "Winter Semester"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
 
         builder.setTitle("Select Your Choice");
 
@@ -116,22 +113,22 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int item) {
 
-                switch(item)
-                {
-                    case 0:
+            switch(item)
+            {
+                case 0:
 
-                        Toast.makeText(getApplicationContext(), "Fall Semester Selected", Toast.LENGTH_LONG).show();
-                        semester = "F";
-                        break;
+                    Toast.makeText(getApplicationContext(), "Fall Semester Selected", Toast.LENGTH_LONG).show();
+                    semester = "F";
+                    break;
 
-                    case 1:
+                case 1:
 
-                        Toast.makeText(getApplicationContext(), "Winter Semester Selected", Toast.LENGTH_LONG).show();
-                        semester = "W";
-                        break;
+                    Toast.makeText(getApplicationContext(), "Winter Semester Selected", Toast.LENGTH_LONG).show();
+                    semester = "W";
+                    break;
+            }
 
-                }
-                alertDialog1.dismiss();
+            alertDialog1.dismiss();
             }
         });
         alertDialog1 = builder.create();
