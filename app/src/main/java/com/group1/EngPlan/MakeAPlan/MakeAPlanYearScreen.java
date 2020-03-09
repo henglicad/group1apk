@@ -67,6 +67,10 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
                     year = 4;
                     goToNumberofCoursesF();
                 }
+                else if(radioBtnChk == getString(R.string.yearRadioBtn5)){
+                    year = 5;
+                    goToNumberofCoursesF();
+                }
                 else{
                     Toast.makeText(getApplicationContext(), "Please Select One of the above Options", Toast.LENGTH_SHORT).show();
                 }
