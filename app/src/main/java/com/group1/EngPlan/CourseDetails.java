@@ -31,7 +31,6 @@ public class CourseDetails extends AppCompatActivity {
         prereqList.setVisibility(View.INVISIBLE);
         toList.setVisibility(View.INVISIBLE);
 
-        //courseID.setText(index + "\n");
         Cursor data = myDB.getCourseData(index);
 
         data.moveToFirst();
@@ -85,16 +84,5 @@ public class CourseDetails extends AppCompatActivity {
                 }
             }
         }
-
-        /*int columnCount = 1;
-
-        String temp = "not null";
-
-        while(temp != null){
-            temp = data.getString(columnCount);
-            courseName.append(temp + "\n");
-            columnCount++;
-        }*/
-
     }
 }

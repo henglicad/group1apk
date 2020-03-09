@@ -136,7 +136,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             startActivity(new Intent (getApplicationContext(), PassFailScreen.class));
         }
         /*else if(id == R.id.nav_schedule_change_view){
-            startActivity(new Intent (getApplicationContext(), ScheculeChange.class));
+            startActivity(new Intent (getApplicationContext(), ScheduleChange.class));
         }*/
 
         drawer.closeDrawer(GravityCompat.START);

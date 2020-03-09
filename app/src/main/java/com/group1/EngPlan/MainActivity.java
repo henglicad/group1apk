@@ -14,7 +14,6 @@ import com.group1.EngPlan.MakeAPlan.MakeAPlanYearScreen;
 
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
-    //DatabaseHandler myDB = new DatabaseHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

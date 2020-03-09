@@ -426,6 +426,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + " WHERE S." + SEMESTER_COL + " = '" + semester + "';";
         return db.rawQuery(query, null);
     }
+
+    public Cursor sendDBData(){
+        Log.d(LOG_TAG, "Filling cursor to write to file");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT C." + COURSE_ID_COL + ", C." +COURSE_NAME_COL + ", C." + COURSE_OFFERED_COL + ","
+                + " I." + SEMESTER_COL + ", C." + COURSE_PREREQ1_COL + ", C." + COURSE_PREREQ2_COL + ","
+                + " C." + COURSE_TO1_COL + ", C." + COURSE_TO2_COL + ", C." + COURSE_TO3_COL + ", C." + COURSE_TO4_COL
+                + " FROM " + COURSE_LIST_TABLE + " C JOIN " + IDEAL_SCHED_TABLE + " I"
+                + " ON C." + COURSE_ID_COL + " = I." + COURSE_ID_COL +";";
+        return db.rawQuery(query, null);
+    }
         /* END SEND DATA */
 
         /* BEGIN FILL DATA */
