@@ -57,7 +57,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         final DatabaseHandler myDB = new DatabaseHandler(this);
         ListView listView = (ListView) findViewById(R.id.central_activity_list_view);
 
-        String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5", "F6", "W6", "F7", "W7"};
+        String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5", "F6", "W6", "F7", "W7", "F8", "W8", "F9", "W9", "F10", "W10", "F11", "W11"};
         int termNo = 0;
         while(termNo < terms.length) {
 
@@ -66,13 +66,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            String s;
-            //boolean check = true;
-            /*while (check){
-                s = DatabaseUtils.dumpCurrentRowToString(data);
-                Log.d(LOG_DATA, s);
-                check = data.moveToNext();
-            }*/
+
+            String s, temp;
 
             data.moveToFirst();
             boolean check = true;
@@ -80,14 +75,19 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                 while (check) {
                     s = DatabaseUtils.dumpCurrentRowToString(data);
                     Log.d(LOG_DATA, s);
-                    courseCode.add(data.getString(0));
-                    courseName.add(data.getString(1));
+                    if(data.getString(1) != null){
+                        courseCode.add(data.getString(0));
+                        courseName.add(data.getString(1));
+                        check = data.moveToNext();
+                    }
                     check = data.moveToNext();
                 }
             }
 
             termNo++;
         }
+
+
 
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
         listView.setAdapter(courseAdapter);
@@ -99,9 +99,9 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                 if((courseName.get(position) == "F1") || (courseName.get(position) == "W1") ||(courseName.get(position) == "F2") || (courseName.get(position) == "W2") ||
                         (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
                         (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6")||
-                        (courseName.get(position) == "F7") || (courseName.get(position) == "W7")){
-
-
+                        (courseName.get(position) == "F7") || (courseName.get(position) == "W7")|| (courseName.get(position) == "F8") || (courseName.get(position) == "W8")||
+                        (courseName.get(position) == "F9") || (courseName.get(position) == "W9")|| (courseName.get(position) == "F10") || (courseName.get(position) == "W10")||
+                        (courseName.get(position) == "F11") || (courseName.get(position) == "W11")){
                 }
                 else {
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
@@ -135,10 +135,12 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             startActivity(new Intent (getApplicationContext(), QuickView.class));
         }
         else if(id == R.id.nav_PF_view){
-            startActivity(new Intent (getApplicationContext(), PassFailScreen.class));
+            Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
+            intent.putExtra("First Time", false);
+            startActivity(intent);
         }
         /*else if(id == R.id.nav_schedule_change_view){
-            startActivity(new Intent (getApplicationContext(), ScheculeChange.class));
+            startActivity(new Intent (getApplicationContext(), ScheduleChange.class));
         }*/
 
         drawer.closeDrawer(GravityCompat.START);

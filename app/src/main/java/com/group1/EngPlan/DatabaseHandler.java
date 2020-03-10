@@ -60,13 +60,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /* BEGIN TABLE CREATION */
+        /* BEGIN TABLE CREATION */
     // CREATE TABLES AND CALL FOR POPULATION
     public void createDatabase(SQLiteDatabase db){
         Log.d(LOG_TAG, "Building tables for database");
 
         db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
+                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(50) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
                 + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
                 + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
         populateCourseTable(db);
@@ -426,6 +426,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + " WHERE S." + SEMESTER_COL + " = '" + semester + "';";
         return db.rawQuery(query, null);
     }
+
+    public Cursor sendDBData(){
+        Log.d(LOG_TAG, "Filling cursor to write to file");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT C." + COURSE_ID_COL + ", C." +COURSE_NAME_COL + ", C." + COURSE_OFFERED_COL + ","
+                + " I." + SEMESTER_COL + ", C." + COURSE_PREREQ1_COL + ", C." + COURSE_PREREQ2_COL + ","
+                + " C." + COURSE_TO1_COL + ", C." + COURSE_TO2_COL + ", C." + COURSE_TO3_COL + ", C." + COURSE_TO4_COL
+                + " FROM " + COURSE_LIST_TABLE + " C JOIN " + IDEAL_SCHED_TABLE + " I"
+                + " ON C." + COURSE_ID_COL + " = I." + COURSE_ID_COL +";";
+        return db.rawQuery(query, null);
+    }
         /* END SEND DATA */
 
         /* BEGIN FILL DATA */
@@ -445,9 +457,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("UPDATE " + SAVED_SCHED_TABLE + " SET " + SEMESTER_COL + " = '" + sem + "' WHERE " + COURSE_ID_COL + " = '" + id + "';");
     }
 
+    // UPDATE SAVED SCHED SEMESTERS BASED ON PASS/FAIL
+    public void updateSemesters(){
+        Log.d(LOG_TAG, "Updating null semesters");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("UPDATE " + SAVED_SCHED_TABLE
+                    + " SET " + SEMESTER_COL + " = NULL"
+                    + " WHERE " + COURSE_ID_COL + " IN (SELECT " + COURSE_ID_COL
+                                                    + " FROM " + RECORD_TABLE
+                                                    + " WHERE " + STATUS_COL +  " = 1);");
+    }
+
+    // SEND PASS FAIL INFORMATION
+    public Cursor sendPassFail(String sem){
+        Log.d(LOG_TAG, "Sending pass/fail info");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT I." + COURSE_ID_COL + ", R." + STATUS_COL
+                + " FROM " + IDEAL_SCHED_TABLE + " I JOIN " + RECORD_TABLE + " R "
+                + "ON I." + COURSE_ID_COL + " = R." + COURSE_ID_COL
+                + " WHERE I." + SEMESTER_COL + " = '" + sem + "';";
+        return db.rawQuery(query, null);
+    }
+
     // UPDATE BACKUP SCHED WITH SAVED SCHED
     //public void updateBackupSched(){
 
     //}
+
         /* END FILL DATA */
 }

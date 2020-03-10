@@ -9,10 +9,11 @@
 
     <string name="yearScreenTextView">What year of university are you in?</string>
     <string name="yearNextBtn">Next</string>
-    <string name="yearRadioBtn">First Year (Year 1)</string>
+    <string name="yearRadioBtn">First Year</string>
     <string name="yearRadioBtn2">Second Year</string>
     <string name="yearRadioBtn3">Third Year</string>
     <string name="yearRadioBtn4">Fourth Year</string>
+    <string name="yearRadioBtn5">Fifth Year</string>
 
 
     <string name="passFailNextBtn">Next</string>
@@ -40,5 +41,6 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="MainActivitybtn3">VIEW MY PLAN</string>
 
 </resources>
