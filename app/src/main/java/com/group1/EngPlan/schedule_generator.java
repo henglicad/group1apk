@@ -21,6 +21,7 @@ public class schedule_generator  {
     ArrayList<ArrayList<String>> winter_semesters = new ArrayList<ArrayList<String>>();
 
 
+
     DatabaseHandler CDB;
 
     public schedule_generator(DatabaseHandler db){
@@ -33,6 +34,8 @@ public class schedule_generator  {
         add_data();
         fYear = year;
         wYear = year;
+        fall_semesters.add(new ArrayList<String>());
+        winter_semesters.add(new ArrayList<String>());
 
         ArrayList<String> MasterList = getMasterList();
 
@@ -401,14 +404,7 @@ public class schedule_generator  {
     }
 
     public void make_schedule(ArrayList<String> fall, ArrayList<String> winter, ArrayList<String> both,  int Cnum){
-        //ArrayList<String> fall_buffer= new ArrayList<>();
-        //ArrayList<String> winter_buffer= new ArrayList<>();
-        //int c = 0;
-        //int fy = 0, wy = 0;
 
-
-        fall_semesters.add(new ArrayList<String>());
-        winter_semesters.add(new ArrayList<String>());
         while(fall.size()!=0 || winter.size()!=0){
             //Fall semester scheduling
             while(fall_semesters.get(fy).size() < Cnum){
@@ -418,7 +414,7 @@ public class schedule_generator  {
                     break;
                 }
                 else if(fall.size() == 0){                                                                  //checks to see if all the fall courses to be scheduled have been scheduled
-                    if (both.size() != 0 && getCourseYear(both.get(0)) <= fy){                      //checks to see if a semester that is available for both semester can be scheduled
+                    if (both.size() != 0 && getCourseYear(both.get(0)) <= fYear+fy){                      //checks to see if a semester that is available for both semester can be scheduled
                         fall_semesters.get(fy).add(both.get(0));
                         IdealcourseStatus.set(IdealcourseID.indexOf(both.get(0)), "1");
                         courseStatus.set(courseID.indexOf(both.get(0)), "1");
@@ -427,7 +423,7 @@ public class schedule_generator  {
                         break;
                     }
                 }
-                else if(getCourseYear(fall.get(0)) > fYear+fy+1){                                   //this condition makes sure that only courses that are to be taken up till users current year are scheduled. e.g: a 3rd year course is no scheduled in 2nd year
+                else if(getCourseYear(fall.get(0)) > fYear+fy){                                   //this condition makes sure that only courses that are to be taken up till users current year are scheduled. e.g: a 3rd year course is no scheduled in 2nd year
                     fall.remove(0);
                 }
                 else{
@@ -456,7 +452,7 @@ public class schedule_generator  {
             Log.d(LOG_TAG, "winter_semesters size:"+winter_semesters.size());
             while(winter_semesters.get(wy).size() < Cnum){
                 if(winter.size() == 0){
-                    if (both.size() != 0 && getCourseYear(both.get(0)) <= wy){
+                    if (both.size() != 0 && getCourseYear(both.get(0)) <= wYear+wy){
                         winter_semesters.get(wy).add(both.get(0));
                         IdealcourseStatus.set(IdealcourseID.indexOf(both.get(0)), "1");
                         courseStatus.set(courseID.indexOf(both.get(0)), "1");
@@ -472,7 +468,7 @@ public class schedule_generator  {
                         break;
 
                 }
-                else if(getCourseYear(winter.get(0)) > wYear+wy+1){
+                else if(getCourseYear(winter.get(0)) > wYear+wy){
                     winter.remove(0);
                 }
                 else{

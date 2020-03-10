@@ -80,7 +80,7 @@ public class PassFailScreen extends AppCompatActivity {
         }
 
         }
-
+      
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName, passFailData, firstTime);
         listView.setAdapter(adapter);
 

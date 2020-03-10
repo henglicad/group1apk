@@ -51,7 +51,7 @@ public class MakeAPlanYearScreen extends AppCompatActivity {
                 else
                     radioBtnChk = RadioBtn.getText().toString();
 
-                if(radioBtnChk == "First Year"){
+                if(radioBtnChk == getString(R.string.yearRadioBtn)){
                     year = 1;
                     goToNumberofCoursesT();
                 }
