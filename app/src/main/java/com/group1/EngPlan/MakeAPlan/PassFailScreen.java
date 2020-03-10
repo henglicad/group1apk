@@ -86,14 +86,5 @@ public class PassFailScreen extends AppCompatActivity {
                     }
         });
 
-
-
-
-
-
     }
-
-
-
-
 }
