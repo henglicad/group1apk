@@ -92,6 +92,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             termNo++;
         }
 
+
+
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
         listView.setAdapter(courseAdapter);
 
@@ -140,7 +142,9 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             startActivity(new Intent (getApplicationContext(), QuickView.class));
         }
         else if(id == R.id.nav_PF_view){
-            startActivity(new Intent (getApplicationContext(), PassFailScreen.class));
+            Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
+            intent.putExtra("First Time", false);
+            startActivity(intent);
         }
         /*else if(id == R.id.nav_schedule_change_view){
             startActivity(new Intent (getApplicationContext(), ScheculeChange.class));

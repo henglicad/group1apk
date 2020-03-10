@@ -33,13 +33,15 @@ public class PassFailScreen extends AppCompatActivity {
         setContentView(R.layout.activity_pass_fail_screen);
 
         Log.d(LOG_TAG, "On Pass Fail Screen");
-        ListView listView = (ListView) findViewById(R.id.passFailListView);
+        final ListView listView = (ListView) findViewById(R.id.passFailListView);
         Button passFailNext = (Button) findViewById(R.id.passFailNextBtn);
         Intent intent = getIntent();
 
         final int year = intent.getIntExtra("Year", 0);
         final String Semester = intent.getStringExtra("Semester");
         final int choice = intent.getIntExtra("Choice", 0);
+        final boolean firstTime = intent.getBooleanExtra("First Time", false);
+        Cursor data;
 
 
 
@@ -47,7 +49,7 @@ public class PassFailScreen extends AppCompatActivity {
         int termNo = 0;
         while(termNo < terms.length) {
 
-            Cursor data = myDB.fillQuickView(terms[termNo]);
+            data = myDB.fillQuickView(terms[termNo]);
 
             data.moveToFirst();
             boolean check = true;
@@ -60,14 +62,36 @@ public class PassFailScreen extends AppCompatActivity {
             termNo++;
         }
 
+        termNo = 0;
+        int i = 0;
+        boolean[] passFailData = new boolean[courseCode.size()];
+        if(firstTime == false){
+                while(termNo < terms.length){
+            data = myDB.sendPassFail(terms[termNo]);
+            data.moveToFirst();
+            boolean check = true;
+            while (check) {
+                if (data.getInt(1) == 1) {
+                    passFailData[i] = true;
+                } else
+                    passFailData[i] = false;
+                check = data.moveToNext();
+                i++;
+            }
+            termNo ++;
+        }
 
-        final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName);
+        }
+
+
+        final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName, passFailData, firstTime);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adapter.setCheckd(position);
+                listView.setAdapter(adapter);
             }
         });
 
@@ -75,24 +99,28 @@ public class PassFailScreen extends AppCompatActivity {
         passFailNext.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean[] chk = adapter.checkBoxState;
-
-                        for(int i = 0; i < chk.length; i++){
-                            if(chk[i] == true)
-                                myDB.setRecords(courseCode.get(i), 1);
-                            else
-                                myDB.setRecords(courseCode.get(i), 0);
-                        }
-
-                        boolean fin = false;
-                        schedule_generator sg = new schedule_generator(myDB);
-                        fin = sg.main(choice, Semester, year);
-                        myDB.updateSemesters();
-                        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
-                        startActivity(intent);
-
+                       writeToDatabase(adapter, myDB,choice, Semester, year);
                     }
         });
 
     }
+
+    public void writeToDatabase(CourseChoiceAdapter adapter, DatabaseHandler myDB, int choice, String Semester, int year){
+        boolean[] chk = adapter.checkBoxState;
+
+        for(int i = 0; i < chk.length; i++){
+            if(chk[i] == true)
+                myDB.setRecords(courseCode.get(i), 1);
+            else
+                myDB.setRecords(courseCode.get(i), 0);
+        }
+
+        boolean fin = false;
+        schedule_generator sg = new schedule_generator(myDB);
+        fin = sg.main(choice, Semester, year);
+        myDB.updateSemesters();
+        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+        startActivity(intent);
+    }
+
 }

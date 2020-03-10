@@ -457,6 +457,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                                     + " WHERE " + STATUS_COL +  " = 1);");
     }
 
+    // SEND PASS FAIL INFORMATION
+    // SEND PASS FAIL INFORMATION
+    public Cursor sendPassFail(String sem){
+        Log.d(LOG_TAG, "Sending pass/fail info");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT I." + COURSE_ID_COL + ", R." + STATUS_COL
+                + " FROM " + IDEAL_SCHED_TABLE + " I JOIN " + RECORD_TABLE + " R "
+                + "ON I." + COURSE_ID_COL + " = R." + COURSE_ID_COL
+                + " WHERE I." + SEMESTER_COL + " = '" + sem + "';";
+        return db.rawQuery(query, null);
+    }
+
     // UPDATE BACKUP SCHED WITH SAVED SCHED
     //public void updateBackupSched(){
 
