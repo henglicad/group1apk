@@ -84,7 +84,7 @@ public class PassFailScreen extends AppCompatActivity {
                         boolean fin = false;
                         schedule_generator sg = new schedule_generator(myDB);
                         fin = sg.main(choice, Semester, year);
-
+                        myDB.updateSemesters();
                         Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
                         startActivity(intent);
 

@@ -456,5 +456,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.execSQL("UPDATE " + SAVED_SCHED_TABLE + " SET " + SEMESTER_COL + " = '" + sem + "' WHERE " + COURSE_ID_COL + " = '" + id + "';");
     }
+
+    // UPDATE SAVED SCHED SEMESTERS BASED ON PASS/FAIL
+    public void updateSemesters(){
+        Log.d(LOG_TAG, "Updating null semesters");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        db.execSQL("UPDATE " + SAVED_SCHED_TABLE
+                    + " SET " + SEMESTER_COL + " = NULL"
+                    + " WHERE " + COURSE_ID_COL + " IN (SELECT " + COURSE_ID_COL
+                                                    + " FROM " + RECORD_TABLE
+                                                    + " WHERE " + STATUS_COL +  " = 1);");
+    }
+
+    // UPDATE BACKUP SCHED WITH SAVED SCHED
+    //public void updateBackupSched(){
+
+    //}
+
         /* END FILL DATA */
 }

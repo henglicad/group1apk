@@ -66,7 +66,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            String s;
+            String s, temp;
             //boolean check = true;
             /*while (check){
                 s = DatabaseUtils.dumpCurrentRowToString(data);
@@ -80,8 +80,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                 while (check) {
                     s = DatabaseUtils.dumpCurrentRowToString(data);
                     Log.d(LOG_DATA, s);
-                    courseCode.add(data.getString(0));
-                    courseName.add(data.getString(1));
+                    if(data.getString(1) != null){
+                        courseCode.add(data.getString(0));
+                        courseName.add(data.getString(1));
+                        check = data.moveToNext();
+                    }
                     check = data.moveToNext();
                 }
             }
@@ -99,6 +102,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                 if((courseName.get(position) == "F1") || (courseName.get(position) == "W1") ||(courseName.get(position) == "F2") || (courseName.get(position) == "W2") ||
                         (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
                         (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6")||
+
                         (courseName.get(position) == "F7") || (courseName.get(position) == "W7")){
                 }
                 else {
