@@ -80,10 +80,9 @@ public class PassFailScreen extends AppCompatActivity {
         }
 
         }
+      
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName, passFailData, firstTime);
-
         listView.setAdapter(adapter);
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -117,6 +116,9 @@ public class PassFailScreen extends AppCompatActivity {
         fin = sg.main(choice, Semester, year);
         myDB.updateSemesters();
         Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+        intent.putExtra("Choice", choice);
+        intent.putExtra("Year",year);
+        intent.putExtra("Semester", Semester);
         startActivity(intent);
     }
 }

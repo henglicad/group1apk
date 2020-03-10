@@ -140,12 +140,9 @@ public class CourseAdapter extends BaseAdapter {
             }
 
             courseSem.setText(display);
-            return v;
+                return v;
         }
-
-
         return null;
-
     }
 
     @Override
