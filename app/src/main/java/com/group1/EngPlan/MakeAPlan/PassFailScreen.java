@@ -41,8 +41,6 @@ public class PassFailScreen extends AppCompatActivity {
         final String Semester = intent.getStringExtra("Semester");
         final int choice = intent.getIntExtra("Choice", 0);
 
-
-
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
         int termNo = 0;
         while(termNo < terms.length) {
@@ -59,7 +57,6 @@ public class PassFailScreen extends AppCompatActivity {
 
             termNo++;
         }
-
 
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName);
         listView.setAdapter(adapter);
@@ -93,15 +90,5 @@ public class PassFailScreen extends AppCompatActivity {
 
                     }
         });
-
-
-
-
-
-
     }
-
-
-
-
 }

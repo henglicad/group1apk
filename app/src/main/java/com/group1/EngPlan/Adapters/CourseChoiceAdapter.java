@@ -90,10 +90,5 @@ public class CourseChoiceAdapter extends BaseAdapter {
         else{
             checkBoxState[position] = false;
         }
-
-
-
     }
-
 }
-

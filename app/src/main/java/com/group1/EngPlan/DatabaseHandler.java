@@ -60,13 +60,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /* BEGIN TABLE CREATION */
+        /* BEGIN TABLE CREATION */
     // CREATE TABLES AND CALL FOR POPULATION
     public void createDatabase(SQLiteDatabase db){
         Log.d(LOG_TAG, "Building tables for database");
 
         db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
+                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(50) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
                 + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
                 + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
         populateCourseTable(db);
@@ -426,6 +426,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + " WHERE S." + SEMESTER_COL + " = '" + semester + "';";
         return db.rawQuery(query, null);
     }
+
+    public Cursor sendDBData(){
+        Log.d(LOG_TAG, "Filling cursor to write to file");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT C." + COURSE_ID_COL + ", C." +COURSE_NAME_COL + ", C." + COURSE_OFFERED_COL + ","
+                + " I." + SEMESTER_COL + ", C." + COURSE_PREREQ1_COL + ", C." + COURSE_PREREQ2_COL + ","
+                + " C." + COURSE_TO1_COL + ", C." + COURSE_TO2_COL + ", C." + COURSE_TO3_COL + ", C." + COURSE_TO4_COL
+                + " FROM " + COURSE_LIST_TABLE + " C JOIN " + IDEAL_SCHED_TABLE + " I"
+                + " ON C." + COURSE_ID_COL + " = I." + COURSE_ID_COL +";";
+        return db.rawQuery(query, null);
+    }
         /* END SEND DATA */
 
         /* BEGIN FILL DATA */
@@ -461,5 +473,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //public void updateBackupSched(){
 
     //}
+
         /* END FILL DATA */
 }
