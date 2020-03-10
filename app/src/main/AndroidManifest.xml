@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.group1.EngPlan">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ManualScheduling.CustomScheduleEdit"></activity>
         <activity
             android:name=".CentralActivity"
             android:label="@string/title_activity_central"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MakeAPlan.NumberOfCoursesScreen" />
         <activity android:name=".MakeAPlan.PassFailScreen" />
         <activity android:name=".MakeAPlan.MakeAPlanYearScreen" />
@@ -24,6 +27,9 @@
             android:label="@string/title_activity_quick_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ChangeDatabase"
+            android:label="Update Database" />
+        <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".SplashScreen">
@@ -33,7 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <uses-library android:name="android.test.runner"
+
+        <uses-library
+            android:name="android.test.runner"
             android:required="false" />
     </application>
 

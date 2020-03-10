@@ -66,14 +66,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            String s, temp;
-            //boolean check = true;
-            /*while (check){
-                s = DatabaseUtils.dumpCurrentRowToString(data);
-                Log.d(LOG_DATA, s);
-                check = data.moveToNext();
-            }*/
 
+            String s, temp;
 
             data.moveToFirst();
             boolean check = true;
@@ -93,6 +87,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             termNo++;
         }
 
+
+
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
         listView.setAdapter(courseAdapter);
 
@@ -106,8 +102,6 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                         (courseName.get(position) == "F7") || (courseName.get(position) == "W7")|| (courseName.get(position) == "F8") || (courseName.get(position) == "W8")||
                         (courseName.get(position) == "F9") || (courseName.get(position) == "W9")|| (courseName.get(position) == "F10") || (courseName.get(position) == "W10")||
                         (courseName.get(position) == "F11") || (courseName.get(position) == "W11")){
-
-
                 }
                 else {
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
@@ -141,10 +135,12 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             startActivity(new Intent (getApplicationContext(), QuickView.class));
         }
         else if(id == R.id.nav_PF_view){
-            startActivity(new Intent (getApplicationContext(), PassFailScreen.class));
+            Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
+            intent.putExtra("First Time", false);
+            startActivity(intent);
         }
         /*else if(id == R.id.nav_schedule_change_view){
-            startActivity(new Intent (getApplicationContext(), ScheculeChange.class));
+            startActivity(new Intent (getApplicationContext(), ScheduleChange.class));
         }*/
 
         drawer.closeDrawer(GravityCompat.START);

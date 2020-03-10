@@ -15,24 +15,21 @@ import java.util.ArrayList;
 public class CourseChoiceAdapter extends BaseAdapter {
 
     public boolean[] checkBoxState;
+    boolean firstTimeChk;
     LayoutInflater mInflater;
     ArrayList<String> courseCode;
     ArrayList<String> courseName;
     public CheckBox courseCheck;
 
-    public CourseChoiceAdapter(Context c, ArrayList<String> i, ArrayList<String> j){
+    public CourseChoiceAdapter(Context c, ArrayList<String> i, ArrayList<String> j, boolean[] passFailData, boolean firstTime){
         courseCode = i;
         courseName = j;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         checkBoxState = new boolean[courseCode.size()];
+        checkBoxState = passFailData;
+        firstTimeChk = firstTime;
     }
 
-   /* private class ViewHolder{
-        TextView courseCodeView;
-        TextView courseNameView;
-        CheckBox courseCheck;
-
-    }*/
 
     @Override
     public int getCount() {
@@ -64,6 +61,7 @@ public class CourseChoiceAdapter extends BaseAdapter {
         courseCodeView.setText(code);
         courseNameView.setText(name);
 
+
         courseCheck.setChecked(checkBoxState[position]);
         courseCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,10 +88,5 @@ public class CourseChoiceAdapter extends BaseAdapter {
         else{
             checkBoxState[position] = false;
         }
-
-
-
     }
-
 }
-
