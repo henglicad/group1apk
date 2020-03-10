@@ -43,7 +43,6 @@ public class ChangeDatabase extends AppCompatActivity {
             public void onClick(View view){
                 saveToFile();
                 Toast.makeText(getApplicationContext(), "Downloaded!", Toast.LENGTH_SHORT).show();
-                //write code to navigate through cursor and send to file
             }
         });
     }

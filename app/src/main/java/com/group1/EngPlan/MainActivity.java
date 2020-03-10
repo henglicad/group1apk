@@ -6,13 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group1.EngPlan.Adapters.LoginDialog;
 import com.group1.EngPlan.MakeAPlan.MakeAPlanYearScreen;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginDialog.LoginListener{
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -54,12 +56,32 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
                 //pop up & check credentials but until then
 
-                
+                openDialog();
 
-                Intent changeDB = new Intent(getApplicationContext(), ChangeDatabase.class);
-                startActivity(changeDB);
+                //Intent changeDB = new Intent(getApplicationContext(), ChangeDatabase.class);
+                //startActivity(changeDB);
             }
         });
+    }
 
+    public void openDialog(){
+        LoginDialog loginDialog = new LoginDialog();
+        loginDialog.show(getSupportFragmentManager(), "Credential Dialog");
+    }
+
+    @Override
+    public void applyText(String cred) {
+        if(cred.equals("1234")){
+            Intent changeDB = new Intent(getApplicationContext(), ChangeDatabase.class);
+            startActivity(changeDB);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Incorrect Password.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing
     }
 }
