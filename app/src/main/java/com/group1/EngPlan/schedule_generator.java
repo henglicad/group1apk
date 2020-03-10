@@ -357,6 +357,49 @@ public class schedule_generator  {
         }
     }
 
+    public void add_COOP(int Cnum){
+        fall_semesters.add(new ArrayList<String>());                                //if it is, then it is scheduled for the year (fy) after the current year (fy)
+        fall_semesters.get(fy+1).add("COOP2080");
+        IdealcourseStatus.set(IdealcourseID.indexOf("COOP2080"), "1");
+        courseStatus.set(courseID.indexOf("COOP2080"), "1");
+        C1Year = fy+1;
+
+        if(winter_semesters.size()<= C1Year){
+            while(winter_semesters.size()<= C1Year){
+                winter_semesters.add(new ArrayList<String>());
+            }
+        }
+
+
+        if(winter_semesters.get(C1Year).size() == 0){
+            winter_semesters.get(C1Year).add("COOP2180");
+            IdealcourseStatus.set(IdealcourseID.indexOf("COOP2180"), "1");
+            courseStatus.set(courseID.indexOf("COOP2180"), "1");
+        }
+        else{
+            int i = winter_semesters.get(C1Year).size();
+            int j = C1Year+1;
+            while(winter_semesters.get(j).size()+i > Cnum){
+                j++;
+                if(j >= winter_semesters.size()){
+                    winter_semesters.add(new ArrayList<String>());
+                    break;
+                }
+            }
+
+            while(winter_semesters.get(C1Year).size()!=0){
+                winter_semesters.get(j).add(winter_semesters.get(C1Year).get(0));
+                winter_semesters.get(C1Year).remove(0);
+            }
+
+            winter_semesters.get(C1Year).add("COOP2180");
+            IdealcourseStatus.set(IdealcourseID.indexOf("COOP2180"), "1");
+            courseStatus.set(courseID.indexOf("COOP2180"), "1");
+        }
+
+
+    }
+
     public void make_schedule(ArrayList<String> fall, ArrayList<String> winter, ArrayList<String> both,  int Cnum){
         //ArrayList<String> fall_buffer= new ArrayList<>();
         //ArrayList<String> winter_buffer= new ArrayList<>();
@@ -389,11 +432,7 @@ public class schedule_generator  {
                 }
                 else{
                     if(fall.get(0).equals("COOP2080")){                                             //checks to see if the course to be scheduled is coop 2080
-                        fall_semesters.add(new ArrayList<String>());                                //if it is, then it is scheduled for the year (fy) after the current year (fy)
-                        fall_semesters.get(fy+1).add(fall.get(0));
-                        IdealcourseStatus.set(IdealcourseID.indexOf(fall.get(0)), "1");
-                        courseStatus.set(courseID.indexOf(fall.get(0)), "1");
-                        C1Year = fy+1;
+                        add_COOP(Cnum);
                         fall.remove(0);
 
                     }
@@ -437,26 +476,15 @@ public class schedule_generator  {
                     winter.remove(0);
                 }
                 else{
-                    if(winter.get(0).equals("COOP2180") && wy+1==C1Year){
-                        winter_semesters.add(new ArrayList<String>());
-                        winter_semesters.get(wy+1).add(winter.get(0));
+                    if(winter.get(0).equals("COOP2180")){
+                        winter.remove(0);
+                    }
+                    else{
+                        winter_semesters.get(wy).add(winter.get(0));
                         IdealcourseStatus.set(IdealcourseID.indexOf(winter.get(0)), "1");
                         courseStatus.set(courseID.indexOf(winter.get(0)), "1");
                         winter.remove(0);
-                        break;
                     }
-                    else{
-                        if(winter.get(0).equals("COOP2180")){
-                            winter.remove(0);
-                        }
-                        else{
-                            winter_semesters.get(wy).add(winter.get(0));
-                            IdealcourseStatus.set(IdealcourseID.indexOf(winter.get(0)), "1");
-                            courseStatus.set(courseID.indexOf(winter.get(0)), "1");
-                            winter.remove(0);
-                        }
-                    }
-
                 }
             }
 
