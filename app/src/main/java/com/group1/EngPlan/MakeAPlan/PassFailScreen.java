@@ -81,24 +81,8 @@ public class PassFailScreen extends AppCompatActivity {
 
         }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.setCheckd(position);
-            }
-        });
-
-
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName, passFailData, firstTime);
-
         listView.setAdapter(adapter);
-
-        boolean fin = false;
-        schedule_generator sg = new schedule_generator(myDB);
-        fin = sg.main(choice, Semester, year);
-        myDB.updateSemesters();
-        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
-        startActivity(intent);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -132,6 +116,9 @@ public class PassFailScreen extends AppCompatActivity {
         fin = sg.main(choice, Semester, year);
         myDB.updateSemesters();
         Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+        intent.putExtra("Choice", choice);
+        intent.putExtra("Year",year);
+        intent.putExtra("Semester", Semester);
         startActivity(intent);
     }
 }

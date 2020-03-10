@@ -30,6 +30,9 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
     ArrayList<String> courseCode = new ArrayList<>();
     ArrayList<String> courseName = new ArrayList<>();
     NavigationView navigationView;
+    int year;
+    String Semester;
+    int choice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
 
         Toolbar toolbar = findViewById(R.id.central_screen_toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        year = intent.getIntExtra("Year", 0);
+        Semester = intent.getStringExtra("Semester");
+        choice = intent.getIntExtra("Choice", 0);
 
         drawer = findViewById(R.id.central_screen_drawer_layout);
 
@@ -67,7 +75,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
 
             data.moveToFirst();
 
-            String s, temp;
+            String s;
 
             data.moveToFirst();
             boolean check = true;
@@ -78,7 +86,6 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                     if(data.getString(1) != null){
                         courseCode.add(data.getString(0));
                         courseName.add(data.getString(1));
-                        check = data.moveToNext();
                     }
                     check = data.moveToNext();
                 }
@@ -86,6 +93,16 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
 
             termNo++;
         }
+
+        for(int i = 0; i < courseCode.size()-1; i++){
+            if((getItemViewType(i) == 0) && (getItemViewType(i+1) == 0)){
+                courseName.remove(i);
+                courseCode.remove(i);
+                i--;
+            }
+        }
+
+
 
 
 
@@ -136,6 +153,9 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         }
         else if(id == R.id.nav_PF_view){
             Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
+            intent.putExtra("Choice", choice);
+            intent.putExtra("Year",year);
+            intent.putExtra("Semester", Semester);
             intent.putExtra("First Time", false);
             startActivity(intent);
         }
@@ -147,5 +167,15 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
+    public int getItemViewType(int position){
+        if((courseName.get(position) == "F1") || (courseName.get(position) == "W1") ||(courseName.get(position) == "F2") || (courseName.get(position) == "W2") ||
+                (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
+                (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6") ||
+                (courseName.get(position) == "F7") || (courseName.get(position) == "W7") || (courseName.get(position) == "F8") || (courseName.get(position) == "W8")||
+                (courseName.get(position) == "F9") || (courseName.get(position) == "W9")|| (courseName.get(position) == "F10") || (courseName.get(position) == "W10")||
+                (courseName.get(position) == "F11") || (courseName.get(position) == "W11")){
+            return 0;}
+        return 1;
+    }
 
 }
