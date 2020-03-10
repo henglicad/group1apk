@@ -3,16 +3,11 @@ package com.group1.EngPlan;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.group1.EngPlan.MakeAPlan.MakeAPlanYearScreen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,7 +18,7 @@ import java.util.Calendar;
 public class ChangeDatabase extends AppCompatActivity {
     public static final String LOG_TAG = ChangeDatabase.class.getSimpleName();
     DatabaseHandler db;
-    final static String path = "/sdcard/myApp"; //Environment.getExternalStorageDirectory().getAbsolutePath() + "/instinctcoder/readwrite/" ;
+    private static final String FILE_NAME = "downloadedDB.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +41,7 @@ public class ChangeDatabase extends AppCompatActivity {
         download.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Cursor courseData = db.sendDBData();
-                saveToFile("hello");
+                saveToFile();
                 Toast.makeText(getApplicationContext(), "Downloaded!", Toast.LENGTH_SHORT).show();
                 //write code to navigate through cursor and send to file
             }
@@ -61,24 +55,56 @@ public class ChangeDatabase extends AppCompatActivity {
     }
 
     // save data to file
-    public static boolean saveToFile( String data){
-        String fileName = "database_" + Calendar.getInstance().getTime() + ".txt";
+    public void saveToFile(){
+        FileOutputStream fos = null;
 
         try {
-            new File(path).mkdirs();
-            File file = new File(path+ fileName);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            FileOutputStream fileOutputStream = new FileOutputStream(file,true);
-            fileOutputStream.write((data + System.getProperty("line.separator")).getBytes());
+            Cursor courseData = db.sendDBData();
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
 
-            return true;
-        }  catch(FileNotFoundException ex) {
-            Log.d(LOG_TAG, ex.getMessage());
-        }  catch(IOException ex) {
-            Log.d(LOG_TAG, ex.getMessage());
+            String data1 = "Current Database for TRU Engineering Program as of " + Calendar.getInstance().getTime() + "\n"
+                    + "COURSE ID | COURSE NAME | OFFERED IN | IDEALLY | "
+                    + "PRE REQ1 | PRE REQ2 | POST REQ |POST REQ |POST REQ |POST REQ | \n\n";
+            fos.write(data1.getBytes());
+
+            courseData.moveToFirst();
+            String temp, line = "";
+            int allocated[] = {8, 50, 1, 2, 8, 8, 8, 8, 8, 8};
+            int numSpaces;
+
+            do{
+                for(int i = 0; i < 10; i++){
+                    temp = courseData.getString(i);
+                    line = line + temp;
+
+                    if(temp != null) {
+                        numSpaces = allocated[i] - temp.length();
+                    }
+                    else{
+                        numSpaces = 4;
+                    }
+                        for (int j = 0; j < numSpaces; j++) {
+                            line = line + " ";
+                        }
+                    line = line  + " | ";
+                }
+
+                line = line + "\n";
+                fos.write(line.getBytes());
+                line = "";
+            }while(courseData.moveToNext());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            if(fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return  false;
     }
 }

@@ -66,7 +66,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Log.d(LOG_TAG, "Building tables for database");
 
         db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(75) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
+                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(50) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
                 + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
                 + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
         populateCourseTable(db);
