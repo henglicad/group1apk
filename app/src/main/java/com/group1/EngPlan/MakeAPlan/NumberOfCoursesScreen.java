@@ -87,6 +87,7 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
         intent.putExtra("Year",year);
         intent.putExtra("Semester", Semester);
         intent.putExtra("Choice", choice);
+        intent.putExtra("First Time", true);
         startActivity(intent);
     }
 }

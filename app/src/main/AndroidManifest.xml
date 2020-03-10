@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ManualScheduling.CustomScheduleEdit"></activity>
         <activity
             android:name=".CentralActivity"
             android:label="@string/title_activity_central"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MakeAPlan.NumberOfCoursesScreen" />
         <activity android:name=".MakeAPlan.PassFailScreen" />
         <activity android:name=".MakeAPlan.MakeAPlanYearScreen" />
@@ -38,7 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <uses-library android:name="android.test.runner"
+
+        <uses-library
+            android:name="android.test.runner"
             android:required="false" />
     </application>
 
