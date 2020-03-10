@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -63,6 +64,13 @@ public class PassFailScreen extends AppCompatActivity {
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName);
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter.setCheckd(position);
+            }
+        });
+
 
         passFailNext.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -79,7 +87,7 @@ public class PassFailScreen extends AppCompatActivity {
                         boolean fin = false;
                         schedule_generator sg = new schedule_generator(myDB);
                         fin = sg.main(choice, Semester, year);
-
+                        myDB.updateSemesters();
                         Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
                         startActivity(intent);
 

@@ -66,7 +66,14 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            String s;
+            String s, temp;
+            //boolean check = true;
+            /*while (check){
+                s = DatabaseUtils.dumpCurrentRowToString(data);
+                Log.d(LOG_DATA, s);
+                check = data.moveToNext();
+            }*/
+
 
             data.moveToFirst();
             boolean check = true;
@@ -74,8 +81,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                 while (check) {
                     s = DatabaseUtils.dumpCurrentRowToString(data);
                     Log.d(LOG_DATA, s);
-                    courseCode.add(data.getString(0));
-                    courseName.add(data.getString(1));
+                    if(data.getString(1) != null){
+                        courseCode.add(data.getString(0));
+                        courseName.add(data.getString(1));
+                        check = data.moveToNext();
+                    }
                     check = data.moveToNext();
                 }
             }

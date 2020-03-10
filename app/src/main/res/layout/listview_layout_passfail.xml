@@ -38,9 +38,12 @@
         android:layout_marginStart="291dp"
         android:layout_marginLeft="291dp"
         android:background="#424242"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewCourseCode"
         app:layout_constraintStart_toStartOf="@+id/textViewCourseName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
