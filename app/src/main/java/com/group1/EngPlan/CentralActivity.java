@@ -66,13 +66,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            String s;
-            //boolean check = true;
-            /*while (check){
-                s = DatabaseUtils.dumpCurrentRowToString(data);
-                Log.d(LOG_DATA, s);
-                check = data.moveToNext();
-            }*/
+
+            String s, temp;
 
             data.moveToFirst();
             boolean check = true;

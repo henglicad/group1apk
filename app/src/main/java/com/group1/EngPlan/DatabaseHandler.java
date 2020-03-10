@@ -470,7 +470,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // SEND PASS FAIL INFORMATION
-    // SEND PASS FAIL INFORMATION
     public Cursor sendPassFail(String sem){
         Log.d(LOG_TAG, "Sending pass/fail info");
         SQLiteDatabase db = this.getReadableDatabase();
