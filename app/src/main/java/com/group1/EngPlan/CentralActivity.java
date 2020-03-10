@@ -73,12 +73,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             boolean check = true;
             if(data.getCount() != 0){
                 while (check) {
-                    s = DatabaseUtils.dumpCurrentRowToString(data);
+                    s = DatabaseUtils.dumpCursorToString(data);
                     Log.d(LOG_DATA, s);
                     if(data.getString(1) != null){
                         courseCode.add(data.getString(0));
                         courseName.add(data.getString(1));
-                        check = data.moveToNext();
                     }
                     check = data.moveToNext();
                 }
