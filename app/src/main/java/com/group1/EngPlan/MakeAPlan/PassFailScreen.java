@@ -43,8 +43,6 @@ public class PassFailScreen extends AppCompatActivity {
         final boolean firstTime = intent.getBooleanExtra("First Time", false);
         Cursor data;
 
-
-
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
         int termNo = 0;
         while(termNo < terms.length) {
@@ -85,6 +83,7 @@ public class PassFailScreen extends AppCompatActivity {
 
 
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName, passFailData, firstTime);
+
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,7 +101,6 @@ public class PassFailScreen extends AppCompatActivity {
                        writeToDatabase(adapter, myDB,choice, Semester, year);
                     }
         });
-
     }
 
     public void writeToDatabase(CourseChoiceAdapter adapter, DatabaseHandler myDB, int choice, String Semester, int year){
@@ -122,5 +120,4 @@ public class PassFailScreen extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
         startActivity(intent);
     }
-
 }

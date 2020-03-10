@@ -107,8 +107,6 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                         (courseName.get(position) == "F7") || (courseName.get(position) == "W7")|| (courseName.get(position) == "F8") || (courseName.get(position) == "W8")||
                         (courseName.get(position) == "F9") || (courseName.get(position) == "W9")|| (courseName.get(position) == "F10") || (courseName.get(position) == "W10")||
                         (courseName.get(position) == "F11") || (courseName.get(position) == "W11")){
-
-
                 }
                 else {
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
@@ -147,7 +145,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             startActivity(intent);
         }
         /*else if(id == R.id.nav_schedule_change_view){
-            startActivity(new Intent (getApplicationContext(), ScheculeChange.class));
+            startActivity(new Intent (getApplicationContext(), ScheduleChange.class));
         }*/
 
         drawer.closeDrawer(GravityCompat.START);
