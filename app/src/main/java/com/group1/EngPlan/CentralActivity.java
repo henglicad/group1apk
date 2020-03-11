@@ -101,6 +101,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                 i--;
             }
         }
+        int temp = courseCode.size();
+        if(getItemViewType(temp-1) == 0){
+            courseName.remove(temp-1);
+            courseCode.remove(temp-1);
+        }
 
 
 
