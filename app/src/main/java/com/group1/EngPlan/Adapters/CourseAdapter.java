@@ -113,15 +113,36 @@ public class CourseAdapter extends BaseAdapter {
                 case "W7":
                     display = "Winter 7";
                     break;
+                case "F8":
+                    display = "Fall 8";
+                    break;
+                case "W8":
+                    display = "Winter 8";
+                    break;
+                case "F9":
+                    display = "Fall 9";
+                    break;
+                case "W9":
+                    display = "Winter 9";
+                    break;
+                case "F10":
+                    display = "Fall 10";
+                    break;
+                case "W10":
+                    display = "Winter 10";
+                    break;
+                case "F11":
+                    display = "Fall 11";
+                    break;
+                case "W11":
+                    display = "Winter 11";
+                    break;
             }
 
             courseSem.setText(display);
-            return v;
+                return v;
         }
-
-
         return null;
-
     }
 
     @Override
@@ -134,7 +155,9 @@ public class CourseAdapter extends BaseAdapter {
         if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
            (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
            (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")||(idealScheduleName.get(position) == "F6") || (idealScheduleName.get(position) == "W6") ||
-            (idealScheduleName.get(position) == "F7") || (idealScheduleName.get(position) == "W7")){
+            (idealScheduleName.get(position) == "F7") || (idealScheduleName.get(position) == "W7") || (idealScheduleName.get(position) == "F8") || (idealScheduleName.get(position) == "W8")||
+            (idealScheduleName.get(position) == "F9") || (idealScheduleName.get(position) == "W9")|| (idealScheduleName.get(position) == "F10") || (idealScheduleName.get(position) == "W10")||
+            (idealScheduleName.get(position) == "F11") || (idealScheduleName.get(position) == "W11")){
                 return 0;}
         return 1;
     }

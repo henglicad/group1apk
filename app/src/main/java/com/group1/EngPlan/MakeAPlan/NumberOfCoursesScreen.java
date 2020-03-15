@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,36 +50,34 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
                     radioBtnChk = arr[0];
                 }
 
-                if(Integer.parseInt(radioBtnChk) == 3)
-                    choice = 3;
-                else if(Integer.parseInt(radioBtnChk) == 4)
-                    choice = 4;
-                else if(Integer.parseInt(radioBtnChk) == 5)
-                    choice = 5;
-                else if(Integer.parseInt(radioBtnChk) == 6)
-                    choice = 6;
-                else //if(Integer.parseInt(radioBtnChk) == 7)
-                    choice = 7;
-
-
-
-                if(message){
-                    ///////////////////////////////////////main(choice, s[1], year);
-                    boolean fin = false;
-                    schedule_generator sg = new schedule_generator(myDB);
-                    fin = sg.main(choice, Semester, year);
-
-
-                    Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
-                    startActivity(intent);
-
-
+                if(radioBtnChk == null) {
+                    Toast.makeText(getApplicationContext(), "Please Select One of the above Options", Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    goToPassFail(choice, year, Semester);
+                else{
+                    if (Integer.parseInt(radioBtnChk) == 3)
+                        choice = 3;
+                    else if (Integer.parseInt(radioBtnChk) == 4)
+                        choice = 4;
+                    else if (Integer.parseInt(radioBtnChk) == 5)
+                        choice = 5;
+                    else if (Integer.parseInt(radioBtnChk) == 6)
+                        choice = 6;
+                    else //if(Integer.parseInt(radioBtnChk) == 7)
+                        choice = 7;
 
+                    if(message){
+                        boolean fin = false;
+                        schedule_generator sg = new schedule_generator(myDB);
+                        fin = sg.main(choice, Semester, year);
+
+
+                        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        goToPassFail(choice, year, Semester);
+                    }
                 }
-
             }
         });
     }
@@ -88,6 +87,7 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
         intent.putExtra("Year",year);
         intent.putExtra("Semester", Semester);
         intent.putExtra("Choice", choice);
+        intent.putExtra("First Time", true);
         startActivity(intent);
     }
 }
