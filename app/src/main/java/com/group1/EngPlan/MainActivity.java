@@ -54,12 +54,7 @@ public class MainActivity extends AppCompatActivity implements LoginDialog.Login
         admin.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //pop up & check credentials but until then
-
                 openDialog();
-
-                //Intent changeDB = new Intent(getApplicationContext(), ChangeDatabase.class);
-                //startActivity(changeDB);
             }
         });
     }
