@@ -490,13 +490,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         /* BEGIN UPLOAD DB */
     // DROP OLD TABLES
-    public void dropTables(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS " + COURSE_LIST_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + IDEAL_SCHED_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + SAVED_SCHED_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + BACKUP_SCHED_TABLE);
+    public void clearTables(){
+        db.execSQL("DELETE FROM " + COURSE_LIST_TABLE);
+        db.execSQL("DELETE FROM " + IDEAL_SCHED_TABLE);
+        db.execSQL("DELETE FROM " + RECORD_TABLE);
+        db.execSQL("DELETE FROM " + SAVED_SCHED_TABLE);
+        db.execSQL("DELETE FROM " + BACKUP_SCHED_TABLE);
     }
 
     public void setMaster(String cid, String cname, String offered, String pr1, String pr2, String t1, String t2, String t3, String t4){
@@ -582,32 +581,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('" + cid + "', " + pf + ");");
     }
-
-    public void createChangeDatabase(){
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(50) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
-                + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
-                + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
-
-        db.execSQL("CREATE TABLE " + IDEAL_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
-                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-
-        db.execSQL("CREATE TABLE " + RECORD_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + STATUS_COL + " int DEFAULT 0,"
-                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-
-        db.execSQL("CREATE TABLE " + SAVED_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
-                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-
-        db.execSQL("CREATE TABLE " + BACKUP_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
-                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
-    }
-
-    // POPULATE NEW TABLES
         /* END UPLOAD DB */
 }

@@ -122,7 +122,7 @@ public class ChangeDatabase extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        FileWriter textFileWriter = null;
+        FileWriter textFileWriter;
         try {
             textFileWriter = new FileWriter(file, false);
 
@@ -177,6 +177,8 @@ public class ChangeDatabase extends AppCompatActivity {
                 Toast.makeText(this, "Could not download", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+
+            Toast.makeText(this, "Downloaded.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             Toast.makeText(this, "Could not download", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -323,8 +325,7 @@ public class ChangeDatabase extends AppCompatActivity {
 
             if(valid) { // all entries are of proper form
                 // drop all tables and create new tables
-                db.dropTables();
-                db.createChangeDatabase();
+                db. clearTables();
 
                 // use data to populate tables
                 String courseID, courseName, offered, semester, pr1, pr2, to1, to2, to3, to4 = null;
