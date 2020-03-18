@@ -487,4 +487,127 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //}
 
         /* END FILL DATA */
+
+        /* BEGIN UPLOAD DB */
+    // DROP OLD TABLES
+    public void dropTables(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + COURSE_LIST_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + IDEAL_SCHED_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + SAVED_SCHED_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + BACKUP_SCHED_TABLE);
+    }
+
+    public void setMaster(String cid, String cname, String offered, String pr1, String pr2, String t1, String t2, String t3, String t4){
+        SQLiteDatabase db = this.getWritableDatabase();
+        cid = cid.trim();
+        cname = cname.trim();
+        offered = offered.trim();
+        pr1 = pr1.trim();
+        pr2 = pr2.trim();
+        t1 = t1.trim();
+        t2 = t2.trim();
+        t3 = t3.trim();
+        t4 = t4.trim();
+
+        if(pr1.equals("null")){ // no prereqs
+            if(t1.equals("null")){ // no postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', null, null, null, null, null, null);");
+            }
+            else if(t2.equals("null")){ // one postreq
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', null, null, '" + t1 + "', null, null, null);");
+            }
+            else if(t3.equals("null")){ // two postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', null, null, '" + t1 + "', '" + t2 + "', null, null);");
+            }
+            else if(t4.equals("null")){ // three postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', null, null, '" + t1 + "', '" + t2 + "', '" + t3 + "', null);");
+            }
+            else{ // four postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', null, null, '" + t1 + "', '" + t2 + "', '" + t3 + "', '" + t4 + "');");
+            }
+        }
+        else if(pr2.equals("null")){
+            if(t1.equals("null")){ // no postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', null, null, null, null, null);");
+            }
+            else if(t2.equals("null")){ // one postreq
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', null, '" + t1 + "', null, null, null);");
+            }
+            else if(t3.equals("null")){ // two postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', null, '" + t1 + "', '" + t2 + "', null, null);");
+            }
+            else if(t4.equals("null")){ // three postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', null, '" + t1 + "', '" + t2 + "', '" + t3 + "', null);");
+            }
+            else{ // four postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', null, '" + t1 + "', '" + t2 + "', '" + t3 + "', '" + t4 + "');");
+            }
+        }
+        else{
+            if(t1.equals("null")){ // no postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', '" + pr2 + "', null, null, null, null);");
+            }
+            else if(t2.equals("null")){ // one postreq
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', '" + pr2 + "', '" + t1 + "', null, null, null);");
+            }
+            else if(t3.equals("null")){ // two postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', '" + pr2 + "', '" + t1 + "', '" + t2 + "', null, null);");
+            }
+            else if(t4.equals("null")){ // three postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', '" + pr2 + "', '" + t1 + "', '" + t2 + "', '" + t3 + "', null);");
+            }
+            else{ // four postreqs
+                db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('" + cid + "', '" + cname + "', '" + offered + "', '" + pr1 + "', '" + pr2 + "', '" + t1 + "', '" + t2 + "', '" + t3 + "', '" + t4 + "');");
+            }
+        }
+    }
+
+    public void setSchedTables(String cid, String sem){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        cid = cid.trim();
+        sem = sem.trim();
+
+        db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('" + cid + "', '" + sem + "');");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('" + cid + "', '" + sem + "');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('" + cid + "', '" + sem + "');");
+    }
+
+    public void setChangeRecord(String cid, Integer pf){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        cid = cid.trim();
+
+        db.execSQL("INSERT INTO " + RECORD_TABLE + " VALUES ('" + cid + "', " + pf + ");");
+    }
+
+    public void createChangeDatabase(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("CREATE TABLE " + COURSE_LIST_TABLE
+                + "(" + COURSE_ID_COL + " CHAR(8) UNIQUE NOT null, " + COURSE_NAME_COL + " VARCHAR(50) NOT null, " + COURSE_OFFERED_COL + " CHAR(1), "
+                + COURSE_PREREQ1_COL + " CHAR(8), " + COURSE_PREREQ2_COL + " CHAR(8), " + COURSE_TO1_COL + " CHAR(8), "
+                + COURSE_TO2_COL + " CHAR(8), " + COURSE_TO3_COL + " CHAR(8), " + COURSE_TO4_COL + " CHAR(8));");
+
+        db.execSQL("CREATE TABLE " + IDEAL_SCHED_TABLE
+                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
+
+        db.execSQL("CREATE TABLE " + RECORD_TABLE
+                + "(" + COURSE_ID_COL + " CHAR(8), " + STATUS_COL + " int DEFAULT 0,"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
+
+        db.execSQL("CREATE TABLE " + SAVED_SCHED_TABLE
+                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
+
+        db.execSQL("CREATE TABLE " + BACKUP_SCHED_TABLE
+                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
+    }
+
+    // POPULATE NEW TABLES
+        /* END UPLOAD DB */
 }

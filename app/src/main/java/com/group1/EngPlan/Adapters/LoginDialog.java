@@ -42,7 +42,7 @@ public class LoginDialog extends AppCompatDialogFragment {
             }
         });
 
-       credential = view.findViewById(R.id.credential);
+        credential = view.findViewById(R.id.credential);
         return builder.create();
     }
 

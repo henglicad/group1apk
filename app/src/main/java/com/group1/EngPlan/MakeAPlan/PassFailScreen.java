@@ -64,20 +64,20 @@ public class PassFailScreen extends AppCompatActivity {
         int i = 0;
         boolean[] passFailData = new boolean[courseCode.size()];
         if(firstTime == false){
-                while(termNo < terms.length){
-            data = myDB.sendPassFail(terms[termNo]);
-            data.moveToFirst();
-            boolean check = true;
-            while (check) {
-                if (data.getInt(1) == 1) {
-                    passFailData[i] = true;
-                } else
-                    passFailData[i] = false;
-                check = data.moveToNext();
-                i++;
+            while(termNo < terms.length){
+                data = myDB.sendPassFail(terms[termNo]);
+                data.moveToFirst();
+                boolean check = true;
+                while (check) {
+                    if (data.getInt(1) == 1) {
+                        passFailData[i] = true;
+                    } else
+                        passFailData[i] = false;
+                    check = data.moveToNext();
+                    i++;
+                }
+                termNo ++;
             }
-            termNo ++;
-        }
 
         }
       
