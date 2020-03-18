@@ -1,6 +1,7 @@
 package com.group1.EngPlan.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.group1.EngPlan.ManualScheduling.CustomScheduleAdd;
 import com.group1.EngPlan.R;
 
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ public class CourseManualAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<String> courseCode;
     private ArrayList<String> courseName;
+    public int clickPosition;
+    protected Context c;
 
 
 
@@ -24,6 +28,7 @@ public class CourseManualAdapter extends BaseAdapter {
         courseCode = i;
         courseName = j;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.c = c;
     }
 
 
@@ -43,7 +48,7 @@ public class CourseManualAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         String temp = courseName.get(position);
 
@@ -69,7 +74,9 @@ public class CourseManualAdapter extends BaseAdapter {
             plusBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    clickPosition = position;
+                    Intent intent = new Intent (c, CustomScheduleAdd.class);
+                    c.startActivity(intent);
                 }
             });
 

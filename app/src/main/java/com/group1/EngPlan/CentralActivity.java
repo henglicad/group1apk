@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.group1.EngPlan.Adapters.CourseAdapter;
 import com.group1.EngPlan.MakeAPlan.PassFailScreen;
+import com.group1.EngPlan.ManualScheduling.CustomScheduleEdit;
 
 import java.util.ArrayList;
 
@@ -86,6 +87,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                     if(data.getString(1) != null){
                         courseCode.add(data.getString(0));
                         courseName.add(data.getString(1));
+                        check = data.moveToNext();
                     }
                     check = data.moveToNext();
                 }
@@ -124,6 +126,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                         (courseName.get(position) == "F7") || (courseName.get(position) == "W7")|| (courseName.get(position) == "F8") || (courseName.get(position) == "W8")||
                         (courseName.get(position) == "F9") || (courseName.get(position) == "W9")|| (courseName.get(position) == "F10") || (courseName.get(position) == "W10")||
                         (courseName.get(position) == "F11") || (courseName.get(position) == "W11")){
+
+
                 }
                 else {
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
@@ -164,9 +168,9 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             intent.putExtra("First Time", false);
             startActivity(intent);
         }
-        /*else if(id == R.id.nav_schedule_change_view){
-            startActivity(new Intent (getApplicationContext(), ScheduleChange.class));
-        }*/
+        else if(id == R.id.nav_schedule_change_view){
+            startActivity(new Intent (getApplicationContext(), CustomScheduleEdit.class));
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

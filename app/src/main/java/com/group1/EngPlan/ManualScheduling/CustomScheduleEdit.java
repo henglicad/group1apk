@@ -60,6 +60,20 @@ public class CustomScheduleEdit extends AppCompatActivity {
             termNo++;
         }
 
+        for(int i = 0; i < courseCode.size()-1; i++){
+            if((getItemViewType(i) == 0) && (getItemViewType(i+1) == 0)){
+                courseName.remove(i);
+                courseCode.remove(i);
+                i--;
+            }
+        }
+        int temp = courseCode.size();
+        if(getItemViewType(temp-1) == 0){
+            courseName.remove(temp-1);
+            courseCode.remove(temp-1);
+        }
+
+
         CourseManualAdapter courseManualAdapter = new CourseManualAdapter(this, courseCode, courseName);
         listView.setAdapter(courseManualAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -80,5 +94,16 @@ public class CustomScheduleEdit extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public int getItemViewType(int position){
+        if((courseName.get(position) == "F1") || (courseName.get(position) == "W1") ||(courseName.get(position) == "F2") || (courseName.get(position) == "W2") ||
+                (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
+                (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6") ||
+                (courseName.get(position) == "F7") || (courseName.get(position) == "W7") || (courseName.get(position) == "F8") || (courseName.get(position) == "W8")||
+                (courseName.get(position) == "F9") || (courseName.get(position) == "W9")|| (courseName.get(position) == "F10") || (courseName.get(position) == "W10")||
+                (courseName.get(position) == "F11") || (courseName.get(position) == "W11")){
+            return 0;}
+        return 1;
     }
 }
