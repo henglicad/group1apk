@@ -40,27 +40,40 @@ public class QuickView extends AppCompatActivity {
             idealScheduleName.add(terms[termNo]);
             idealScheduleCode.add(terms[termNo]);
 
-            data.moveToFirst();
-            boolean check = true;
-            while (check) {
-                idealScheduleCode.add(data.getString(0));
-                check = data.moveToNext();
-            }
+            int x = data.getCount();
+            if(x != 0) {
+                data.moveToFirst();
+                boolean check = true;
+                while (check) {
+                    idealScheduleCode.add(data.getString(0));
+                    check = data.moveToNext();
+                }
 
-            data.moveToFirst();
-            check = true;
-            while (check) {
-                idealScheduleName.add(data.getString(1));
-                check = data.moveToNext();
+                data.moveToFirst();
+                check = true;
+                while (check) {
+                    idealScheduleName.add(data.getString(1));
+                    check = data.moveToNext();
+                }
             }
-
             termNo++;
+        }
+
+        for(int i = 0; i < idealScheduleCode.size()-1; i++){
+            if((getItemViewType(i) == 0) && (getItemViewType(i+1) == 0)){
+                idealScheduleName.remove(i);
+                idealScheduleCode.remove(i);
+                i--;
+            }
+        }
+        int temp = idealScheduleCode.size();
+        if(getItemViewType(temp-1) == 0){
+            idealScheduleName.remove(temp-1);
+            idealScheduleCode.remove(temp-1);
         }
 
         CourseAdapter courseAdapter = new CourseAdapter(this, idealScheduleCode, idealScheduleName);
         listView.setAdapter(courseAdapter);
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,4 +93,15 @@ public class QuickView extends AppCompatActivity {
             }
         });
     }
+    public int getItemViewType(int position){
+        if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
+                (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
+                (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")||(idealScheduleName.get(position) == "F6") || (idealScheduleName.get(position) == "W6") ||
+                (idealScheduleName.get(position) == "F7") || (idealScheduleName.get(position) == "W7") || (idealScheduleName.get(position) == "F8") || (idealScheduleName.get(position) == "W8")||
+                (idealScheduleName.get(position) == "F9") || (idealScheduleName.get(position) == "W9")|| (idealScheduleName.get(position) == "F10") || (idealScheduleName.get(position) == "W10")||
+                (idealScheduleName.get(position) == "F11") || (idealScheduleName.get(position) == "W11")){
+            return 0;}
+        return 1;
+    }
+
 }
