@@ -64,26 +64,24 @@ public class PassFailScreen extends AppCompatActivity {
         int i = 0;
         boolean[] passFailData = new boolean[courseCode.size()];
         if(firstTime == false){
-                while(termNo < terms.length){
-            data = myDB.sendPassFail(terms[termNo]);
-            data.moveToFirst();
-            boolean check = true;
-            while (check) {
-                if (data.getInt(1) == 1) {
-                    passFailData[i] = true;
-                } else
-                    passFailData[i] = false;
-                check = data.moveToNext();
-                i++;
+            while(termNo < terms.length){
+                data = myDB.sendPassFail(terms[termNo]);
+                data.moveToFirst();
+                boolean check = true;
+                while (check) {
+                    if (data.getInt(1) == 1) {
+                        passFailData[i] = true;
+                    } else
+                        passFailData[i] = false;
+                    check = data.moveToNext();
+                    i++;
+                }
+                termNo ++;
             }
-            termNo ++;
-        }
 
         }
-
-
+      
         final CourseChoiceAdapter adapter = new CourseChoiceAdapter(this, courseCode, courseName, passFailData, firstTime);
-
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,6 +116,9 @@ public class PassFailScreen extends AppCompatActivity {
         fin = sg.main(choice, Semester, year);
         myDB.updateSemesters();
         Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+        intent.putExtra("Choice", choice);
+        intent.putExtra("Year",year);
+        intent.putExtra("Semester", Semester);
         startActivity(intent);
     }
 }
