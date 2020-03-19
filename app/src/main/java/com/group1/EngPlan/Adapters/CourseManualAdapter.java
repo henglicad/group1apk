@@ -20,7 +20,7 @@ public class CourseManualAdapter extends BaseAdapter {
     private ArrayList<String> courseCode;
     private ArrayList<String> courseName;
     public int clickPosition;
-    protected Context c;
+    protected Context context;
 
 
 
@@ -28,7 +28,7 @@ public class CourseManualAdapter extends BaseAdapter {
         courseCode = i;
         courseName = j;
         mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.c = c;
+        context = c;
     }
 
 
@@ -75,8 +75,9 @@ public class CourseManualAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     clickPosition = position;
-                    Intent intent = new Intent (c, CustomScheduleAdd.class);
-                    c.startActivity(intent);
+                    Intent intent = new Intent (context, CustomScheduleAdd.class);
+                    intent.putExtra("Semester", courseName.get(position));
+                    context.startActivity(intent);
                 }
             });
 

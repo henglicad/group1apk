@@ -2,7 +2,6 @@ package com.group1.EngPlan.ManualScheduling;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,13 +43,13 @@ public class CustomScheduleEdit extends AppCompatActivity {
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            String s;
+            //String s;
 
             data.moveToFirst();
             boolean check = true;
             if(data.getCount() != 0){
                 while (check) {
-                    s = DatabaseUtils.dumpCurrentRowToString(data);
+                    //s = DatabaseUtils.dumpCurrentRowToString(data);
                     courseCode.add(data.getString(0));
                     courseName.add(data.getString(1));
                     check = data.moveToNext();
@@ -80,18 +79,12 @@ public class CustomScheduleEdit extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String data = courseCode.get(position);
-                if((courseName.get(position) == "F1") || (courseName.get(position) == "W1") ||(courseName.get(position) == "F2") || (courseName.get(position) == "W2") ||
-                        (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
-                        (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6")||
-                        (courseName.get(position) == "F7") || (courseName.get(position) == "W7")){
-
-
-                }
-                else {
+                if(getItemViewType(position) != 0){
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
                     showCourseInfo.putExtra("com.group1.INDEX", data);
                     startActivity(showCourseInfo);
                 }
+
             }
         });
     }

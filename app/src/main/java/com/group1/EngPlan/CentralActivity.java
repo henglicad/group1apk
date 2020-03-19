@@ -2,9 +2,7 @@ package com.group1.EngPlan;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -82,15 +80,15 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             boolean check = true;
             if(data.getCount() != 0){
                 while (check) {
-                    s = DatabaseUtils.dumpCursorToString(data);
-                    Log.d(LOG_DATA, s);
+                    //s = DatabaseUtils.dumpCursorToString(data);
+                    //Log.d(LOG_DATA, s);
                     if(data.getString(1) != null){
                         courseCode.add(data.getString(0));
                         courseName.add(data.getString(1));
                         check = data.moveToNext();
                     }
-                    check = data.moveToNext();
                 }
+                // check = data.moveToNext();
             }
 
             termNo++;
