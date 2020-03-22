@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name=".ManualScheduling.CustomScheduleEdit"></activity>
+        <activity android:name=".ManualScheduling.CustomScheduleEdit"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".ManualScheduling.CustomScheduleAdd"></activity>
         <activity
             android:name=".CentralActivity"

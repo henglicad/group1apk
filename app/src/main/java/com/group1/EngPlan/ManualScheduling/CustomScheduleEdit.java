@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class CustomScheduleEdit extends AppCompatActivity {
 
-    ArrayList<String> courseCode = new ArrayList<>();
-    ArrayList<String> courseName = new ArrayList<>();
+    public ArrayList<String> courseCode = new ArrayList<>();
+    public ArrayList<String> courseName = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

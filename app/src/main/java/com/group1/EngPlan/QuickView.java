@@ -79,27 +79,21 @@ public class QuickView extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String data = idealScheduleCode.get(position);
-                if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
-                        (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
-                        (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")){
-
-
-                }
-                 else {
+                if(getItemViewType(position) == 1){
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
                     showCourseInfo.putExtra("com.group1.INDEX", data);
                     startActivity(showCourseInfo);
+
                 }
+
             }
         });
     }
     public int getItemViewType(int position){
-        if((idealScheduleName.get(position) == "F1") || (idealScheduleName.get(position) == "W1") ||(idealScheduleName.get(position) == "F2") || (idealScheduleName.get(position) == "W2") ||
-                (idealScheduleName.get(position) == "F3") || (idealScheduleName.get(position) == "W3") || (idealScheduleName.get(position) == "F4") || (idealScheduleName.get(position) == "W4") ||
-                (idealScheduleName.get(position) == "F5") || (idealScheduleName.get(position) == "W5")||(idealScheduleName.get(position) == "F6") || (idealScheduleName.get(position) == "W6") ||
-                (idealScheduleName.get(position) == "F7") || (idealScheduleName.get(position) == "W7") || (idealScheduleName.get(position) == "F8") || (idealScheduleName.get(position) == "W8")||
-                (idealScheduleName.get(position) == "F9") || (idealScheduleName.get(position) == "W9")|| (idealScheduleName.get(position) == "F10") || (idealScheduleName.get(position) == "W10")||
-                (idealScheduleName.get(position) == "F11") || (idealScheduleName.get(position) == "W11")){
+        if((idealScheduleName.get(position).equals("F1")) || (idealScheduleName.get(position).equals("W1")) ||(idealScheduleName.get(position).equals("F2")) || (idealScheduleName.get(position).equals("W2")) ||
+                (idealScheduleName.get(position).equals("F3")) || (idealScheduleName.get(position).equals("W3")) || (idealScheduleName.get(position).equals("F4")) || (idealScheduleName.get(position).equals("W4")) ||
+                (idealScheduleName.get(position).equals("F5")) || (idealScheduleName.get(position).equals("W5"))||(idealScheduleName.get(position).equals("F6")) || (idealScheduleName.get(position).equals("W6")) ||
+                (idealScheduleName.get(position).equals("F7")) || (idealScheduleName.get(position).equals("W7"))){
             return 0;}
         return 1;
     }

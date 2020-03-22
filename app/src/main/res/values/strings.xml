@@ -43,4 +43,6 @@
     <string name="menu_send">Send</string>
     <string name="MainActivitybtn3">VIEW MY PLAN</string>
 
+    <string name="customAddTextView">Select the course you want to add to </string>
+
 </resources>
