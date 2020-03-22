@@ -6,23 +6,25 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class schedule_generator  {
-    public static final String LOG_TAG = schedule_generator.class.getSimpleName();
-    Cursor data;
-    int fYear, wYear;
-    int fy = 0, wy = 0, C1Year;
+    private static final String LOG_TAG = schedule_generator.class.getSimpleName();
+    private Cursor data;
+    private int fYear, wYear;
+    private int fy = 0, wy = 0, C1Year;
+    private String semester;
 
-    ArrayList<String> courseID = new ArrayList<>();
-    ArrayList<String> courseStatus = new ArrayList<>();
+    private ArrayList<String> courseID = new ArrayList<>();
+    private ArrayList<String> courseStatus = new ArrayList<>();
 
-    ArrayList<String> IdealcourseID = new ArrayList<>();
-    ArrayList<String> IdealcourseStatus = new ArrayList<>();
+    private ArrayList<String> IdealcourseID = new ArrayList<>();
+    private ArrayList<String> IdealcourseStatus = new ArrayList<>();
+    private ArrayList<String> CourseState = new ArrayList<>();
 
-    ArrayList<ArrayList<String>> fall_semesters = new ArrayList<ArrayList<String>>();
-    ArrayList<ArrayList<String>> winter_semesters = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<String>> fall_semesters = new ArrayList<>();
+    private ArrayList<ArrayList<String>> winter_semesters = new ArrayList<>();
 
 
 
-    DatabaseHandler CDB;
+    private DatabaseHandler CDB;
 
     public schedule_generator(DatabaseHandler db){
         CDB = db;
@@ -32,6 +34,7 @@ public class schedule_generator  {
 
     public boolean main(int num_of_courses, String sem, int year){
         add_data();
+        semester = sem;
         fYear = year;
         wYear = year;
         fall_semesters.add(new ArrayList<String>());
@@ -52,7 +55,7 @@ public class schedule_generator  {
             Both = order(Both);
 
             if (Fall.size() == 0 && Winter.size() == 0 && Both.size() != 0) {
-                Backup(Fall, Winter, Both, num_of_courses);
+                Backup(Both, num_of_courses);
             }else{
                 make_schedule(Fall, Winter,Both, num_of_courses);
             }
@@ -61,23 +64,7 @@ public class schedule_generator  {
         return true;
     }
 
-    /*public void test(){
-        data.moveToFirst();
-
-            for(data.moveToFirst(); !data.isAfterLast(); data.moveToNext()){
-                for(int i = 0; i<9; i++){
-                    if(data.getString(i) != null){
-                        Log.d(LOG_TAG, data.getString(i));
-                    }
-                    else{
-                        Log.d(LOG_TAG, "null");
-                    }
-
-                }
-            }
-    }*/
-
-    public void add_data(){
+    private void add_data(){
         boolean check = true;
         // saving all the data as they are ordered in the Cursor
         data.moveToFirst();
@@ -111,6 +98,17 @@ public class schedule_generator  {
         ArrayList<String> sF5 = new ArrayList<>();
         ArrayList<String> sW5 = new ArrayList<>();
 
+        ArrayList<String> stF1 = new ArrayList<>();
+        ArrayList<String> stW1 = new ArrayList<>();
+        ArrayList<String> stF2 = new ArrayList<>();
+        ArrayList<String> stW2 = new ArrayList<>();
+        ArrayList<String> stF3 = new ArrayList<>();
+        ArrayList<String> stW3 = new ArrayList<>();
+        ArrayList<String> stF4 = new ArrayList<>();
+        ArrayList<String> stW4 = new ArrayList<>();
+        ArrayList<String> stF5 = new ArrayList<>();
+        ArrayList<String> stW5 = new ArrayList<>();
+
         data.moveToFirst();
         check =true;
         while(check){
@@ -118,42 +116,52 @@ public class schedule_generator  {
                 case "F1":
                     F1.add(data.getString(0));
                     sF1.add(Integer.toString(data.getInt(8)));
+                    stF1.add(Integer.toString(data.getInt(10)));
                     break;
                 case "W1":
                     W1.add(data.getString(0));
                     sW1.add(Integer.toString(data.getInt(8)));
+                    stW1.add(Integer.toString(data.getInt(10)));
                     break;
                 case "F2":
                     F2.add(data.getString(0));
                     sF2.add(Integer.toString(data.getInt(8)));
+                    stF2.add(Integer.toString(data.getInt(10)));
                     break;
                 case "W2":
                     W2.add(data.getString(0));
                     sW2.add(Integer.toString(data.getInt(8)));
+                    stW2.add(Integer.toString(data.getInt(10)));
                     break;
                 case "F3":
                     F3.add(data.getString(0));
                     sF3.add(Integer.toString(data.getInt(8)));
+                    stF3.add(Integer.toString(data.getInt(10)));
                     break;
                 case "W3":
                     W3.add(data.getString(0));
                     sW3.add(Integer.toString(data.getInt(8)));
+                    stW3.add(Integer.toString(data.getInt(10)));
                     break;
                 case "F4":
                     F4.add(data.getString(0));
                     sF4.add(Integer.toString(data.getInt(8)));
+                    stF4.add(Integer.toString(data.getInt(10)));
                     break;
                 case "W4":
                     W4.add(data.getString(0));
                     sW4.add(Integer.toString(data.getInt(8)));
+                    stW4.add(Integer.toString(data.getInt(10)));
                     break;
                 case "F5":
                     F5.add(data.getString(0));
                     sF5.add(Integer.toString(data.getInt(8)));
+                    stF5.add(Integer.toString(data.getInt(10)));
                     break;
                 case "W5":
                     W5.add(data.getString(0));
                     sW5.add(Integer.toString(data.getInt(8)));
+                    stW5.add(Integer.toString(data.getInt(10)));
                     break;
             }
 
@@ -181,13 +189,26 @@ public class schedule_generator  {
         IdealcourseStatus.addAll(sW4);
         IdealcourseStatus.addAll(sF5);
         IdealcourseStatus.addAll(sW5);
+
+        CourseState.addAll(stF1);
+        CourseState.addAll(stW1);
+        CourseState.addAll(stF2);
+        CourseState.addAll(stW2);
+        CourseState.addAll(stF3);
+        CourseState.addAll(stW3);
+        CourseState.addAll(stF4);
+        CourseState.addAll(stW4);
+        CourseState.addAll(stF5);
+        CourseState.addAll(stW5);
+
     }
 
-    public ArrayList<String> getMasterList(){
+    private ArrayList<String> getMasterList(){
         ArrayList<String> MasterList = new ArrayList<>();
+        //
 
         for(int i = 0; i<IdealcourseStatus.size(); i++){
-            if(IdealcourseStatus.get(i).equals("0")){
+            if(IdealcourseStatus.get(i).equals("0") && CourseState.get(i).equals("0")){
                 MasterList.add(IdealcourseID.get(i));
             }
         }
@@ -195,7 +216,7 @@ public class schedule_generator  {
         return MasterList;
     }
 
-    public boolean checkMaster(ArrayList<String> Master){
+    private boolean checkMaster(ArrayList<String> Master){
 
 
         for(int i = 0; i<Master.size(); i++){
@@ -205,7 +226,7 @@ public class schedule_generator  {
         return true;
     }
 
-    public boolean check_pre_req(String course){
+    private boolean check_pre_req(String course){
         int pos = courseID.indexOf(course);
         int count = 0;
         String r1, r2;
@@ -250,7 +271,7 @@ public class schedule_generator  {
         return count == 2;
     }
 
-    public ArrayList<String> subList1 (ArrayList<String> masterID ){
+    private ArrayList<String> subList1(ArrayList<String> masterID){
         ArrayList<String> s = new ArrayList<>();
 
         for(int i= 0; i< masterID.size(); i++){
@@ -259,12 +280,10 @@ public class schedule_generator  {
             }
         }
 
-
-
         return s;
     }
 
-    public ArrayList<String> getFall(ArrayList<String> sub){
+    private ArrayList<String> getFall(ArrayList<String> sub){
         ArrayList<String> fall = new ArrayList<>();
 
         for(int i = 0; i<sub.size(); i++){
@@ -278,7 +297,7 @@ public class schedule_generator  {
 
     }
 
-    public ArrayList<String> getWinter(ArrayList<String> sub){
+    private ArrayList<String> getWinter(ArrayList<String> sub){
         ArrayList<String> Winter = new ArrayList<>();
 
         for(int i = 0; i<sub.size(); i++){
@@ -292,7 +311,7 @@ public class schedule_generator  {
 
     }
 
-    public ArrayList<String> getBoth(ArrayList<String> sub){
+    private ArrayList<String> getBoth(ArrayList<String> sub){
         ArrayList<String> Both = new ArrayList<>();
 
         for(int i = 0; i<sub.size(); i++){
@@ -307,7 +326,7 @@ public class schedule_generator  {
     }
 
 
-    public ArrayList<String> order(ArrayList<String> x){
+    private ArrayList<String> order(ArrayList<String> x){
         int a = -1;
         int count1=0;
         int count2 = 0;
@@ -346,7 +365,7 @@ public class schedule_generator  {
         return x;
     }
 
-    public Integer getCourseYear(String course){
+    private Integer getCourseYear(String course){
         switch (course.charAt(4)){
             case '1':
                 return 1;
@@ -360,20 +379,26 @@ public class schedule_generator  {
         }
     }
 
-    public void add_COOP(int Cnum){
-        fall_semesters.add(new ArrayList<String>());                                //if it is, then it is scheduled for the year (fy) after the current year (fy)
+    private void add_COOP(int Cnum){
+        //adds the fall COOP term
+        fall_semesters.add(new ArrayList<String>());
         fall_semesters.get(fy+1).add("COOP2080");
         IdealcourseStatus.set(IdealcourseID.indexOf("COOP2080"), "1");
         courseStatus.set(courseID.indexOf("COOP2080"), "1");
         C1Year = fy+1;
 
+        if(semester.equals("W")){
+            C1Year++;
+        }
+
+        //pads out winter_semester so that the correspinding semester is available for COOP 2180
         if(winter_semesters.size()<= C1Year){
             while(winter_semesters.size()<= C1Year){
                 winter_semesters.add(new ArrayList<String>());
             }
         }
 
-
+        //checks to see if the year that the COOP term needs to be added to is free or not
         if(winter_semesters.get(C1Year).size() == 0){
             winter_semesters.get(C1Year).add("COOP2180");
             IdealcourseStatus.set(IdealcourseID.indexOf("COOP2180"), "1");
@@ -403,7 +428,7 @@ public class schedule_generator  {
 
     }
 
-    public void make_schedule(ArrayList<String> fall, ArrayList<String> winter, ArrayList<String> both,  int Cnum){
+    private void make_schedule(ArrayList<String> fall, ArrayList<String> winter, ArrayList<String> both, int Cnum){
 
         while(fall.size()!=0 || winter.size()!=0){
             //Fall semester scheduling
@@ -491,7 +516,7 @@ public class schedule_generator  {
         }
     }
 
-    public void Backup(ArrayList<String> fall, ArrayList<String> winter, ArrayList<String> both, int Cnum){
+    private void Backup(ArrayList<String> both, int Cnum){
         semester_trim();
         while(both.size()!=0){
 
@@ -515,7 +540,7 @@ public class schedule_generator  {
         }
     }
 
-    public void semester_trim(){
+    private void semester_trim(){
         while(fall_semesters.get(fall_semesters.size()-1).size() == 0){
             fall_semesters.remove(fall_semesters.size()-1);
         }
@@ -525,8 +550,8 @@ public class schedule_generator  {
         }
     }
 
-    public void enterInDB(String sem){
-        int Y = 0;
+    private void enterInDB(String sem){
+        int Y;
         if(sem.equals("W")){
             fYear ++;
         }
