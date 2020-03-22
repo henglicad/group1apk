@@ -411,7 +411,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + ", L." + COURSE_TO1_COL + ", L." + COURSE_TO2_COL + ", L." + COURSE_TO3_COL + ", L." + COURSE_TO4_COL + ", R." + STATUS_COL + ", I." + SEMESTER_COL + ", S." + SAVED_SCHED_STATE
                 + " FROM " + COURSE_LIST_TABLE + " L JOIN " + RECORD_TABLE + " R ON L." + COURSE_ID_COL + " = R." + COURSE_ID_COL
                 + " JOIN " + IDEAL_SCHED_TABLE + " I ON L." + COURSE_ID_COL + " = I." + COURSE_ID_COL
-                + " JOIN " + SAVED_SCHED_TABLE + " S ON L." + COURSE_ID_COL + " = S." + COURSE_ID_COL + ";";
+                + " JOIN " + SAVED_SCHED_TABLE + " S ON I." + COURSE_ID_COL + " = S." + COURSE_ID_COL + ";";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
@@ -488,7 +488,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.execSQL("UPDATE " + SAVED_SCHED_TABLE
-                    + " SET " + SEMESTER_COL + " = " + sem
+                    + " SET " + SEMESTER_COL + " = '" + sem + "'"
                     + " WHERE " + COURSE_ID_COL + " = " + id + ";");
         db.execSQL("UPDATE " + SAVED_SCHED_TABLE
                     + " SET " + SAVED_SCHED_STATE + " = 1"
