@@ -489,10 +489,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.execSQL("UPDATE " + SAVED_SCHED_TABLE
                     + " SET " + SEMESTER_COL + " = '" + sem + "'"
-                    + " WHERE " + COURSE_ID_COL + " = " + id + ";");
+                    + " WHERE " + COURSE_ID_COL + " = '" + id + "';");
         db.execSQL("UPDATE " + SAVED_SCHED_TABLE
                     + " SET " + SAVED_SCHED_STATE + " = 1"
-                    + " WHERE " + COURSE_ID_COL + " = " + id + ";");
+                    + " WHERE " + COURSE_ID_COL + " = '" + id + "';");
     }
 
     public boolean checkSemster(String id, String sem){
@@ -500,7 +500,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String query = "SELECT " + COURSE_ID_COL + ", " + COURSE_OFFERED_COL
                 + " FROM " + COURSE_LIST_TABLE
-                + " WHERE " + COURSE_ID_COL + " = " + id + ";";
+                + " WHERE " + COURSE_ID_COL + " = '" + id + "';";
         Cursor cursor = db.rawQuery(query, null);
 
         cursor.moveToFirst();
