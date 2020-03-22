@@ -142,7 +142,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             drawer.closeDrawer(GravityCompat.START);
         }
         else{
-            super.onBackPressed();
+            Intent MainActivity = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(MainActivity);
         }
     }
 
