@@ -1,20 +1,10 @@
-#group1apk
-SENG 3210 This app aims to help engineering students plan their degrees for every semester and keep track of their credits earned. They will use this app to make sure thay know when thay are going to graduate based on how many courses thay want to take every semester
+The TRU Eng Planner app is made to help TRU Software Engineering students plan their semesters out and stay on track for graduation. The app is easy to use and features an attractive dark mode to make it easier on the users’ eyes.
 
-      FEATURES
-List of all courses with pre-reqs
-
-List of “normal” course schedule
-
-Option to say if passed/failed/doing
-
-Recalculate plan based on pre-reqs
-
-Calculate grad year/number left
-
-Quick view
-
-Line graph showing progress
-
-    Extra Features
-Make plans based on number of courses per semester
+      App Features
+- Quick View to see TRU’s ideal software engineering schedule
+- Make A Plan automatic valid semester scheduler based on year, semester, and preferred number of courses per semester
+- All courses markable as taken or not taken so that the schedule reflects each student’s current status
+- Easy viewing of course details, including prerequisites, post requisites, and semesters offered
+- Course database downloadable into a text file on the phone
+- Protected feature to upload a new valid database in case of program changes
+- Manual schedule changes supported
