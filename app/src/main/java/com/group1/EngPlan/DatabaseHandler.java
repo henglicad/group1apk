@@ -494,6 +494,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + " SET " + SAVED_SCHED_STATE + " = 1"
                     + " WHERE " + COURSE_ID_COL + " = " + id + ";");
     }
+
+    public boolean checkSemster(String id, String sem){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT " + COURSE_ID_COL + ", " + COURSE_OFFERED_COL
+                + " FROM " + COURSE_LIST_TABLE
+                + " WHERE " + COURSE_ID_COL + " = " + id + ";";
+        Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
+
+        if(cursor.getString(1).equals("B")){
+            return true;
+        }
+        else if(cursor.getString(1).equals(sem)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
         /* END FILL DATA */
 
         /* BEGIN UPLOAD DB */
