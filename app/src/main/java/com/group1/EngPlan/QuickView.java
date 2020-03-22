@@ -85,7 +85,6 @@ public class QuickView extends AppCompatActivity {
                     startActivity(showCourseInfo);
 
                 }
-
             }
         });
     }

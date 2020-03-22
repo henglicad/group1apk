@@ -1,5 +1,7 @@
 package com.group1.EngPlan.ManualScheduling;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +12,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseAdapter;
-import com.group1.EngPlan.CourseDetails;
+import com.group1.EngPlan.CentralActivity;
+import com.group1.EngPlan.DatabaseHandler;
 import com.group1.EngPlan.R;
 
 import java.util.ArrayList;
@@ -19,8 +22,9 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
     ArrayList<String> courseName = new ArrayList<>();
     ArrayList<String> courseCode = new ArrayList<>();
-    String semester;
+    String semester, test;
     int check;
+    boolean permission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
         Intent intent = getIntent();
         courseCode = intent.getStringArrayListExtra("Course Code");
         courseName = intent.getStringArrayListExtra("Course Name");
-        String test = intent.getStringExtra("Semester");
+        test = intent.getStringExtra("Semester");
 
         switch(test){
             case "F1":
@@ -125,19 +129,79 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
     private void displayList(ListView listView){
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
+        final DatabaseHandler myDB = new DatabaseHandler(this);
         listView.setAdapter(courseAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(getItemViewType(position) == 1){
-                    Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
-                    //showCourseInfo.putExtra("com.group1.INDEX", data);
-                    startActivity(showCourseInfo);
+                    boolean check;
+                    check = myDB.checkSemester(courseCode.get(position), String.valueOf(test.charAt(0)));
+                    if(check){
+                        alertDialogAreYouSure(myDB, position);
+
+                    }
+                    else{
+                        alertDialog1(test);
+                    }
+
 
                 }
 
             }
         });
+
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+        startActivity(intent);
+    }
+
+    private void alertDialogAreYouSure(final DatabaseHandler myDB,final int position){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Hey!");
+        dialog.setMessage("Are you sure you want to alter your schedule? This change is irreversible.");
+        dialog.setPositiveButton("Yes Of Course",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        myDB.manualChange(courseCode.get(position), test);
+                        Intent intent = new Intent(getApplicationContext(), CustomScheduleEdit.class);
+                        //showCourseInfo.putExtra("com.group1.INDEX", data);
+                        startActivity(intent);
+                    }
+                });
+        dialog.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
+
+    }
+
+    private void alertDialog1(String test) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        if(test.charAt(0) == 'F'){
+            dialog.setMessage("The course you have selected is not offered in the Fall Semester. ");
+        }
+        else if(test.charAt(0) == 'W'){
+            dialog.setMessage("The course you have selected is not offered in the Winter Semester.");
+        }
+        dialog.setTitle("Hey!");
+        dialog.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
     }
 
     public int getItemViewType(int position){

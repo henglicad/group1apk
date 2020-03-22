@@ -19,7 +19,7 @@ public class CourseManualAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<String> courseCode;
     private ArrayList<String> courseName;
-    public int clickPosition;
+    private int clickPosition;
     protected Context context;
 
 
@@ -69,7 +69,7 @@ public class CourseManualAdapter extends BaseAdapter {
             View v = mInflater.inflate(R.layout.listview_headings_custom_schedule, null);
             TextView courseSem = (TextView) v.findViewById(R.id.TextViewSemesterWBtn);
             Button plusBtn = (Button) v.findViewById(R.id.plusButton);
-            Button editBtn = (Button) v.findViewById(R.id.editButton);
+            //Button editBtn = (Button) v.findViewById(R.id.editButton);
 
             plusBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -147,10 +147,12 @@ public class CourseManualAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position){
-        if((courseName.get(position) == "F1") || (courseName.get(position) == "W1") ||(courseName.get(position) == "F2") || (courseName.get(position) == "W2") ||
-                (courseName.get(position) == "F3") || (courseName.get(position) == "W3") || (courseName.get(position) == "F4") || (courseName.get(position) == "W4") ||
-                (courseName.get(position) == "F5") || (courseName.get(position) == "W5")||(courseName.get(position) == "F6") || (courseName.get(position) == "W6") ||
-                (courseName.get(position) == "F7") || (courseName.get(position) == "W7")){
+        if((courseName.get(position).equals("F1")) || (courseName.get(position).equals("W1")) ||(courseName.get(position).equals("F2")) || (courseName.get(position).equals("W2")) ||
+                (courseName.get(position).equals("F3")) || (courseName.get(position).equals("W3")) || (courseName.get(position).equals("F4")) || (courseName.get(position).equals("W4")) ||
+                (courseName.get(position).equals("F5")) || (courseName.get(position).equals("W5")) || (courseName.get(position).equals("F6")) || (courseName.get(position).equals("W6")) ||
+                (courseName.get(position).equals("F7")) || (courseName.get(position).equals("W7")) || (courseName.get(position).equals("F8")) || (courseName.get(position).equals("W8"))||
+                (courseName.get(position).equals("F9")) || (courseName.get(position).equals("W9")) || (courseName.get(position).equals("F10")) || (courseName.get(position).equals("W10"))||
+                (courseName.get(position).equals("F11")) || (courseName.get(position).equals("W11"))){
             return 0;}
         return 1;
     }
