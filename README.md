@@ -8,3 +8,5 @@ The TRU Eng Planner app is made to help TRU Software Engineering students plan t
 - Course database downloadable into a text file on the phone
 - Protected feature to upload a new valid database in case of program changes
 - Manual schedule changes supported
+
+"Build, Install & Use.docx" is the reference document that can be followed for instructions on how to build, install, and use the TRU Eng Planner application.
