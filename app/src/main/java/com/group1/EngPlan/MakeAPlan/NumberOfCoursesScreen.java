@@ -11,9 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.CentralActivity;
-import com.group1.EngPlan.DatabaseHandler;
+import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.R;
-import com.group1.EngPlan.schedule_generator;
+import com.group1.EngPlan.Backend.schedule_generator;
 
 public class NumberOfCoursesScreen extends AppCompatActivity {
 

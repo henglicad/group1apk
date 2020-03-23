@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.group1.EngPlan.Adapters.CourseAdapter;
+import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.MakeAPlan.PassFailScreen;
 import com.group1.EngPlan.ManualScheduling.CustomScheduleEdit;
 

@@ -13,13 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseChoiceAdapter;
 import com.group1.EngPlan.CentralActivity;
-import com.group1.EngPlan.DatabaseHandler;
+import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.R;
-import com.group1.EngPlan.schedule_generator;
+import com.group1.EngPlan.Backend.schedule_generator;
 
 import java.util.ArrayList;
 
-import static com.group1.EngPlan.DatabaseHandler.LOG_TAG;
+import static com.group1.EngPlan.Backend.DatabaseHandler.LOG_TAG;
 
 public class PassFailScreen extends AppCompatActivity {
 
@@ -114,6 +114,9 @@ public class PassFailScreen extends AppCompatActivity {
         boolean fin = false;
         schedule_generator sg = new schedule_generator(myDB);
         fin = sg.main(choice, Semester, year);
+        myDB.year = year;
+        myDB.numCourses = choice;
+        myDB.semester = Semester;
         myDB.updateSemesters();
         Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
         intent.putExtra("Choice", choice);

@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
-import static com.group1.EngPlan.DatabaseHandler.LOG_TAG;
+
+import com.group1.EngPlan.Backend.DatabaseHandler;
+
+import static com.group1.EngPlan.Backend.DatabaseHandler.LOG_TAG;
 
 public class SplashScreen extends AppCompatActivity {
 

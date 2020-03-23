@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseAdapter;
-import com.group1.EngPlan.DatabaseHandler;
+import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.R;
 
 import java.util.ArrayList;

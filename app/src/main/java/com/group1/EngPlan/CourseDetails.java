@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group1.EngPlan.Backend.DatabaseHandler;
+
 public class CourseDetails extends AppCompatActivity {
 
     @Override

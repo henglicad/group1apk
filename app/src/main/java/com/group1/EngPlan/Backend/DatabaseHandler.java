@@ -1,4 +1,4 @@
-package com.group1.EngPlan;
+package com.group1.EngPlan.Backend;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,10 @@ import android.util.Log;
 public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String LOG_TAG = DatabaseHandler.class.getSimpleName();
     SQLiteDatabase db;
+
+    public static int year;
+    public static int numCourses;
+    public static String semester;
 
     private static final String DATABASE_NAME = "EngPlan.db";
     private boolean firstTime = true;

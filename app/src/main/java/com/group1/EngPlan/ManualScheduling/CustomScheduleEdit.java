@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.group1.EngPlan.Adapters.CourseManualAdapter;
 import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.CourseDetails;
-import com.group1.EngPlan.DatabaseHandler;
+import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.R;
 
 import java.util.ArrayList;

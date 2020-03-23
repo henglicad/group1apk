@@ -1,4 +1,4 @@
-package com.group1.EngPlan;
+package com.group1.EngPlan.Backend;
 
 
 import android.database.Cursor;

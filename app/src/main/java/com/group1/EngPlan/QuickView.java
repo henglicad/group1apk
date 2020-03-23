@@ -10,6 +10,8 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseAdapter;
+import com.group1.EngPlan.Backend.DatabaseHandler;
+import com.group1.EngPlan.Backend.schedule_generator;
 
 import java.util.ArrayList;
 
