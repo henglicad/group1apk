@@ -19,11 +19,10 @@ import java.util.ArrayList;
 
 public class CustomScheduleAdd extends AppCompatActivity {
 
-    ArrayList<String> courseName = new ArrayList<>();
-    ArrayList<String> courseCode = new ArrayList<>();
-    String semester, test;
-    int check, semesterPosition;
-    boolean permission;
+    private ArrayList<String> courseName = new ArrayList<>();
+    private ArrayList<String> courseCode = new ArrayList<>();
+    private String semester, test;
+    private int check, semesterPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +164,6 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
     }
 
-
     private void alertDialogAreYouSure(final DatabaseHandler myDB,final int position){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Hey!");
@@ -176,7 +174,6 @@ public class CustomScheduleAdd extends AppCompatActivity {
                                         int which) {
                         myDB.manualChange(courseCode.get(position), test);
                         Intent intent = new Intent(getApplicationContext(), CustomScheduleEdit.class);
-                        //showCourseInfo.putExtra("com.group1.INDEX", data);
                         startActivity(intent);
                     }
                 });
