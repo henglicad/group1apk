@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseAdapter;
-import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.DatabaseHandler;
 import com.group1.EngPlan.R;
 
@@ -23,7 +22,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
     ArrayList<String> courseName = new ArrayList<>();
     ArrayList<String> courseCode = new ArrayList<>();
     String semester, test;
-    int check;
+    int check, semesterPosition;
     boolean permission;
 
     @Override
@@ -38,6 +37,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
         courseCode = intent.getStringArrayListExtra("Course Code");
         courseName = intent.getStringArrayListExtra("Course Name");
         test = intent.getStringExtra("Semester");
+        semesterPosition = intent.getIntExtra("Position", 0);
 
         switch(test){
             case "F1":
@@ -136,8 +136,19 @@ public class CustomScheduleAdd extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(getItemViewType(position) == 1){
                     boolean check;
-                    check = myDB.checkSemester(courseCode.get(position), String.valueOf(test.charAt(0)));
-                    if(check){
+                    String course = courseCode.get(position);
+                    check = myDB.checkSemester(course, String.valueOf(test.charAt(0)));
+                    if(course.contains("COOP2")){
+                        if(semesterPosition + 1 != courseName.size()){
+                            if(getItemViewType(semesterPosition+1) == 1){
+                                alertDialog1("CO");
+                            }
+                            else{
+                                alertDialogAreYouSure(myDB, position);
+                            }
+                        }
+                    }
+                    else if(check){
                         alertDialogAreYouSure(myDB, position);
 
                     }
@@ -154,11 +165,6 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed(){
-        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
-        startActivity(intent);
-    }
 
     private void alertDialogAreYouSure(final DatabaseHandler myDB,final int position){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -188,10 +194,13 @@ public class CustomScheduleAdd extends AppCompatActivity {
     private void alertDialog1(String test) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         if(test.charAt(0) == 'F'){
-            dialog.setMessage("The course you have selected is not offered in the Fall Semester. ");
+            dialog.setMessage("The course you have selected is not offered in the Fall Semester.");
         }
         else if(test.charAt(0) == 'W'){
             dialog.setMessage("The course you have selected is not offered in the Winter Semester.");
+        }
+        else{
+            dialog.setMessage("COOP2XXX series courses cannot be moved because they are work terms.");
         }
         dialog.setTitle("Hey!");
         dialog.setPositiveButton("OK",

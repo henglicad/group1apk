@@ -10,6 +10,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseManualAdapter;
+import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.CourseDetails;
 import com.group1.EngPlan.DatabaseHandler;
 import com.group1.EngPlan.R;
@@ -84,9 +85,14 @@ public class CustomScheduleEdit extends AppCompatActivity {
                     showCourseInfo.putExtra("com.group1.INDEX", data);
                     startActivity(showCourseInfo);
                 }
-
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+        startActivity(intent);
     }
 
     public int getItemViewType(int position){

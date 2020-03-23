@@ -77,6 +77,7 @@ public class CourseManualAdapter extends BaseAdapter {
                     clickPosition = position;
                     Intent intent = new Intent (context, CustomScheduleAdd.class);
                     intent.putExtra("Semester", courseName.get(position));
+                    intent.putExtra("Position", position);
                     intent.putStringArrayListExtra("Course Name", courseName);
                     intent.putStringArrayListExtra("Course Code", courseCode);
                     context.startActivity(intent);
