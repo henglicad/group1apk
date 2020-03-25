@@ -19,17 +19,17 @@ public class QuickView extends AppCompatActivity {
 
     ArrayList<String> idealScheduleCode = new ArrayList<>();
     ArrayList<String> idealScheduleName = new ArrayList<>();
+    boolean fromMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DatabaseHandler myDB = new DatabaseHandler(this);
 
-        schedule_generator sg = new schedule_generator(myDB);
-        //sg.test();
-
-
-
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        fromMenu = intent.getBooleanExtra("Menu", false);
+
         setContentView(R.layout.activity_quick_view);
 
         ListView listView = (ListView) findViewById(R.id.ListViewIdeal);
@@ -90,6 +90,18 @@ public class QuickView extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        if(fromMenu){
+            Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+            startActivity(intent);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
     public int getItemViewType(int position){
         if((idealScheduleName.get(position).equals("F1")) || (idealScheduleName.get(position).equals("W1")) ||(idealScheduleName.get(position).equals("F2")) || (idealScheduleName.get(position).equals("W2")) ||
                 (idealScheduleName.get(position).equals("F3")) || (idealScheduleName.get(position).equals("W3")) || (idealScheduleName.get(position).equals("F4")) || (idealScheduleName.get(position).equals("W4")) ||

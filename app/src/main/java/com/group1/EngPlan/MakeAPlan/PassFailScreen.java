@@ -25,6 +25,7 @@ public class PassFailScreen extends AppCompatActivity {
 
     ArrayList<String> courseCode = new ArrayList<>();
     ArrayList<String> courseName = new ArrayList<>();
+    boolean fromMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class PassFailScreen extends AppCompatActivity {
         final String Semester = intent.getStringExtra("Semester");
         final int choice = intent.getIntExtra("Choice", 0);
         final boolean firstTime = intent.getBooleanExtra("First Time", false);
+        fromMenu = intent.getBooleanExtra("Menu", false);
         Cursor data;
 
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
@@ -63,7 +65,7 @@ public class PassFailScreen extends AppCompatActivity {
         termNo = 0;
         int i = 0;
         boolean[] passFailData = new boolean[courseCode.size()];
-        if(firstTime == false){
+        if(!firstTime){
             while(termNo < terms.length){
                 data = myDB.sendPassFail(terms[termNo]);
                 data.moveToFirst();
@@ -99,6 +101,17 @@ public class PassFailScreen extends AppCompatActivity {
                        writeToDatabase(adapter, myDB,choice, Semester, year);
                     }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(fromMenu) {
+            Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+            startActivity(intent);
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     public void writeToDatabase(CourseChoiceAdapter adapter, DatabaseHandler myDB, int choice, String Semester, int year){

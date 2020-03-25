@@ -22,6 +22,7 @@ import com.group1.EngPlan.MakeAPlan.PassFailScreen;
 import com.group1.EngPlan.ManualScheduling.CustomScheduleEdit;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CentralActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -57,7 +58,6 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         navigationView.setNavigationItemSelectedListener(this);
 
         displayList();
-
     }
 
     public void displayList(){
@@ -81,15 +81,12 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             boolean check = true;
             if(data.getCount() != 0){
                 while (check) {
-                    //s = DatabaseUtils.dumpCursorToString(data);
-                    //Log.d(LOG_DATA, s);
                     if(data.getString(1) != null){
                         courseCode.add(data.getString(0));
                         courseName.add(data.getString(1));
                         check = data.moveToNext();
                     }
                 }
-                // check = data.moveToNext();
             }
 
             termNo++;
@@ -107,10 +104,6 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             courseName.remove(temp-1);
             courseCode.remove(temp-1);
         }
-
-
-
-
 
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
         listView.setAdapter(courseAdapter);
@@ -158,7 +151,9 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         }
 
         if(id == R.id.nav_quick_view){
-            startActivity(new Intent (getApplicationContext(), QuickView.class));
+            Intent intent = new Intent (getApplicationContext(), QuickView.class);
+            intent.putExtra("Menu", true);
+            startActivity(intent);
         }
         else if(id == R.id.nav_PF_view){
             Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
@@ -166,6 +161,7 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             intent.putExtra("Year",year);
             intent.putExtra("Semester", Semester);
             intent.putExtra("First Time", false);
+            intent.putExtra("Menu", true);
             startActivity(intent);
         }
         else if(id == R.id.nav_schedule_change_view){
