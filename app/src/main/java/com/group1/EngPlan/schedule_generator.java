@@ -217,8 +217,6 @@ public class schedule_generator  {
     }
 
     private boolean checkMaster(ArrayList<String> Master){
-
-
         for(int i = 0; i<Master.size(); i++){
             if(IdealcourseStatus.get(IdealcourseID.indexOf(Master.get(i))).equals("0"))
             return false;
