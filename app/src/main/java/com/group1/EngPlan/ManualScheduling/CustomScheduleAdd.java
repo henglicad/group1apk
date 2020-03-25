@@ -3,6 +3,7 @@ package com.group1.EngPlan.ManualScheduling;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
     private ArrayList<String> courseName = new ArrayList<>();
     private ArrayList<String> courseCode = new ArrayList<>();
+    private ArrayList<String> courseCodeTest = new ArrayList<>();
     private String semester, test;
     private int check, semesterPosition;
 
@@ -34,6 +36,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
         Intent intent = getIntent();
         courseCode = intent.getStringArrayListExtra("Course Code");
+        courseCodeTest = (ArrayList<String>) courseCode.clone();
         courseName = intent.getStringArrayListExtra("Course Name");
         test = intent.getStringExtra("Semester");
         semesterPosition = intent.getIntExtra("Position", 0);
@@ -129,26 +132,79 @@ public class CustomScheduleAdd extends AppCompatActivity {
     private void displayList(ListView listView){
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
         final DatabaseHandler myDB = new DatabaseHandler(this);
+        final ArrayList<String> preReqs = new ArrayList<>();
+
         listView.setAdapter(courseAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(getItemViewType(position) == 1){
-                    boolean check;
+                    boolean courseCheck, preReqCheck = false, preReqComplete = false;
+                    int preReqNo = -1, preReqMatch = -1;
                     String course = courseCode.get(position);
-                    check = myDB.checkSemester(course, String.valueOf(test.charAt(0)));
-                    if(course.contains("COOP2")){
-                        if(semesterPosition + 1 != courseName.size()){
-                            if(getItemViewType(semesterPosition+1) == 1){
-                                alertDialog1("CO");
-                            }
-                            else{
-                                alertDialogAreYouSure(myDB, position);
-                            }
+                    courseCheck = myDB.checkSemester(course, String.valueOf(test.charAt(0)));
+
+
+                    Cursor data = myDB.getCourseData(course);
+                    //String s;
+                    //s = DatabaseUtils.dumpCursorToString(data);
+                    data.moveToFirst();
+                    preReqs.add(data.getString(3));
+                    preReqs.add(data.getString(4));
+                    for(int i = 0; i < preReqs.size(); i++){
+                        if(preReqs.get(i) != null){
+                            preReqNo++;
                         }
                     }
-                    else if(check){
-                        alertDialogAreYouSure(myDB, position);
+
+                    int i = 0;
+                    while(!courseCodeTest.get(i).equals(test)){
+                        int count = preReqNo;
+                        while(count >= 0){
+                            if(courseCodeTest.get(i).equals(preReqs.get(count))){
+                                preReqCheck = true;
+                            }
+                            count--;
+                        }
+                        if(preReqCheck){
+                            preReqMatch++;
+                            preReqCheck = false;
+                        }
+                        if(preReqMatch == preReqNo){
+                            preReqComplete = true;
+                            break;
+                        }
+                        i++;
+                    }
+
+                    if(course.contains("COOP2")) {
+                        if(preReqComplete){
+                            if (semesterPosition + 1 != courseName.size()) {
+                                if (getItemViewType(semesterPosition + 1) == 1) {
+                                    alertDialog1("CO");
+                                } else {
+                                    alertDialogAreYouSure(myDB, position);
+                                }
+                            }
+                        }
+                        else{
+                            if (semesterPosition + 1 != courseName.size()) {
+                                if (getItemViewType(semesterPosition + 1) == 1) {
+                                    alertDialog1("CO");
+                                } else {
+                                    alertDialogueMissingPreReq(myDB, position);
+                                }
+                            }
+                        }
+
+                    }
+                    else if(courseCheck){
+                        if(preReqComplete){
+                            alertDialogAreYouSure(myDB, position);
+                        }
+                        else{
+                            alertDialogueMissingPreReq(myDB, position);
+                        }
 
                     }
                     else{
@@ -168,6 +224,30 @@ public class CustomScheduleAdd extends AppCompatActivity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Hey!");
         dialog.setMessage("Are you sure you want to alter your schedule? This change is irreversible.");
+        dialog.setPositiveButton("Yes Of Course",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        myDB.manualChange(courseCode.get(position), test);
+                        Intent intent = new Intent(getApplicationContext(), CustomScheduleEdit.class);
+                        startActivity(intent);
+                    }
+                });
+        dialog.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
+
+    }
+
+    private void alertDialogueMissingPreReq(final DatabaseHandler myDB,final int position){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Hey!");
+        dialog.setMessage(" Moving this course will result in missing prerequisites. Are you sure you want to alter your schedule? This change is irreversible.");
         dialog.setPositiveButton("Yes Of Course",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
