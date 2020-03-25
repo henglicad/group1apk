@@ -1,6 +1,8 @@
 package com.group1.EngPlan.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.group1.EngPlan.ManualScheduling.CustomScheduleAdd;
+import com.group1.EngPlan.ManualScheduling.CustomScheduleEdit;
 import com.group1.EngPlan.R;
 
 import java.util.ArrayList;
@@ -76,11 +79,16 @@ public class CourseManualAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     clickPosition = position;
                     Intent intent = new Intent (context, CustomScheduleAdd.class);
-                    intent.putExtra("Semester", courseName.get(position));
-                    intent.putExtra("Position", position);
-                    intent.putStringArrayListExtra("Course Name", courseName);
-                    intent.putStringArrayListExtra("Course Code", courseCode);
-                    context.startActivity(intent);
+                    if(courseName.get(position + 1).contains("COOP2")){
+                        alertDialogue(position);
+                    }
+                    else{
+                        intent.putExtra("Semester", courseName.get(position));
+                        intent.putExtra("Position", position);
+                        intent.putStringArrayListExtra("Course Name", courseName);
+                        intent.putStringArrayListExtra("Course Code", courseCode);
+                        context.startActivity(intent);
+                    }
                 }
             });
 
@@ -156,6 +164,32 @@ public class CourseManualAdapter extends BaseAdapter {
                 (courseName.get(position).equals("F11")) || (courseName.get(position).equals("W11"))){
             return 0;}
         return 1;
+    }
+
+    private void alertDialogue(final int position){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("Hey!");
+        dialog.setMessage("You cannot add a course to a work term, Are you sure you want to do this ?");
+        dialog.setPositiveButton("Yes Of Course",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Intent intent = new Intent(context, CustomScheduleEdit.class);
+                        intent.putExtra("Semester", courseName.get(position));
+                        intent.putExtra("Position", position);
+                        intent.putStringArrayListExtra("Course Name", courseName);
+                        intent.putStringArrayListExtra("Course Code", courseCode);
+                        context.startActivity(intent);
+                    }
+                });
+        dialog.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                    }
+                });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
     }
 
 }
