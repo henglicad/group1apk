@@ -189,7 +189,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                         i++;
                     }
 
-                   for(int j = position; j < courseCodeTest.size(); j++){
+                   for(int j = semesterPosition; j < courseCodeTest.size(); j++){
                        for(int k = 2; k < postReqNo; k++){
                            if(courseCodeTest.get(j).equals(reqs.get(k))){
                                postReqMatch++;
@@ -230,15 +230,19 @@ public class CustomScheduleAdd extends AppCompatActivity {
                             alertDialogAreYouSure(myDB, position);
                         }
                         else{
-                            alertDialogueMissingPreReq(myDB, position, reqs, postReqComplete, postReqComplete);
+                            alertDialogueMissingPreReq(myDB, position, reqs, preReqComplete, postReqComplete);
                         }
+
                     }
                     else{
                         alertDialog1(test);
                     }
+
                 }
+
             }
         });
+
     }
 
     private void alertDialogAreYouSure(final DatabaseHandler myDB,final int position){
@@ -268,22 +272,30 @@ public class CustomScheduleAdd extends AppCompatActivity {
     private void alertDialogueMissingPreReq(final DatabaseHandler myDB,final int position, ArrayList<String> reqs, boolean preReqComplete, boolean postReqComplete){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         String alertMessage = "";
+
         for(int i = 0; i < reqs.size(); i++){
-            if((preReqComplete == false)){
-                if(reqs.get(i) != null){
-                    alertMessage = "\n Moving this course will result in missing its prerequisite: " + reqs.get(i) + "\n";
+            if((i <= 1) && (preReqComplete == false)){
+                if(i == 0){
+                    alertMessage = alertMessage + "\nPre-Reqs:\n";
                 }
-            }
-            if(postReqComplete == false){
                 if(reqs.get(i) != null){
-                    alertMessage = "\n Moving this course will result other courses missing their prerequisite: " + reqs.get(i) + "\n";
+                    alertMessage = "    " + alertMessage + reqs.get(i) + "\n";
+                }
+
+            }
+            else if(postReqComplete == false){
+                if(i == 2){
+                    alertMessage = alertMessage + "\nPost-Reqs:\n";
+                }
+                if(reqs.get(i) != null){
+                    alertMessage = "    " + alertMessage + reqs.get(i) + "\n";
                 }
             }
         }
 
         dialog.setTitle("Hey!");
-        dialog.setMessage(alertMessage +
-                "\n Are you sure you want to alter your schedule? This change is irreversible.");
+        dialog.setMessage("\n Moving this course will result in missing prerequisites or .\n" + alertMessage +
+                "Are you sure you want to alter your schedule? This change is irreversible.");
         dialog.setPositiveButton("Yes Of Course",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
