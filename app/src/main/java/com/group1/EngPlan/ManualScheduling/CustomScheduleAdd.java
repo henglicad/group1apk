@@ -232,18 +232,13 @@ public class CustomScheduleAdd extends AppCompatActivity {
                         else{
                             alertDialogueMissingPreReq(myDB, position, reqs, postReqComplete, postReqComplete);
                         }
-
                     }
                     else{
                         alertDialog1(test);
                     }
-
-
                 }
-
             }
         });
-
     }
 
     private void alertDialogAreYouSure(final DatabaseHandler myDB,final int position){
@@ -274,30 +269,21 @@ public class CustomScheduleAdd extends AppCompatActivity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         String alertMessage = "";
         for(int i = 0; i < reqs.size(); i++){
-            if(i <= 1 && (preReqComplete == false)){
-                if(i == 0){
-                    alertMessage = alertMessage + "\n pre-Reqs:\n";
-                }
+            if((preReqComplete == false)){
                 if(reqs.get(i) != null){
-                    alertMessage = "    " + alertMessage + reqs.get(i) + "\n";
+                    alertMessage = "\n Moving this course will result in missing its prerequisite: " + reqs.get(i) + "\n";
                 }
-
             }
-            else if(postReqComplete == false){
-                if(i == 2){
-                    alertMessage = alertMessage + "\n post-Reqs:\n";
-                }
+            if(postReqComplete == false){
                 if(reqs.get(i) != null){
-                    alertMessage = "    " + alertMessage + reqs.get(i) + "\n";
+                    alertMessage = "\n Moving this course will result other courses missing their prerequisite: " + reqs.get(i) + "\n";
                 }
-
-
             }
         }
 
         dialog.setTitle("Hey!");
-        dialog.setMessage("\n Moving this course will result in missing prerequisites.\n" + alertMessage +
-                "Are you sure you want to alter your schedule? This change is irreversible.");
+        dialog.setMessage(alertMessage +
+                "\n Are you sure you want to alter your schedule? This change is irreversible.");
         dialog.setPositiveButton("Yes Of Course",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
