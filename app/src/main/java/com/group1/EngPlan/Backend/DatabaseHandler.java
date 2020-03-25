@@ -99,7 +99,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // POPULATE COURSE_LIST_TABLE WITH IDEAL PLAN
     private void populateCourseTable(SQLiteDatabase db){
-        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, null, null, null, null);");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, 'COOP2080', 'COOP2180', null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2080', 'Work Term 1', 'F', 'COOP1000', null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2180', 'Work Term 2', 'W', 'COOP1000', 'COOP2080', null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG2010', 'Computer Architecture & Assembly Language', 'F', 'MATH1230', 'SENG1210', 'SENG3130', 'CENG3010', null, null);");
