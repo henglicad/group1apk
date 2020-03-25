@@ -219,7 +219,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                                 if (getItemViewType(semesterPosition + 1) == 1) {
                                     alertDialog1("CO");
                                 } else {
-                                    alertDialogueMissingPreReq(myDB, position, reqs);
+                                    alertDialogueMissingPreReq(myDB, position, reqs, preReqComplete, postReqComplete);
                                 }
                             }
                         }
@@ -230,7 +230,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                             alertDialogAreYouSure(myDB, position);
                         }
                         else{
-                            alertDialogueMissingPreReq(myDB, position, reqs);
+                            alertDialogueMissingPreReq(myDB, position, reqs, postReqComplete, postReqComplete);
                         }
 
                     }
@@ -270,22 +270,22 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
     }
 
-    private void alertDialogueMissingPreReq(final DatabaseHandler myDB,final int position, ArrayList<String> reqs){
+    private void alertDialogueMissingPreReq(final DatabaseHandler myDB,final int position, ArrayList<String> reqs, boolean preReqComplete, boolean postReqComplete){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         String alertMessage = "";
         for(int i = 0; i < reqs.size(); i++){
-            if(i <= 1){
+            if(i <= 1 && (preReqComplete == false)){
                 if(i == 0){
-                    alertMessage = alertMessage + "pre-Reqs:\n";
+                    alertMessage = alertMessage + "\n pre-Reqs:\n";
                 }
                 if(reqs.get(i) != null){
                     alertMessage = "    " + alertMessage + reqs.get(i) + "\n";
                 }
 
             }
-            else{
+            else if(postReqComplete == false){
                 if(i == 2){
-                    alertMessage = alertMessage + "post-Reqs:\n";
+                    alertMessage = alertMessage + "\n post-Reqs:\n";
                 }
                 if(reqs.get(i) != null){
                     alertMessage = "    " + alertMessage + reqs.get(i) + "\n";
@@ -296,7 +296,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
         }
 
         dialog.setTitle("Hey!");
-        dialog.setMessage("Moving this course will result in missing prerequisites.\n" + alertMessage +
+        dialog.setMessage("\n Moving this course will result in missing prerequisites.\n" + alertMessage +
                 "Are you sure you want to alter your schedule? This change is irreversible.");
         dialog.setPositiveButton("Yes Of Course",
                 new DialogInterface.OnClickListener() {
