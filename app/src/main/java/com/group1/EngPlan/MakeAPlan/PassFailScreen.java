@@ -3,6 +3,7 @@ package com.group1.EngPlan.MakeAPlan;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,10 +13,10 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseChoiceAdapter;
-import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.Backend.DatabaseHandler;
-import com.group1.EngPlan.R;
 import com.group1.EngPlan.Backend.ScheduleGenerator;
+import com.group1.EngPlan.CentralActivity;
+import com.group1.EngPlan.R;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,6 @@ public class PassFailScreen extends AppCompatActivity {
         while(termNo < terms.length) {
 
             data = myDB.fillQuickView(terms[termNo]);
-
             data.moveToFirst();
             boolean check = true;
             while (check) {
@@ -58,7 +58,6 @@ public class PassFailScreen extends AppCompatActivity {
                 courseName.add(data.getString(1));
                 check = data.moveToNext();
             }
-
             termNo++;
         }
 
@@ -89,11 +88,12 @@ public class PassFailScreen extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Parcelable state = listView.onSaveInstanceState();
                 adapter.setCheckd(position);
                 listView.setAdapter(adapter);
+                listView.onRestoreInstanceState(state);
             }
         });
-
 
         passFailNext.setOnClickListener(new View.OnClickListener() {
                     @Override

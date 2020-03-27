@@ -22,11 +22,11 @@ import com.group1.EngPlan.MakeAPlan.PassFailScreen;
 import com.group1.EngPlan.ManualScheduling.CustomScheduleEdit;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class CentralActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String LOG_DATA = CentralActivity.class.getSimpleName();
+
     private DrawerLayout drawer;
     ArrayList<String> courseCode = new ArrayList<>();
     ArrayList<String> courseName = new ArrayList<>();
@@ -39,14 +39,18 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_central);
+        final DatabaseHandler myDB = new DatabaseHandler(this);
 
         Toolbar toolbar = findViewById(R.id.central_screen_toolbar);
         setSupportActionBar(toolbar);
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         year = intent.getIntExtra("Year", 0);
         Semester = intent.getStringExtra("Semester");
-        choice = intent.getIntExtra("Choice", 0);
+        choice = intent.getIntExtra("Choice", 0);*/
+        year = myDB.year;
+        Semester = myDB.semester;
+        choice = myDB.numCourses;
 
         drawer = findViewById(R.id.central_screen_drawer_layout);
 
@@ -57,12 +61,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        displayList();
+        displayList(myDB);
     }
 
-    public void displayList(){
+    public void displayList(DatabaseHandler myDB){
 
-        final DatabaseHandler myDB = new DatabaseHandler(this);
         ListView listView = (ListView) findViewById(R.id.central_activity_list_view);
 
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5", "F6", "W6", "F7", "W7", "F8", "W8", "F9", "W9", "F10", "W10", "F11", "W11"};
