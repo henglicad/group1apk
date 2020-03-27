@@ -476,7 +476,14 @@ public class schedule_generator  {
             Log.d(LOG_TAG, "wy:"+wy);
             Log.d(LOG_TAG, "winter_semesters size:"+winter_semesters.size());
             while(winter_semesters.get(wy).size() < Cnum){
-                if(winter.size() == 0){
+                if(winter_semesters.get(wy).size() != 0 && winter_semesters.get(wy).get(0).equals("COOP2180")){
+
+                    winter_semesters.add(new ArrayList<String>());
+                    wy++;
+                    break;
+
+                }
+                else if(winter.size() == 0){
                     if (both.size() != 0 && getCourseYear(both.get(0)) <= wYear+wy){
                         winter_semesters.get(wy).add(both.get(0));
                         IdealcourseStatus.set(IdealcourseID.indexOf(both.get(0)), "1");
@@ -485,13 +492,6 @@ public class schedule_generator  {
                     }else{
                         break;
                     }
-                }
-                else if(winter_semesters.get(wy).size() != 0 && winter_semesters.get(wy).get(0).equals("COOP2180")){
-
-                        winter_semesters.add(new ArrayList<String>());
-                        wy++;
-                        break;
-
                 }
                 else if(getCourseYear(winter.get(0)) > wYear+wy){
                     winter.remove(0);
