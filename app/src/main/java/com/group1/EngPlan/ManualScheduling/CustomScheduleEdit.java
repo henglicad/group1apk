@@ -44,13 +44,11 @@ public class CustomScheduleEdit extends AppCompatActivity {
             courseCode.add(terms[termNo]);
 
             data.moveToFirst();
-            //String s;
 
             data.moveToFirst();
             boolean check = true;
             if(data.getCount() != 0){
                 while (check) {
-                    //s = DatabaseUtils.dumpCurrentRowToString(data);
                     courseCode.add(data.getString(0));
                     courseName.add(data.getString(1));
                     check = data.moveToNext();
@@ -67,6 +65,7 @@ public class CustomScheduleEdit extends AppCompatActivity {
                 i--;
             }
         }
+
         int temp = courseCode.size();
         if(getItemViewType(temp-1) == 0){
             courseName.remove(temp-1);
