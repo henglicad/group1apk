@@ -83,7 +83,7 @@ public class CourseDetails extends AppCompatActivity {
         temp = data.getString(5);
         if(temp != null){
             toTitle.setVisibility(View.VISIBLE);
-            toTitle.setText("Needed Before");
+            toTitle.setText("Postrequisites");
             toList.setVisibility(View.VISIBLE);
             toList.setText(temp);
 

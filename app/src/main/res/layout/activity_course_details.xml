@@ -82,12 +82,12 @@
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:background="#4863A0"
+        android:onClick="goToPre2"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/Offering"
-        app:layout_constraintTop_toBottomOf="@+id/PreReqList"
-        android:onClick = "goToPre2"/>
+        app:layout_constraintStart_toStartOf="@+id/PreReqList"
+        app:layout_constraintTop_toBottomOf="@+id/PreReqList" />
 
     <TextView
         android:id="@+id/ToList"
