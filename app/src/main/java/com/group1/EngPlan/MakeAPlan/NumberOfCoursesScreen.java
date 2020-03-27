@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.R;
-import com.group1.EngPlan.Backend.schedule_generator;
+import com.group1.EngPlan.Backend.ScheduleGenerator;
 
 public class NumberOfCoursesScreen extends AppCompatActivity {
 
@@ -67,7 +67,7 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
 
                     if(message){
                         boolean fin = false;
-                        schedule_generator sg = new schedule_generator(myDB);
+                        ScheduleGenerator sg = new ScheduleGenerator(myDB);
                         fin = sg.main(choice, Semester, year);
 
 
