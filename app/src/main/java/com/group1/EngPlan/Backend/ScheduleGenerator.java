@@ -5,8 +5,8 @@ import android.database.Cursor;
 import android.util.Log;
 import java.util.ArrayList;
 
-public class schedule_generator  {
-    private static final String LOG_TAG = schedule_generator.class.getSimpleName();
+public class ScheduleGenerator {
+    private static final String LOG_TAG = ScheduleGenerator.class.getSimpleName();
     private Cursor data;
     private int fYear, wYear;
     private int fy = 0, wy = 0, C1Year;
@@ -26,7 +26,7 @@ public class schedule_generator  {
 
     private DatabaseHandler CDB;
 
-    public schedule_generator(DatabaseHandler db){
+    public ScheduleGenerator(DatabaseHandler db){
         CDB = db;
         data = CDB.getSchedData();
         //test();

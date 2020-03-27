@@ -15,7 +15,7 @@ import com.group1.EngPlan.Adapters.CourseChoiceAdapter;
 import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.R;
-import com.group1.EngPlan.Backend.schedule_generator;
+import com.group1.EngPlan.Backend.ScheduleGenerator;
 
 import java.util.ArrayList;
 
@@ -125,7 +125,7 @@ public class PassFailScreen extends AppCompatActivity {
         }
 
         boolean fin = false;
-        schedule_generator sg = new schedule_generator(myDB);
+        ScheduleGenerator sg = new ScheduleGenerator(myDB);
         fin = sg.main(choice, Semester, year);
         myDB.year = year;
         myDB.numCourses = choice;

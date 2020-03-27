@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 
-public class schedule_generatorTest {
+public class scheduleGeneratorTest {
 
     /*@Test
     public void main() {
