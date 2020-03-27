@@ -294,8 +294,8 @@ public class CustomScheduleAdd extends AppCompatActivity {
         }
 
         dialog.setTitle("Hey!");
-        dialog.setMessage("\n Moving this course will result in missing prerequisites or .\n" + alertMessage +
-                "Are you sure you want to alter your schedule? This change is irreversible.");
+        dialog.setMessage("\n Moving this course will result in an invalid schedule.\n" + alertMessage +
+                "\nAre you sure you want to alter your schedule? This change is irreversible.");
         dialog.setPositiveButton("Yes Of Course",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
