@@ -117,10 +117,15 @@ public class CustomScheduleAdd extends AppCompatActivity {
                 courseName.remove(i);
                 courseCode.remove(i);
                 check = getItemViewType(i);
-                while(check == 1){
+                while(check == 1 ){
                     courseName.remove(i);
                     courseCode.remove(i);
-                    check = getItemViewType(i);
+                    if(i < courseCode.size()){
+                        check = getItemViewType(i);
+                    }
+                    else {
+                        break;
+                    }
                 }
                 break;
             }
