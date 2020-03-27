@@ -10,9 +10,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String LOG_TAG = DatabaseHandler.class.getSimpleName();
     SQLiteDatabase db;
 
-    public int year;
-    public int numCourses;
-    public String semester;
+    public int year = 1;
+    public int numCourses = 7;
+    public String semester = "F";
 
     private static final String DATABASE_NAME = "EngPlan.db";
     private boolean firstTime = true;
