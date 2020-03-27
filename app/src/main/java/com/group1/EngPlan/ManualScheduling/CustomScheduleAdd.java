@@ -23,6 +23,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
     private ArrayList<String> courseName = new ArrayList<>();
     private ArrayList<String> courseCode = new ArrayList<>();
     private ArrayList<String> courseCodeTest = new ArrayList<>();
+    private final ArrayList<String> reqs = new ArrayList<>();
     private String semester, test;
     private int check, semesterPosition;
 
@@ -32,7 +33,6 @@ public class CustomScheduleAdd extends AppCompatActivity {
         setContentView(R.layout.activity_custum_schedule_add);
         TextView textview = (TextView) findViewById(R.id.customAddTextView);
         ListView listView = (ListView) findViewById(R.id.customAddListView);
-
 
         Intent intent = getIntent();
         courseCode = intent.getStringArrayListExtra("Course Code");
@@ -137,7 +137,6 @@ public class CustomScheduleAdd extends AppCompatActivity {
     private void displayList(ListView listView){
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
         final DatabaseHandler myDB = new DatabaseHandler(this);
-        final ArrayList<String> reqs = new ArrayList<>();
 
         listView.setAdapter(courseAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -149,10 +148,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                     String course = courseCode.get(position);
                     courseCheck = myDB.checkSemester(course, String.valueOf(test.charAt(0)));
 
-
                     Cursor data = myDB.getCourseData(course);
-                    //String s;
-                    //s = DatabaseUtils.dumpCursorToString(data);
                     data.moveToFirst();
                     reqs.add(data.getString(3));
                     reqs.add(data.getString(4));
@@ -171,8 +167,6 @@ public class CustomScheduleAdd extends AppCompatActivity {
                             postReqNo++;
                         }
                     }
-
-
 
                     int i = 0;
                     while(!courseCodeTest.get(i).equals(test)){
@@ -208,7 +202,6 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
                    reqComplete = preReqComplete & postReqComplete;
 
-
                     if(course.contains("COOP2")) {
                         if(reqComplete){
                             if (semesterPosition + 1 != courseName.size()) {
@@ -224,7 +217,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                                 if (getItemViewType(semesterPosition + 1) == 1) {
                                     alertDialog1("CO");
                                 } else {
-                                    alertDialogueMissingPreReq(myDB, position, reqs, preReqComplete, postReqComplete);
+                                    alertDialogueMissingPreReq(myDB, position, preReqComplete, postReqComplete);
                                 }
                             }
                         }
@@ -235,16 +228,14 @@ public class CustomScheduleAdd extends AppCompatActivity {
                             alertDialogAreYouSure(myDB, position);
                         }
                         else{
-                            alertDialogueMissingPreReq(myDB, position, reqs, preReqComplete, postReqComplete);
+                            alertDialogueMissingPreReq(myDB, position, preReqComplete, postReqComplete);
                         }
-
                     }
                     else{
                         alertDialog1(test);
                     }
-
+                reqs.clear();
                 }
-
             }
         });
 
@@ -259,14 +250,17 @@ public class CustomScheduleAdd extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         myDB.manualChange(courseCode.get(position), test);
+                        reqs.clear();
                         Intent intent = new Intent(getApplicationContext(), CustomScheduleEdit.class);
                         startActivity(intent);
+
                     }
                 });
         dialog.setNegativeButton("No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
+                        reqs.clear();
                     }
                 });
         AlertDialog alertDialog=dialog.create();
@@ -274,7 +268,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
 
     }
 
-    private void alertDialogueMissingPreReq(final DatabaseHandler myDB,final int position, ArrayList<String> reqs, boolean preReqComplete, boolean postReqComplete){
+    private void alertDialogueMissingPreReq(final DatabaseHandler myDB,final int position, boolean preReqComplete, boolean postReqComplete){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         String alertMessage = "";
 
@@ -306,6 +300,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         myDB.manualChange(courseCode.get(position), test);
+                        reqs.clear();
                         Intent intent = new Intent(getApplicationContext(), CustomScheduleEdit.class);
                         startActivity(intent);
                     }
@@ -314,6 +309,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
+                        reqs.clear();
                     }
                 });
         AlertDialog alertDialog=dialog.create();
@@ -337,6 +333,7 @@ public class CustomScheduleAdd extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
+                        reqs.clear();
                     }
                 });
         AlertDialog alertDialog=dialog.create();
