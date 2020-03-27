@@ -280,9 +280,8 @@ public class CustomScheduleAdd extends AppCompatActivity {
                 if(reqs.get(i) != null){
                     alertMessage = "    " + alertMessage + reqs.get(i) + "\n";
                 }
-
             }
-            else if(postReqComplete == false){
+            else if((i > 1) && (postReqComplete == false)){
                 if(i == 2){
                     alertMessage = alertMessage + "\nPost-Reqs:\n";
                 }
