@@ -84,6 +84,14 @@ public class CustomScheduleEdit extends AppCompatActivity {
                     showCourseInfo.putExtra("com.group1.INDEX", data);
                     startActivity(showCourseInfo);
                 }
+                else if(getItemViewType(position) == 0){
+                    Intent intent = new Intent(getApplicationContext(), CustomScheduleAdd.class);
+                    intent.putExtra("Semester", courseName.get(position));
+                    intent.putExtra("Position", position);
+                    intent.putStringArrayListExtra("Course Name", courseName);
+                    intent.putStringArrayListExtra("Course Code", courseCode);
+                    startActivity(intent);
+                }
             }
         });
     }

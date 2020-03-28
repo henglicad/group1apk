@@ -32,15 +32,15 @@ public class SplashScreenTest {
 
     @Test
     public void splashScreenTest() {
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.SplashScreentextView1), withText("group1"),
+        ViewInteraction textView = Espresso.onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.SplashScreentextView1), ViewMatchers.withText("group1"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(android.R.id.content),
+                                        ViewMatchers.withId(android.R.id.content),
                                         0),
                                 0),
-                        isDisplayed()));
-        textView.check(matches(withText("group1")));
+                        ViewMatchers.isDisplayed()));
+        textView.check(ViewAssertions.matches(ViewMatchers.withText("group1")));
 
     }
 

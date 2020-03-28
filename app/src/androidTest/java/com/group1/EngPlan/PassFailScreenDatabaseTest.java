@@ -11,13 +11,17 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.group1.EngPlan.Backend.DatabaseHandler;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -31,13 +35,19 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MakeAPlanYearScreenTest2 {
+public class PassFailScreenDatabaseTest {
+
+    DatabaseHandler db;
+    @Before
+    public void setUp(){
+        db = new DatabaseHandler(getApplicationContext());
+    }
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void makeAPlanYearScreenTest2() {
+    public void passFailScreenDatabaseTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.MainActivitybtn1), withText("Make a Plan"),
                         childAtPosition(
@@ -116,7 +126,85 @@ public class MakeAPlanYearScreenTest2 {
                                 1),
                         isDisplayed()));
         appCompatButton2.perform(click());
+
+        ViewInteraction appCompatRadioButton2 = onView(
+                allOf(withId(R.id.courseNoRadioBtn3), withText("5 Courses"),
+                        childAtPosition(
+                                allOf(withId(R.id.courseNoRadioGroup1),
+                                        childAtPosition(
+                                                childAtPosition(
+                                                        allOf(withId(android.R.id.content),
+                                                                childAtPosition(
+                                                                        allOf(withId(R.id.decor_content_parent),
+                                                                                childAtPosition(
+                                                                                        childAtPosition(
+                                                                                                withClassName(is("android.widget.LinearLayout")),
+                                                                                                1),
+                                                                                        0)),
+                                                                        0)),
+                                                        0),
+                                                0)),
+                                2),
+                        isDisplayed()));
+        appCompatRadioButton2.perform(click());
+
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(R.id.courseNoNextBtn1), withText("Next"),
+                        childAtPosition(
+                                childAtPosition(
+                                        allOf(withId(android.R.id.content),
+                                                childAtPosition(
+                                                        allOf(withId(R.id.decor_content_parent),
+                                                                childAtPosition(
+                                                                        childAtPosition(
+                                                                                withClassName(is("android.widget.LinearLayout")),
+                                                                                1),
+                                                                        0)),
+                                                        0)),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatButton3.perform(click());
+
+        DataInteraction constraintLayout = onData(anything())
+                .inAdapterView(allOf(withId(R.id.passFailListView),
+                        childAtPosition(
+                                childAtPosition(
+                                        allOf(withId(android.R.id.content),
+                                                childAtPosition(
+                                                        allOf(withId(R.id.decor_content_parent),
+                                                                childAtPosition(
+                                                                        childAtPosition(
+                                                                                withClassName(is("android.widget.LinearLayout")),
+                                                                                1),
+                                                                        0)),
+                                                        0)),
+                                        0),
+                                0)))
+                .atPosition(14);
+        constraintLayout.perform(click());
+
+        ViewInteraction appCompatButton4 = onView(
+                allOf(withId(R.id.passFailNextBtn), withText("Next"),
+                        childAtPosition(
+                                childAtPosition(
+                                        allOf(withId(android.R.id.content),
+                                                childAtPosition(
+                                                        allOf(withId(R.id.decor_content_parent),
+                                                                childAtPosition(
+                                                                        childAtPosition(
+                                                                                withClassName(is("android.widget.LinearLayout")),
+                                                                                1),
+                                                                        0)),
+                                                        0)),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatButton4.perform(click());
+
     }
+
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {

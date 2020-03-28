@@ -20,9 +20,11 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -31,15 +33,15 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MakeAPlanYearScreenTest2 {
+public class ManualChangeScreenTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void makeAPlanYearScreenTest2() {
+    public void manualChangeScreenTest() {
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.MainActivitybtn1), withText("Make a Plan"),
+                allOf(withId(R.id.MainActivitybtn3), withText("VIEW MY PLAN"),
                         childAtPosition(
                                 childAtPosition(
                                         allOf(withId(android.R.id.content),
@@ -52,70 +54,77 @@ public class MakeAPlanYearScreenTest2 {
                                                                         0)),
                                                         1)),
                                         0),
-                                1),
+                                3),
                         isDisplayed()));
         appCompatButton.perform(click());
 
-        ViewInteraction appCompatRadioButton = onView(
-                allOf(withId(R.id.yearRadioBtn2), withText("Second Year"),
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withContentDescription("Open navigation drawer"),
                         childAtPosition(
-                                allOf(withId(R.id.yearInfoRadioGrp),
+                                allOf(withId(R.id.central_screen_toolbar),
                                         childAtPosition(
                                                 childAtPosition(
-                                                        allOf(withId(android.R.id.content),
+                                                        allOf(withId(R.id.central_screen_drawer_layout),
                                                                 childAtPosition(
-                                                                        allOf(withId(R.id.decor_content_parent),
+                                                                        allOf(withId(android.R.id.content),
                                                                                 childAtPosition(
-                                                                                        childAtPosition(
-                                                                                                withClassName(is("android.widget.LinearLayout")),
-                                                                                                1),
-                                                                                        0)),
+                                                                                        allOf(withId(R.id.action_bar_root),
+                                                                                                childAtPosition(
+                                                                                                        childAtPosition(
+                                                                                                                withClassName(is("android.widget.LinearLayout")),
+                                                                                                                1),
+                                                                                                        0)),
+                                                                                        1)),
                                                                         0)),
-                                                        0),
-                                                2)),
+                                                        1),
+                                                0)),
                                 1),
                         isDisplayed()));
-        appCompatRadioButton.perform(click());
+        appCompatImageButton.perform(click());
 
-        DataInteraction appCompatCheckedTextView = onData(anything())
-                .inAdapterView(allOf(withId(R.id.select_dialog_listview),
-                        childAtPosition(
-                                allOf(withId(R.id.contentPanel),
-                                        childAtPosition(
-                                                allOf(withId(R.id.parentPanel),
-                                                        childAtPosition(
-                                                                allOf(withId(android.R.id.content),
-                                                                        childAtPosition(
-                                                                                allOf(withId(R.id.action_bar_root),
-                                                                                        childAtPosition(
+        ViewInteraction navigationMenuItemView = onView(
+                allOf(childAtPosition(
+                        allOf(withId(R.id.design_navigation_view),
+                                childAtPosition(
+                                        allOf(withId(R.id.nav_view),
+                                                childAtPosition(
+                                                        allOf(withId(R.id.central_screen_drawer_layout),
+                                                                childAtPosition(
+                                                                        allOf(withId(android.R.id.content),
+                                                                                childAtPosition(
+                                                                                        allOf(withId(R.id.action_bar_root),
                                                                                                 childAtPosition(
-                                                                                                        withClassName(is("android.widget.LinearLayout")),
-                                                                                                        1),
-                                                                                                0)),
-                                                                                0)),
-                                                                0)),
-                                                1)),
-                                0)))
-                .atPosition(0);
-        appCompatCheckedTextView.perform(click());
+                                                                                                        childAtPosition(
+                                                                                                                withClassName(is("android.widget.LinearLayout")),
+                                                                                                                1),
+                                                                                                        0)),
+                                                                                        1)),
+                                                                        0)),
+                                                        2)),
+                                        0)),
+                        3),
+                        isDisplayed()));
+        navigationMenuItemView.perform(click());
 
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.yearNextBtn), withText("Next"),
+        DataInteraction constraintLayout = onData(anything())
+                .inAdapterView(allOf(withId(R.id.custom_schedule_list_view),
                         childAtPosition(
                                 childAtPosition(
                                         allOf(withId(android.R.id.content),
                                                 childAtPosition(
-                                                        allOf(withId(R.id.decor_content_parent),
+                                                        allOf(withId(R.id.action_bar_root),
                                                                 childAtPosition(
                                                                         childAtPosition(
                                                                                 withClassName(is("android.widget.LinearLayout")),
                                                                                 1),
                                                                         0)),
-                                                        0)),
+                                                        1)),
                                         0),
-                                1),
-                        isDisplayed()));
-        appCompatButton2.perform(click());
+                                0)))
+                .atPosition(0);
+        constraintLayout.perform(click());
+
+        pressBack();
     }
 
     private static Matcher<View> childAtPosition(
