@@ -23,11 +23,9 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -37,15 +35,9 @@ public class ZDatabaseTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void databaseTest() {
+    public void zDatabaseTest() {
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.fileButton), withText("Admin"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
+                allOf(withId(R.id.fileButton), withText("Admin")));
         appCompatButton.perform(click());
 
         ViewInteraction appCompatEditText = onView(
@@ -59,51 +51,23 @@ public class ZDatabaseTest {
         appCompatEditText.perform(replaceText("abcd"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.credential), withText("abcd"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
+                allOf(withId(R.id.credential), withText("abcd")));
         appCompatEditText2.perform(click());
 
         ViewInteraction appCompatButton2 = onView(
-                allOf(withId(android.R.id.button1), withText("Okay"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
+                allOf(withId(android.R.id.button1), withText("Okay")));
         appCompatButton2.perform(scrollTo(), click());
 
         ViewInteraction appCompatButton3 = onView(
-                allOf(withId(R.id.fileButton), withText("Admin"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
+                allOf(withId(R.id.fileButton), withText("Admin")));
         appCompatButton3.perform(click());
 
         ViewInteraction appCompatButton4 = onView(
-                allOf(withId(android.R.id.button2), withText("Cancel"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                2)));
+                allOf(withId(android.R.id.button2), withText("Cancel")));
         appCompatButton4.perform(scrollTo(), click());
 
         ViewInteraction appCompatButton5 = onView(
-                allOf(withId(R.id.fileButton), withText("Admin"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
+                allOf(withId(R.id.fileButton), withText("Admin")));
         appCompatButton5.perform(click());
 
         ViewInteraction appCompatEditText3 = onView(
@@ -117,63 +81,27 @@ public class ZDatabaseTest {
         appCompatEditText3.perform(replaceText("1234"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton6 = onView(
-                allOf(withId(android.R.id.button1), withText("Okay"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
+                allOf(withId(android.R.id.button1), withText("Okay")));
         appCompatButton6.perform(scrollTo(), click());
 
         ViewInteraction appCompatButton7 = onView(
-                allOf(withId(R.id.button_download), withText("Download Database"),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                0),
-                        isDisplayed()));
+                allOf(withId(R.id.button_download), withText("Download Database")));
         appCompatButton7.perform(click());
 
         ViewInteraction appCompatButton8 = onView(
-                allOf(withId(R.id.button_upload), withText("Upload Database"),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                1),
-                        isDisplayed()));
+                allOf(withId(R.id.button_upload), withText("Upload Database")));
         appCompatButton8.perform(click());
 
         ViewInteraction appCompatButton9 = onView(
-                allOf(withId(android.R.id.button1), withText("Yes, upload"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                3)));
+                allOf(withId(android.R.id.button1), withText("Yes, upload")));
         appCompatButton9.perform(scrollTo(), click());
 
         ViewInteraction appCompatButton10 = onView(
-                allOf(withId(android.R.id.button1), withText("Okay"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                3)));
+                allOf(withId(android.R.id.button1), withText("Okay")));
         appCompatButton10.perform(scrollTo(), click());
 
         ViewInteraction appCompatButton11 = onView(
-                allOf(withId(R.id.button_logout), withText("Log Out"),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                2),
-                        isDisplayed()));
+                allOf(withId(R.id.button_logout), withText("Log Out")));
         appCompatButton11.perform(click());
     }
 
