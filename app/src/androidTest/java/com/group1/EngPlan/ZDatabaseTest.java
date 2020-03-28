@@ -56,7 +56,7 @@ public class ZDatabaseTest {
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(android.R.id.button1), withText("Okay")));
-        appCompatButton2.perform(scrollTo(), click());
+        appCompatButton2.perform(click());
 
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(R.id.fileButton), withText("Admin")));
@@ -64,7 +64,7 @@ public class ZDatabaseTest {
 
         ViewInteraction appCompatButton4 = onView(
                 allOf(withId(android.R.id.button2), withText("Cancel")));
-        appCompatButton4.perform(scrollTo(), click());
+        appCompatButton4.perform(click());
 
         ViewInteraction appCompatButton5 = onView(
                 allOf(withId(R.id.fileButton), withText("Admin")));
@@ -94,11 +94,11 @@ public class ZDatabaseTest {
 
         ViewInteraction appCompatButton9 = onView(
                 allOf(withId(android.R.id.button1), withText("Yes, upload")));
-        appCompatButton9.perform(scrollTo(), click());
+        appCompatButton9.perform(click());
 
         ViewInteraction appCompatButton10 = onView(
                 allOf(withId(android.R.id.button1), withText("Okay")));
-        appCompatButton10.perform(scrollTo(), click());
+        appCompatButton10.perform(click());
 
         ViewInteraction appCompatButton11 = onView(
                 allOf(withId(R.id.button_logout), withText("Log Out")));
