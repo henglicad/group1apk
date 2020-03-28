@@ -119,7 +119,7 @@ public class CentralActivityTest {
                                 0),
                         isDisplayed()));
         textView.check(matches(withText("Winter 4")));
-
+//here
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Open navigation drawer"),
                         childAtPosition(
