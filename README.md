@@ -17,3 +17,26 @@ The TRU Eng Planner app is made to help TRU Software Engineering students plan t
 - Created unit, component, and integration tests on Android Studio
 - Generated reports to see verify adequate test coverage
 - Beta testing before each release
+
+
+      App Structure:
+
+The source code of the TRU Eng Planner app is separated into two parts, the java and xml files that contain the source code of the application and the tests for those individual files as well as the integration and unit tests. The Java source code files are segmented further as shown in the File Organization figure.  The resources folder has xml files that are separated, based on their purpose and function, into four separate folders:
+
+| Folder | Description |
+| --- | --- |
+| drawable | Contains files for appearance of the buttons  |
+| layout | Layout files for screens or adapters to use |
+|  menu   |  Contains files that define structure of the menu   |
+|  values   |  Contains files for colors, dimensions, strings and styles   |
+
+The folder ‘java/com/group1/EngPlan’ contains the java files with the source code which contains a further four folders:
+
+| Folder | Description |
+| --- | --- |
+| Adapters | Contains the adapter files  |
+| Backend | Contains the java files which handle the backend operations |
+|  MakeAPlan   |  Contains files that implement this feature   |
+|  ManualScheduling    |  Contains the java files that handle this feature   |
+
+The remaining java files are responsible for the other functionalities of the App. This  includes the functionalities of the main screen, handling the course details, handling the buttons on the main screen and deploying the splash screen of the app.  The file structure of the app is shown in the File Organization figure.
