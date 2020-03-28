@@ -3,6 +3,7 @@ package com.group1.EngPlan.MakeAPlan;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,19 +13,20 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.group1.EngPlan.Adapters.CourseChoiceAdapter;
+import com.group1.EngPlan.Backend.DatabaseHandler;
+import com.group1.EngPlan.Backend.ScheduleGenerator;
 import com.group1.EngPlan.CentralActivity;
-import com.group1.EngPlan.DatabaseHandler;
 import com.group1.EngPlan.R;
-import com.group1.EngPlan.schedule_generator;
 
 import java.util.ArrayList;
 
-import static com.group1.EngPlan.DatabaseHandler.LOG_TAG;
+import static com.group1.EngPlan.Backend.DatabaseHandler.LOG_TAG;
 
 public class PassFailScreen extends AppCompatActivity {
 
     ArrayList<String> courseCode = new ArrayList<>();
     ArrayList<String> courseName = new ArrayList<>();
+    boolean fromMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class PassFailScreen extends AppCompatActivity {
         final String Semester = intent.getStringExtra("Semester");
         final int choice = intent.getIntExtra("Choice", 0);
         final boolean firstTime = intent.getBooleanExtra("First Time", false);
+        fromMenu = intent.getBooleanExtra("Menu", false);
         Cursor data;
 
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5"};
@@ -48,7 +51,6 @@ public class PassFailScreen extends AppCompatActivity {
         while(termNo < terms.length) {
 
             data = myDB.fillQuickView(terms[termNo]);
-
             data.moveToFirst();
             boolean check = true;
             while (check) {
@@ -56,14 +58,13 @@ public class PassFailScreen extends AppCompatActivity {
                 courseName.add(data.getString(1));
                 check = data.moveToNext();
             }
-
             termNo++;
         }
 
         termNo = 0;
         int i = 0;
         boolean[] passFailData = new boolean[courseCode.size()];
-        if(firstTime == false){
+        if(!firstTime){
             while(termNo < terms.length){
                 data = myDB.sendPassFail(terms[termNo]);
                 data.moveToFirst();
@@ -87,11 +88,12 @@ public class PassFailScreen extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Parcelable state = listView.onSaveInstanceState();
                 adapter.setCheckd(position);
                 listView.setAdapter(adapter);
+                listView.onRestoreInstanceState(state);
             }
         });
-
 
         passFailNext.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -99,6 +101,17 @@ public class PassFailScreen extends AppCompatActivity {
                        writeToDatabase(adapter, myDB,choice, Semester, year);
                     }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(fromMenu) {
+            Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+            startActivity(intent);
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     public void writeToDatabase(CourseChoiceAdapter adapter, DatabaseHandler myDB, int choice, String Semester, int year){
@@ -112,13 +125,29 @@ public class PassFailScreen extends AppCompatActivity {
         }
 
         boolean fin = false;
-        schedule_generator sg = new schedule_generator(myDB);
-        fin = sg.main(choice, Semester, year);
-        myDB.updateSemesters();
-        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
-        intent.putExtra("Choice", choice);
-        intent.putExtra("Year",year);
-        intent.putExtra("Semester", Semester);
-        startActivity(intent);
+
+        if(fromMenu){
+            myDB.year = year;
+            myDB.numCourses = choice;
+            myDB.semester = Semester;
+            Intent intent = new Intent(getApplicationContext(), SemesterUpdate.class);
+            intent.putExtra("Choice", choice);
+            intent.putExtra("Year",year);
+            intent.putExtra("Semester", Semester);
+            startActivity(intent);
+        }
+        else{
+            ScheduleGenerator sg = new ScheduleGenerator(myDB);
+            fin = sg.main(choice, Semester, year);
+            myDB.year = year;
+            myDB.numCourses = choice;
+            myDB.semester = Semester;
+            myDB.updateSemesters();
+            Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+            intent.putExtra("Choice", choice);
+            intent.putExtra("Year",year);
+            intent.putExtra("Semester", Semester);
+            startActivity(intent);
+        }
     }
 }

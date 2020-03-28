@@ -1,5 +1,6 @@
 package com.group1.EngPlan.MakeAPlan;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,29 +9,28 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.group1.EngPlan.CentralActivity;
 import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.R;
 import com.group1.EngPlan.Backend.ScheduleGenerator;
 
-public class NumberOfCoursesScreen extends AppCompatActivity {
+public class SemesterUpdate extends AppCompatActivity {
 
     RadioGroup radioGroup;
     RadioButton RadioBtn;
-    public int choice;
+    public String Semester;
+    DatabaseHandler myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final DatabaseHandler myDB = new DatabaseHandler(this);
+        myDB = new DatabaseHandler(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_number_of_courses_screen);
+        setContentView(R.layout.activity_semester_update);
 
         Intent intent = getIntent();
         final boolean message = intent.getBooleanExtra("Check", false);
         final int year = intent.getIntExtra("Year", 0);
-        final String Semester = intent.getStringExtra("Semester");
+        Semester = intent.getStringExtra("Semester");
         radioGroup = findViewById(R.id.courseNoRadioGroup1);
         Button nextBtn = findViewById(R.id.courseNoNextBtn1);
 
@@ -51,43 +51,36 @@ public class NumberOfCoursesScreen extends AppCompatActivity {
                 }
 
                 if(radioBtnChk == null) {
-                    Toast.makeText(getApplicationContext(), "Please Select One of the above Options", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please Select One of the above options", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    if (Integer.parseInt(radioBtnChk) == 3)
-                        choice = 3;
-                    else if (Integer.parseInt(radioBtnChk) == 4)
-                        choice = 4;
-                    else if (Integer.parseInt(radioBtnChk) == 5)
-                        choice = 5;
-                    else if (Integer.parseInt(radioBtnChk) == 6)
-                        choice = 6;
-                    else //if(Integer.parseInt(radioBtnChk) == 7)
-                        choice = 7;
-
-                    if(message){
-                        boolean fin = false;
-                        ScheduleGenerator sg = new ScheduleGenerator(myDB);
-                        fin = sg.main(choice, Semester, year);
-
-
-                        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
-                        startActivity(intent);
+                    if (radioBtnChk.equals("Fall")) {
+                        Semester = "F";
                     }
                     else {
-                        goToPassFail(choice, year, Semester);
+                        Semester = "W";
                     }
+
+                    goToCentral(year, Semester);
                 }
             }
         });
     }
 
-    public void goToPassFail(int choice, int year, String Semester){
-        Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
+    public void goToCentral(int year, String Semester){
+        ScheduleGenerator sg = new ScheduleGenerator(myDB);
+        int choice = myDB.numCourses;
+
+        boolean fin = sg.main(choice, Semester, year);
+
+        myDB.year = year;
+        myDB.semester = Semester;
+        myDB.updateSemesters();
+
+        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+        intent.putExtra("Choice", choice);
         intent.putExtra("Year",year);
         intent.putExtra("Semester", Semester);
-        intent.putExtra("Choice", choice);
-        intent.putExtra("First Time", true);
         startActivity(intent);
     }
 }

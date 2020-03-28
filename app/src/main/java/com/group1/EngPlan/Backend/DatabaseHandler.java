@@ -1,4 +1,4 @@
-package com.group1.EngPlan;
+package com.group1.EngPlan.Backend;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,10 @@ import android.util.Log;
 public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String LOG_TAG = DatabaseHandler.class.getSimpleName();
     SQLiteDatabase db;
+
+    public static int year = 1;
+    public static int numCourses = 7;
+    public static String semester = "F";
 
     private static final String DATABASE_NAME = "EngPlan.db";
     private boolean firstTime = true;
@@ -32,6 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String STATUS_COL = "STATUS";
     //SAVED_SCHED_TABLE STRING DECLARATIONS
     private static final String SAVED_SCHED_TABLE = "SAVED_SCHED";
+    private static final String SAVED_SCHED_STATE = "SCHED_STATE";
     //BACKUP_SCHED_TABLE STRING DECLARATIONS
     private static final String BACKUP_SCHED_TABLE = "BACKUP_SCHED";
 
@@ -82,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         populateRecordTable(db);
 
         db.execSQL("CREATE TABLE " + SAVED_SCHED_TABLE
-                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2),"
+                + "(" + COURSE_ID_COL + " CHAR(8), " + SEMESTER_COL + " CHAR(2), " + SAVED_SCHED_STATE + " int DEFAULT 0, "
                 + "FOREIGN KEY(" + COURSE_ID_COL + ") REFERENCES " + COURSE_LIST_TABLE + "(" + COURSE_ID_COL + "));");
         populateSavedSchedTable(db);
 
@@ -94,7 +99,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // POPULATE COURSE_LIST_TABLE WITH IDEAL PLAN
     private void populateCourseTable(SQLiteDatabase db){
-        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, null, null, null, null);");
+        db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP1000', 'Career Management', 'B', null, null, 'COOP2080', 'COOP2180', null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2080', 'Work Term 1', 'F', 'COOP1000', null, null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('COOP2180', 'Work Term 2', 'W', 'COOP1000', 'COOP2080', null, null, null, null);");
         db.execSQL("INSERT INTO " + COURSE_LIST_TABLE + " VALUES ('CENG2010', 'Computer Architecture & Assembly Language', 'F', 'MATH1230', 'SENG1210', 'SENG3130', 'CENG3010', null, null);");
@@ -265,59 +270,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // POPULATE SAVED_SCHED_TABLE WITH IDEAL PLAN FRO DEFAULT
     private void populateSavedSchedTable(SQLiteDatabase db){
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COOP1000', 'F2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COOP2080', 'F4');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COOP2180', 'W4');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG2010', 'F2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG2030', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG3010', 'F3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG3020', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG3310', 'F3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG4320', 'W5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CHEM1520', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CMNS1290', 'F2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COMP3410', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COMP3610', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('DRAF1520', 'F1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EENG3010', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGL1100', 'F1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR1100', 'F1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR2200', 'F2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR2300', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR2400', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR3300', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1150', 'F1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1250', 'W1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1700', 'W1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1990', 'W1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY2200', 'F2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY2300', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY2990', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1130', 'F1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1230', 'W1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1300', 'F1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1700', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('PHYS2150', 'F2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('PHYS2250', 'W2');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG1110', 'F1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG1210', 'W1');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3110', 'F3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3120', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3130', 'F3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3210', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4100', 'F5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4110', 'F5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4120', 'F5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4130', 'F5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4140', 'W5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4220', 'W5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4230', 'W5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('STAT2230', 'F5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('NSCIXXXX', 'W3');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG41XX', 'F5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG42XX', 'F5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG43XX', 'W5');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG44XX', 'W5');");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COOP1000', 'F2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COOP2080', 'F4', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COOP2180', 'W4', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG2010', 'F2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG2030', 'W2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG3010', 'F3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG3020', 'W3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG3310', 'F3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CENG4320', 'W5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CHEM1520', 'W1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('CMNS1290', 'F2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COMP3410', 'W3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('COMP3610', 'W3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('DRAF1520', 'F1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EENG3010', 'F3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGL1100', 'F1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR1100', 'F1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR2200', 'F2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR2300', 'W2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR2400', 'W2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('ENGR3300', 'F3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1150', 'F1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1250', 'W1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1700', 'W1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY1990', 'W1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY2200', 'F2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY2300', 'W2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('EPHY2990', 'W2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1130', 'F1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1230', 'W1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1300', 'F1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('MATH1700', 'W1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('PHYS2150', 'F2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('PHYS2250', 'W2', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG1110', 'F1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG1210', 'W1', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3110', 'F3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3120', 'W3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3130', 'F3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG3210', 'W3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4100', 'F5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4110', 'F5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4120', 'F5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4130', 'F5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4140', 'W5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4220', 'W5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG4230', 'W5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('STAT2230', 'F5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('NSCIXXXX', 'W3', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG41XX', 'F5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG42XX', 'F5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG43XX', 'W5', 0);");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('SENG44XX', 'W5', 0);");
     }
 
     // POPULATE BACKUP_SCHED_TABLE
@@ -331,18 +336,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3020', 'W3');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG3310', 'F3');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CENG4320', 'W5');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CHEM1520', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CHEM1520', 'W1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('CMNS1290', 'F2');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COMP3410', 'W3');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('COMP3610', 'W3');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('DRAF1520', 'F1');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EENG3010', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EENG3010', 'F3');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGL1100', 'F1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR1100', 'F1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2200', 'F2');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2300', 'W2');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR2400', 'W2');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR3300', 'W3');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('ENGR3300', 'F3');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1150', 'F1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1250', 'W1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('EPHY1700', 'W1');");
@@ -353,7 +358,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1130', 'F1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1230', 'W1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1300', 'F1');");
-        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1700', 'W2');");
+        db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('MATH1700', 'W1');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('PHYS2150', 'F2');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('PHYS2250', 'W2');");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('SENG1110', 'F1');");
@@ -407,9 +412,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT L." + COURSE_ID_COL + ", L." + COURSE_OFFERED_COL + ", L." + COURSE_PREREQ1_COL + ", L." + COURSE_PREREQ2_COL
-                + ", L." + COURSE_TO1_COL + ", L." + COURSE_TO2_COL + ", L." + COURSE_TO3_COL + ", L." + COURSE_TO4_COL + ", R." + STATUS_COL + ", I." + SEMESTER_COL
+                + ", L." + COURSE_TO1_COL + ", L." + COURSE_TO2_COL + ", L." + COURSE_TO3_COL + ", L." + COURSE_TO4_COL + ", R." + STATUS_COL + ", I." + SEMESTER_COL + ", S." + SAVED_SCHED_STATE
                 + " FROM " + COURSE_LIST_TABLE + " L JOIN " + RECORD_TABLE + " R ON L." + COURSE_ID_COL + " = R." + COURSE_ID_COL
-                + " JOIN " + IDEAL_SCHED_TABLE + " I ON L." + COURSE_ID_COL + " = I." + COURSE_ID_COL + ";";
+                + " JOIN " + IDEAL_SCHED_TABLE + " I ON L." + COURSE_ID_COL + " = I." + COURSE_ID_COL
+                + " JOIN " + SAVED_SCHED_TABLE + " S ON I." + COURSE_ID_COL + " = S." + COURSE_ID_COL + ";";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
@@ -427,15 +433,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
-    public Cursor sendDBData(){
-        Log.d(LOG_TAG, "Filling cursor to write to file");
+    // CHECK IF A COURSE IS OFFERED IN THE GIVEN SEMESTER
+    public boolean checkSemester(String id, String sem){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT C." + COURSE_ID_COL + ", C." +COURSE_NAME_COL + ", C." + COURSE_OFFERED_COL + ","
-                + " I." + SEMESTER_COL + ", C." + COURSE_PREREQ1_COL + ", C." + COURSE_PREREQ2_COL + ","
-                + " C." + COURSE_TO1_COL + ", C." + COURSE_TO2_COL + ", C." + COURSE_TO3_COL + ", C." + COURSE_TO4_COL
-                + " FROM " + COURSE_LIST_TABLE + " C JOIN " + IDEAL_SCHED_TABLE + " I"
-                + " ON C." + COURSE_ID_COL + " = I." + COURSE_ID_COL +";";
+        String query = "SELECT " + COURSE_ID_COL + ", " + COURSE_OFFERED_COL
+                + " FROM " + COURSE_LIST_TABLE
+                + " WHERE " + COURSE_ID_COL + " = '" + id + "';";
+        Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
+
+        if(cursor.getString(1).equals("B")){
+            return true;
+        }
+        else if(cursor.getString(1).equals(sem)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    // SEND PASS FAIL INFORMATION
+    public Cursor sendPassFail(String sem){
+        Log.d(LOG_TAG, "Sending pass/fail info");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT I." + COURSE_ID_COL + ", R." + STATUS_COL
+                + " FROM " + IDEAL_SCHED_TABLE + " I JOIN " + RECORD_TABLE + " R "
+                + "ON I." + COURSE_ID_COL + " = R." + COURSE_ID_COL
+                + " WHERE I." + SEMESTER_COL + " = '" + sem + "';";
         return db.rawQuery(query, null);
     }
         /* END SEND DATA */
@@ -469,26 +497,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                                     + " WHERE " + STATUS_COL +  " = 1);");
     }
 
-    // SEND PASS FAIL INFORMATION
-    public Cursor sendPassFail(String sem){
-        Log.d(LOG_TAG, "Sending pass/fail info");
-        SQLiteDatabase db = this.getReadableDatabase();
+    // SET ADDITIONAL COLUMN AS SCHEDULES
+    public void manualChange(String id, String sem){
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT I." + COURSE_ID_COL + ", R." + STATUS_COL
-                + " FROM " + IDEAL_SCHED_TABLE + " I JOIN " + RECORD_TABLE + " R "
-                + "ON I." + COURSE_ID_COL + " = R." + COURSE_ID_COL
-                + " WHERE I." + SEMESTER_COL + " = '" + sem + "';";
-        return db.rawQuery(query, null);
+        db.execSQL("UPDATE " + SAVED_SCHED_TABLE
+                + " SET " + SEMESTER_COL + " = '" + sem + "'"
+                + " WHERE " + COURSE_ID_COL + " = '" + id + "';");
+        db.execSQL("UPDATE " + SAVED_SCHED_TABLE
+                    + " SET " + SAVED_SCHED_STATE + " = 1"
+                    + " WHERE " + COURSE_ID_COL + " = '" + id + "';");
     }
-
-    // UPDATE BACKUP SCHED WITH SAVED SCHED
-    //public void updateBackupSched(){
-
-    //}
-
         /* END FILL DATA */
 
         /* BEGIN UPLOAD DB */
+    // SEND RELEVANT DATA TO BE WRITTEN TO TEXT FILE
+    public Cursor sendDBData(){
+        Log.d(LOG_TAG, "Filling cursor to write to file");
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT C." + COURSE_ID_COL + ", C." +COURSE_NAME_COL + ", C." + COURSE_OFFERED_COL + ","
+                + " I." + SEMESTER_COL + ", C." + COURSE_PREREQ1_COL + ", C." + COURSE_PREREQ2_COL + ","
+                + " C." + COURSE_TO1_COL + ", C." + COURSE_TO2_COL + ", C." + COURSE_TO3_COL + ", C." + COURSE_TO4_COL
+                + " FROM " + COURSE_LIST_TABLE + " C JOIN " + IDEAL_SCHED_TABLE + " I"
+                + " ON C." + COURSE_ID_COL + " = I." + COURSE_ID_COL +";";
+        return db.rawQuery(query, null);
+    }
+
     // DROP OLD TABLES
     public void clearTables(){
         db.execSQL("DELETE FROM " + COURSE_LIST_TABLE);
@@ -498,6 +533,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + BACKUP_SCHED_TABLE);
     }
 
+    // ADD NEW ROWS TO COURSE_LIST_TABLE
     public void setMaster(String cid, String cname, String offered, String pr1, String pr2, String t1, String t2, String t3, String t4){
         SQLiteDatabase db = this.getWritableDatabase();
         cid = cid.trim();
@@ -563,6 +599,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    // ADD NEW ROWS TO ALL SCHEDULE TABLES
     public void setSchedTables(String cid, String sem){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -570,10 +607,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         sem = sem.trim();
 
         db.execSQL("INSERT INTO " + IDEAL_SCHED_TABLE + " VALUES ('" + cid + "', '" + sem + "');");
-        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('" + cid + "', '" + sem + "');");
+        db.execSQL("INSERT INTO " + SAVED_SCHED_TABLE + " VALUES ('" + cid + "', '" + sem + "', 0);");
         db.execSQL("INSERT INTO " + BACKUP_SCHED_TABLE + " VALUES ('" + cid + "', '" + sem + "');");
     }
 
+    // ADD ROWS TO RECORDS TABLE BASED ON PREVIOUS PASS/FAIL RECORDS
     public void setChangeRecord(String cid, Integer pf){
         SQLiteDatabase db = this.getWritableDatabase();
 

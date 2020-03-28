@@ -10,6 +10,11 @@
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
+    <style name="AppTheme.Clean">
+        <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 

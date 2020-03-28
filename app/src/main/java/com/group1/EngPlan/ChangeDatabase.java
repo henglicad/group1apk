@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.group1.EngPlan.Backend.DatabaseHandler;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

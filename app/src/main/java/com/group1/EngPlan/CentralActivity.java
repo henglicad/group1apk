@@ -2,9 +2,7 @@ package com.group1.EngPlan;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,13 +17,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.group1.EngPlan.Adapters.CourseAdapter;
+import com.group1.EngPlan.Backend.DatabaseHandler;
 import com.group1.EngPlan.MakeAPlan.PassFailScreen;
+import com.group1.EngPlan.ManualScheduling.CustomScheduleEdit;
 
 import java.util.ArrayList;
 
 public class CentralActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String LOG_DATA = CentralActivity.class.getSimpleName();
+
     private DrawerLayout drawer;
     ArrayList<String> courseCode = new ArrayList<>();
     ArrayList<String> courseName = new ArrayList<>();
@@ -38,14 +39,18 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_central);
+        final DatabaseHandler myDB = new DatabaseHandler(this);
 
         Toolbar toolbar = findViewById(R.id.central_screen_toolbar);
         setSupportActionBar(toolbar);
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         year = intent.getIntExtra("Year", 0);
         Semester = intent.getStringExtra("Semester");
-        choice = intent.getIntExtra("Choice", 0);
+        choice = intent.getIntExtra("Choice", 0);*/
+        year = myDB.year;
+        Semester = myDB.semester;
+        choice = myDB.numCourses;
 
         drawer = findViewById(R.id.central_screen_drawer_layout);
 
@@ -56,13 +61,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        displayList();
-
+        displayList(myDB);
     }
 
-    public void displayList(){
+    public void displayList(DatabaseHandler myDB){
 
-        final DatabaseHandler myDB = new DatabaseHandler(this);
         ListView listView = (ListView) findViewById(R.id.central_activity_list_view);
 
         String[] terms = {"F1", "W1", "F2", "W2", "F3", "W3", "F4", "W4", "F5", "W5", "F6", "W6", "F7", "W7", "F8", "W8", "F9", "W9", "F10", "W10", "F11", "W11"};
@@ -81,13 +84,11 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             boolean check = true;
             if(data.getCount() != 0){
                 while (check) {
-                    s = DatabaseUtils.dumpCursorToString(data);
-                    Log.d(LOG_DATA, s);
                     if(data.getString(1) != null){
                         courseCode.add(data.getString(0));
                         courseName.add(data.getString(1));
+                        check = data.moveToNext();
                     }
-                    check = data.moveToNext();
                 }
             }
 
@@ -107,10 +108,6 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             courseCode.remove(temp-1);
         }
 
-
-
-
-
         CourseAdapter courseAdapter = new CourseAdapter(this, courseCode, courseName);
         listView.setAdapter(courseAdapter);
 
@@ -124,6 +121,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
                         (courseName.get(position) == "F7") || (courseName.get(position) == "W7")|| (courseName.get(position) == "F8") || (courseName.get(position) == "W8")||
                         (courseName.get(position) == "F9") || (courseName.get(position) == "W9")|| (courseName.get(position) == "F10") || (courseName.get(position) == "W10")||
                         (courseName.get(position) == "F11") || (courseName.get(position) == "W11")){
+
+
                 }
                 else {
                     Intent showCourseInfo = new Intent(getApplicationContext(), CourseDetails.class);
@@ -140,7 +139,8 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             drawer.closeDrawer(GravityCompat.START);
         }
         else{
-            super.onBackPressed();
+            Intent MainActivity = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(MainActivity);
         }
     }
 
@@ -154,7 +154,9 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
         }
 
         if(id == R.id.nav_quick_view){
-            startActivity(new Intent (getApplicationContext(), QuickView.class));
+            Intent intent = new Intent (getApplicationContext(), QuickView.class);
+            intent.putExtra("Menu", true);
+            startActivity(intent);
         }
         else if(id == R.id.nav_PF_view){
             Intent intent = new Intent(getApplicationContext(), PassFailScreen.class);
@@ -162,11 +164,12 @@ public class CentralActivity extends AppCompatActivity implements NavigationView
             intent.putExtra("Year",year);
             intent.putExtra("Semester", Semester);
             intent.putExtra("First Time", false);
+            intent.putExtra("Menu", true);
             startActivity(intent);
         }
-        /*else if(id == R.id.nav_schedule_change_view){
-            startActivity(new Intent (getApplicationContext(), ScheduleChange.class));
-        }*/
+        else if(id == R.id.nav_schedule_change_view){
+            startActivity(new Intent (getApplicationContext(), CustomScheduleEdit.class));
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

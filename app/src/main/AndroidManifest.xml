@@ -11,8 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat">
-        <activity android:name=".ManualScheduling.CustomScheduleEdit"></activity>
+        android:theme="@style/Theme.AppCompat"
+        android:fullBackupContent="true">
+        <activity android:name=".ManualScheduling.CustomScheduleEdit"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".ManualScheduling.CustomScheduleAdd"/>
         <activity
             android:name=".CentralActivity"
             android:label="@string/title_activity_central"
@@ -20,6 +23,7 @@
         <activity android:name=".MakeAPlan.NumberOfCoursesScreen" />
         <activity android:name=".MakeAPlan.PassFailScreen" />
         <activity android:name=".MakeAPlan.MakeAPlanYearScreen" />
+        <activity android:name=".MakeAPlan.SemesterUpdate" />
         <activity
             android:name=".CourseDetails"
             android:label="Course Details" />
@@ -33,7 +37,9 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".SplashScreen">
+        <activity
+            android:name=".SplashScreen"
+            android:theme="@style/AppTheme.Clean">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

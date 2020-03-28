@@ -111,15 +111,15 @@ public class CentralActivityTest {
         appCompatButton4.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.TextViewSemester), withText("Fall 1"),
+                allOf(withId(R.id.TextViewSemester), withText("Winter 4"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.central_activity_list_view),
                                         0),
                                 0),
                         isDisplayed()));
-        textView.check(matches(withText("Fall 1")));
-
+        textView.check(matches(withText("Winter 4")));
+//here
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Open navigation drawer"),
                         childAtPosition(
