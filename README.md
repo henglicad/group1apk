@@ -40,3 +40,4 @@ The folder ‘java/com/group1/EngPlan’ contains the java files with the source
 |  ManualScheduling    |  Contains the java files that handle this feature   |
 
 The remaining java files are responsible for the other functionalities of the App. This  includes the functionalities of the main screen, handling the course details, handling the buttons on the main screen and deploying the splash screen of the app.  The file structure of the app is shown in the File Organization figure.
+

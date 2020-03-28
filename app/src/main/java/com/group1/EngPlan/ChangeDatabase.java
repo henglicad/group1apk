@@ -378,11 +378,8 @@ public class ChangeDatabase extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                // rerun algorithm with static values from DatabaseHandler
-                // call ahmeds here
-
                 displayNotification();
-                Toast.makeText(this, "Upload complete. Please review schedule.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Upload complete. Please re-build schedule.", Toast.LENGTH_SHORT).show();
             }
             else{
                 Toast.makeText(this, "Cannot read.", Toast.LENGTH_SHORT).show();
