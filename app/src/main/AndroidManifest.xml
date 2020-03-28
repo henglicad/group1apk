@@ -23,6 +23,7 @@
         <activity android:name=".MakeAPlan.NumberOfCoursesScreen" />
         <activity android:name=".MakeAPlan.PassFailScreen" />
         <activity android:name=".MakeAPlan.MakeAPlanYearScreen" />
+        <activity android:name=".MakeAPlan.SemesterUpdate" />
         <activity
             android:name=".CourseDetails"
             android:label="Course Details" />
