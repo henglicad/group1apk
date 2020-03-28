@@ -125,16 +125,29 @@ public class PassFailScreen extends AppCompatActivity {
         }
 
         boolean fin = false;
-        ScheduleGenerator sg = new ScheduleGenerator(myDB);
-        fin = sg.main(choice, Semester, year);
-        myDB.year = year;
-        myDB.numCourses = choice;
-        myDB.semester = Semester;
-        myDB.updateSemesters();
-        Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
-        intent.putExtra("Choice", choice);
-        intent.putExtra("Year",year);
-        intent.putExtra("Semester", Semester);
-        startActivity(intent);
+
+        if(fromMenu){
+            myDB.year = year;
+            myDB.numCourses = choice;
+            myDB.semester = Semester;
+            Intent intent = new Intent(getApplicationContext(), SemesterUpdate.class);
+            intent.putExtra("Choice", choice);
+            intent.putExtra("Year",year);
+            intent.putExtra("Semester", Semester);
+            startActivity(intent);
+        }
+        else{
+            ScheduleGenerator sg = new ScheduleGenerator(myDB);
+            fin = sg.main(choice, Semester, year);
+            myDB.year = year;
+            myDB.numCourses = choice;
+            myDB.semester = Semester;
+            myDB.updateSemesters();
+            Intent intent = new Intent(getApplicationContext(), CentralActivity.class);
+            intent.putExtra("Choice", choice);
+            intent.putExtra("Year",year);
+            intent.putExtra("Semester", Semester);
+            startActivity(intent);
+        }
     }
 }

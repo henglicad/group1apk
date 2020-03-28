@@ -11,6 +11,8 @@ public class ScheduleGenerator {
     private int fYear, wYear;
     private int fy = 0, wy = 0, C1Year;
     private String semester;
+    int fcounter = 0;
+    int wcounter = 0;
 
     private ArrayList<String> courseID = new ArrayList<>();
     private ArrayList<String> courseStatus = new ArrayList<>();
@@ -59,6 +61,8 @@ public class ScheduleGenerator {
             }else{
                 make_schedule(Fall, Winter,Both, num_of_courses);
             }
+            fcounter ++;
+            wcounter ++;
         }
         enterInDB(sem);
         return true;
@@ -275,8 +279,17 @@ public class ScheduleGenerator {
         ArrayList<String> s = new ArrayList<>();
 
         for(int i= 0; i< masterID.size(); i++){
+
             if(check_pre_req(masterID.get(i)) && courseStatus.get(courseID.indexOf(masterID.get(i))).equals("0")){
-                s.add(masterID.get(i));
+                if(!masterID.get(i).equals("COOP1000")){
+                    s.add(masterID.get(i));
+                }
+                else{
+                    if(fy >= 1 && wy >= 1){
+                        s.add(masterID.get(i));
+                    }
+                }
+
             }
         }
 
@@ -448,14 +461,13 @@ public class ScheduleGenerator {
                         break;
                     }
                 }
-                else if(getCourseYear(fall.get(0)) > fYear+fy){                                   //this condition makes sure that only courses that are to be taken up till users current year are scheduled. e.g: a 3rd year course is no scheduled in 2nd year
+                else if(getCourseYear(fall.get(0)) > fYear+fy && fcounter<10){                                   //this condition makes sure that only courses that are to be taken up till users current year are scheduled. e.g: a 3rd year course is no scheduled in 2nd year
                     fall.remove(0);
                 }
                 else{
                     if(fall.get(0).equals("COOP2080")){                                             //checks to see if the course to be scheduled is coop 2080
                         add_COOP(Cnum);
                         fall.remove(0);
-
                     }
                     else {
                         fall_semesters.get(fy).add(fall.get(0));                                    //schedules a normal course
@@ -465,9 +477,11 @@ public class ScheduleGenerator {
                     }
 
                 }
+
             }
             if(fall_semesters.get(fy).size() >= Cnum){                                              //makes so that the next years fall semester is scheduled next
                 fy++;
+                fcounter = 0;
                 fall_semesters.add(new ArrayList<String>());
             }
 
@@ -491,7 +505,7 @@ public class ScheduleGenerator {
                         break;
                     }
                 }
-                else if(getCourseYear(winter.get(0)) > wYear+wy){
+                else if(getCourseYear(winter.get(0)) > wYear+wy && wcounter<10){
                     winter.remove(0);
                 }
                 else{
@@ -509,6 +523,7 @@ public class ScheduleGenerator {
 
             if(winter_semesters.get(wy).size() >= Cnum){
                 wy++;
+                wcounter = 0;
                 winter_semesters.add(new ArrayList<String>());
             }
         }
